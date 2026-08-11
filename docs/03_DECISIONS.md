@@ -1,0 +1,104 @@
+<!-- Chem-151 | S.T. Yau High School Science Award (Asia) 2026 | Palaash Gang -->
+# 03 — DECISION LOG
+
+Dated record of every judgement call, with rationale. Decisions recorded here are binding on the
+report; where a decision changes, the old entry is struck through rather than deleted, so the
+reasoning trail survives.
+
+---
+
+## 2026-08-11 — Phase 4 interview: AWAITING ANSWERS
+
+25 questions, grouped, ordered by consequence. Answer in this file or in session; either way the
+answers and their rationale are recorded here before Phase 5 proceeds.
+
+**Status: OPEN — Phases 5 onward are blocked on Q1–Q7.**
+
+### Context Palaash needs before answering
+
+Two findings from the Phase 3 audit are not questions but must be known:
+
+1. **PbSO₄ supersaturation.** The competitor salts are sulfates (CuSO₄·5H₂O, ZnSO₄·7H₂O) and the
+   lead salt is a nitrate. In both ternary compositions the solution is supersaturated with respect
+   to anglesite, PbSO₄, at a saturation index of about **+1.0** (activity-corrected). Every sample
+   is filtered at 0.45 µm, so any precipitate would be counted as sorption. See audit **B10.1**.
+2. **Molar-basis inversion.** Converting the capacities to mmol g⁻¹ gives Pb 0.194, Cu 0.399,
+   Zn 0.258 — the ordering **inverts** to Cu > Zn > Pb, and the same inversion appears in the
+   ternary uptake. The selectivity factors α **survive intact** because α is a ratio of distribution
+   coefficients and is invariant to the mass-or-molar basis. The capacity-ordering claim does not
+   survive and must be recast. See audit **B10.2**.
+
+### A. The two answers that can change what the report claims
+
+| # | Question | Answer | Rationale |
+|---|---|---|---|
+| 1 | **Ternary composition: equal-mass or truly equimolar?** (audit B3) | | |
+| 2 | **Was a sorbent-free ternary blank run? Was any turbidity or white precipitate seen?** (B10.1) | | |
+| 3 | **Promote the 25/100/100 minority-target run to the headline competitive result?** (B3) | | |
+
+### B. Compliance and disqualification exposure
+
+| # | Question | Answer | Rationale |
+|---|---|---|---|
+| 4 | **Has any part of this work been submitted to any other competition, fair, exhibition or journal, ever?** (A20) | | |
+| 5 | **Who supplied or prepared the ossein?** (B10.6 / A24) | | |
+| 6 | **Has Ms Menon's written AI approval gone out? Has the principal's signature request gone out?** | | |
+| 7 | **Has any paid or commercial service been engaged at any stage?** | | |
+
+### C. The thermodynamics dataset
+
+| # | Question | Answer | Rationale |
+|---|---|---|---|
+| 8 | **Which temperatures, how controlled, measured or setpoint?** (B1) | | |
+| 9 | **Which metals, and what concentration structure at each temperature?** (B1) | | |
+| 10 | **Replicates, and was it the same sorbent batch?** (B1 / B10.14) | | |
+
+### D. What actually happened at the bench
+
+| # | Question | Answer | Rationale |
+|---|---|---|---|
+| 11 | **Open question: which steps did not go as written, and what actually happened?** (B10.17 / A29) | | |
+| 12 | **Functionalisation bath — deviations?** | | |
+| 13 | **Washing endpoint — visual or UV-Vis?** (B10.11) | | |
+| 14 | **Sieved fraction actually obtained, and yield?** | | |
+| 15 | **Bed packing — measured bed height, V_bed, ρ_b, H:D?** | | |
+| 16 | **Did Column B run at all?** | | |
+| 17 | **Were cycles 2 and 3 terminated early at C/C₀ ≈ 0.30?** | | |
+| 18 | **Was any run repeated or discarded?** | | |
+
+### E. Data holdings, replicates and analytical quality
+
+| # | Question | Answer | Rationale |
+|---|---|---|---|
+| 19 | **Which datasets exist right now versus which are still to be produced?** | | |
+| 20 | **What n was actually run at each isotherm and kinetic point?** (B10.5) | | |
+| 21 | **AAS calibration: standards, wavelengths, fit form, R² per metal per batch?** (B10.4 / A25) | | |
+| 22 | **Was laboratory temperature recorded at all?** (B10.10) | | |
+| 23 | **Which quantity is 80.1% — batch q_e retention or column BV₁₀ retention? What was the cycle-1 denominator?** (C14 / B10.7) | | |
+
+### F. Instruments, facilities and provenance
+
+| # | Question | Answer | Rationale |
+|---|---|---|---|
+| 24 | **Who operated the FTIR, SEM-EDX, AAS and XPS, at which facility, on what dates?** (A17 / C-022) | | |
+| 25 | **Have XPS and SEM-EDX measurements actually been made, or are they still to acquire?** (B6) | | |
+
+---
+
+## Decisions already taken by the auditor (not requiring Palaash's ruling)
+
+Recorded so they can be reversed on request.
+
+| Date | Decision | Rationale |
+|---|---|---|
+| 2026-08-11 | **All isotherm and kinetic fitting is non-linear regression.** Linearised forms of Lab Protocol §11 superseded. | Linearisation distorts the error structure (Tran et al. 2017, already cited in the outline). Attack A08, Bible anti-pattern 4. Amendment A-02. |
+| 2026-08-11 | **TGA and BET formally DESIGNED OUT** with a stated reason, replaced by a six-line evidence set. | Instruments unavailable. A missing figure that is explained is a limitation; one silently absent is a hole. Amendment A-01. |
+| 2026-08-11 | **XPS promoted to a full characterisation subsection** with a new figure and table. | Pb 4f is the strongest direct evidence of Pb–O coordination and oxidation state, and the instrument is available. Amendment A-03. |
+| 2026-08-11 | **Quantified leaching test made mandatory** (was optional). | With TGA gone, it is the only evidence that distinguishes grafted from adsorbed tannin. Attack A10. Amendment A-04. |
+| 2026-08-11 | **LOD, LOQ and spike recovery added**, with the IUPAC 3.3σ/10σ convention named. | Underwrites every reported concentration; values below LOQ must not be silently fitted. Amendment A-05. |
+| 2026-08-11 | **Computed speciation with saturation indices added.** | Attack A07; costs no bench time; became urgent once B10.1 was found. Amendment A-06. |
+| 2026-08-11 | **The outline's numbers are claims, not inputs.** They live in audit Table C and nowhere else; they do not seed `CANONICAL_NUMBERS.yaml` and do not influence the computational protocol. | Correctness beats consistency with the outline. |
+| 2026-08-11 | **The outline's ΔG°_bind values (−145.2 / −110.4 / −85.6 kJ mol⁻¹) and f_orb = 0.38 are not carried forward.** | No stated reference state (Attack A04); the decomposition scheme is not yet chosen (A01, A13). Nothing has been computed. |
+| 2026-08-11 | **Attribution suppression and the commit-msg hook installed in Phase 1** rather than Phase 10. | The absolute attribution rule applies to *every* commit, including the first. |
+| 2026-08-11 | **LICENSE is split: MIT for code, all rights reserved for research content.** | Not specified in the brief. A competition submission under assessment should not be openly licensed; the tooling reasonably can be. **Reversible on request.** |
+| 2026-08-11 | **The three source documents remain at the repository root under their original filenames**, untouched. | They are Palaash's files; renaming or moving them silently would be a surprise. Referenced by path from `README.md`. |

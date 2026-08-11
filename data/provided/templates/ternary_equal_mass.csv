@@ -1,0 +1,1 @@
+run_id,replicate,sorbent,sorbent_mass_g,volume_mL,pH_initial,pH_final,contact_time_min,temperature_C,C0_Pb_measured_mg_per_L,C0_Cu_measured_mg_per_L,C0_Zn_measured_mg_per_L,Ce_Pb_mg_per_L,Ce_Cu_mg_per_L,Ce_Zn_mg_per_L,dilution_factor_Pb,dilution_factor_Cu,dilution_factor_Zn,aas_batch_id,date,notes

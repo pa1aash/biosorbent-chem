@@ -1,0 +1,1 @@
+run_id,cycle,replicate,stage,eluent,desorbate_Pb_mg_per_L,desorbate_Cu_mg_per_L,desorbate_Zn_mg_per_L,readsorption_C0_mg_per_L,readsorption_Ce_mg_per_L,sorbent_mass_g,volume_mL,contact_time_min,mass_adsorbed_mg,mass_desorbed_mg,dilution_factor,aas_batch_id,date,notes

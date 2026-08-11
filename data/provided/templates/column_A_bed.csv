@@ -1,0 +1,1 @@
+column_id,cycle,sorbent_mass_g,bed_height_cm,Vbed_mL,rho_b_g_per_cm3,H_to_D,feed_C0_mg_per_L,feed_pH,flow_BV_per_h,flow_mL_per_min,EBCT_min,date_start,date_end,terminated_early,notes

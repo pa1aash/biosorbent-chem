@@ -1,0 +1,1 @@
+run_id,metal,temperature_C_measured,temperature_control_method,temperature_stability_C,replicate,C0_mg_per_L,Ce_mg_per_L,sorbent_mass_g,volume_mL,sorbent_batch,pH_initial,pH_final,contact_time_min,dilution_factor,aas_batch_id,date,notes

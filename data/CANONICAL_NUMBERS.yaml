@@ -1,4 +1,2657 @@
-# Chem-151 canonical numbers - the single source of truth for every number the report states.
-# PLACEHOLDER - populated in Phase 5. Nothing is pre-filled from the Stage-1 outline.
-# Every key: {value: null, uncertainty: null, n: null, units: <str>, source_dataset: <str>, status: PENDING}
-# No numeric result may be hard-coded in any .tex file. scripts/emit_numbers.py is the only route.
+# ==============================================================================
+# Chem-151 — CANONICAL NUMBERS
+# S.T. Yau High School Science Award (Asia) 2026 · Palaash Gang
+# ==============================================================================
+#
+# THE SINGLE SOURCE OF TRUTH FOR EVERY NUMBER THE REPORT STATES.
+#
+# No numeric result may be hard-coded in any .tex file. Every number reaches
+# LaTeX through \num{key}, generated from this file by scripts/emit_numbers.py
+# into report/preamble/numbers.tex.
+#
+#   data/provided/ -> analysis/src/ -> data/processed/ -> THIS FILE -> numbers.tex
+#
+# Schema, per key:
+#   value           the number, or null
+#   uncertainty     SD, or the half-width of the 95% CI; state which in `note`
+#   n               replicate count, or null where not applicable
+#   units           always explicit; never omitted
+#   source_dataset  the DS-xx id from docs/DATA_REQUEST.md, or the script
+#   status          PENDING | VERIFIED
+#   note            optional; conventions, caveats, what the uncertainty means
+#
+# RULES
+#   1. status: VERIFIED only when the value is derived from a real dataset by a
+#      script in analysis/src/ or dft/analysis/. Never by hand.
+#   2. emit_numbers.py REFUSES to emit a PENDING value except under --draft,
+#      where it renders a loud red marker instead.
+#   3. NOTHING here is pre-filled from the Stage-1 outline. The outline's values
+#      are claims to be tested and live only in docs/02_PROTOCOL_AUDIT.md
+#      Table C.
+#   4. Significant figures are matched to measurement precision. If the SD is
+#      +/-2 mg/g the value is 40.1, not 40.11.
+#   5. Capacities carry BOTH mg/g and mmol/g keys. On a molar basis the ordering
+#      inverts — see audit B10.2 and attack A23.
+# ==============================================================================
+
+
+# ------------------------------------------------------------------------------
+# MATERIAL AND FUNCTIONALISATION  —  §4.1, Finding 1
+# ------------------------------------------------------------------------------
+
+loading_wt_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "wt%"
+  source_dataset: "DS-11"
+  status: PENDING
+  note: "gravimetric; cannot distinguish grafted from entrained tannin (attack A11)"
+
+sizing_yield_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "wt%"
+  source_dataset: "DS-11"
+  status: PENDING
+  note: "mass in the 0.50-1.00 mm fraction as a fraction of the supplied ossein"
+
+ash_raw_oss_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "wt%"
+  source_dataset: "DS-19"
+  status: PENDING
+
+ash_ta_oss_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "wt%"
+  source_dataset: "DS-19"
+  status: PENDING
+
+ph_pzc_raw_oss:
+  value: null
+  uncertainty: null
+  n: null
+  units: "pH units"
+  source_dataset: "DS-16"
+  status: PENDING
+
+ph_pzc_ta_oss:
+  value: null
+  uncertainty: null
+  n: null
+  units: "pH units"
+  source_dataset: "DS-16"
+  status: PENDING
+  note: "a lower value than RAW-OSS is independent functional evidence of grafting"
+
+galloyl_mmol_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mmol/g"
+  source_dataset: "derived from DS-11"
+  status: PENDING
+  note: "= loading_wt_pct/100 / 1701.2 * 1000 * 10 galloyl per tannic acid; nominal decagalloyl stoichiometry"
+
+metal_per_galloyl_ternary:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mol/mol"
+  source_dataset: "derived"
+  status: PENDING
+  note: "site-balance consistency check, audit D.3 — a check, not a proof"
+
+
+# ------------------------------------------------------------------------------
+# TANNIC-ACID LEACHING  —  §4.1, attack A10
+# ------------------------------------------------------------------------------
+
+leaching_ph5_mg_gae_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg gallic-acid-equivalent per g sorbent"
+  source_dataset: "DS-17"
+  status: PENDING
+
+leaching_ph5_pct_of_loading:
+  value: null
+  uncertainty: null
+  n: null
+  units: "% of measured loading"
+  source_dataset: "derived from DS-17 and DS-11"
+  status: PENDING
+  note: "THIS is the number that answers attack A10"
+
+leaching_ph2_mg_gae_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg gallic-acid-equivalent per g sorbent"
+  source_dataset: "DS-17"
+  status: PENDING
+
+leaching_ph2_pct_of_loading:
+  value: null
+  uncertainty: null
+  n: null
+  units: "% of measured loading"
+  source_dataset: "derived from DS-17 and DS-11"
+  status: PENDING
+  note: "THIS is the number that answers attack A10"
+
+
+# ------------------------------------------------------------------------------
+# ATR-FTIR BAND POSITIONS  —  §4.1, Table 4.1
+# ------------------------------------------------------------------------------
+
+ftir_aromatic_cc_cm1:
+  value: null
+  uncertainty: null
+  n: null
+  units: "cm^-1"
+  source_dataset: "DS-12"
+  status: PENDING
+  note: "aromatic C=C, new on functionalisation"
+
+ftir_galloyl_ester_cm1:
+  value: null
+  uncertainty: null
+  n: null
+  units: "cm^-1"
+  source_dataset: "DS-12"
+  status: PENDING
+  note: "galloyl ester C-O / C=O, new on functionalisation"
+
+ftir_amide_i_raw_cm1:
+  value: null
+  uncertainty: null
+  n: null
+  units: "cm^-1"
+  source_dataset: "DS-12"
+  status: PENDING
+  note: "collagen Amide I, RAW-OSS"
+
+ftir_amide_i_ta_cm1:
+  value: null
+  uncertainty: null
+  n: null
+  units: "cm^-1"
+  source_dataset: "DS-12"
+  status: PENDING
+  note: "collagen Amide I, TA-OSS — expected preserved"
+
+ftir_amide_ii_ta_cm1:
+  value: null
+  uncertainty: null
+  n: null
+  units: "cm^-1"
+  source_dataset: "DS-12"
+  status: PENDING
+  note: "collagen Amide II"
+
+ftir_amide_iii_ta_cm1:
+  value: null
+  uncertainty: null
+  n: null
+  units: "cm^-1"
+  source_dataset: "DS-12"
+  status: PENDING
+  note: "collagen Amide III"
+
+ftir_phenolic_oh_ta_cm1:
+  value: null
+  uncertainty: null
+  n: null
+  units: "cm^-1"
+  source_dataset: "DS-12"
+  status: PENDING
+  note: "phenolic O-H"
+
+ftir_phenolic_oh_spent_cm1:
+  value: null
+  uncertainty: null
+  n: null
+  units: "cm^-1"
+  source_dataset: "DS-12"
+  status: PENDING
+  note: "phenolic O-H, spent — expected dampened"
+
+ftir_phosphate_cm1:
+  value: null
+  uncertainty: null
+  n: null
+  units: "cm^-1"
+  source_dataset: "DS-12"
+  status: PENDING
+  note: "residual mineral phosphate"
+
+
+# ------------------------------------------------------------------------------
+# XPS  —  §4.1, Fig 4.18, Table 4.13  [BLOCKED: laboratory has not released the data]
+# ------------------------------------------------------------------------------
+
+xps_c1s_reference_ev:
+  value: null
+  uncertainty: null
+  n: null
+  units: "eV"
+  source_dataset: "DS-23"
+  status: PENDING
+  note: "adventitious C 1s charge reference — 284.8 eV by convention, stated not assumed"
+
+xps_pb4f72_be_ev:
+  value: null
+  uncertainty: null
+  n: null
+  units: "eV"
+  source_dataset: "DS-23"
+  status: PENDING
+  note: "Pb 4f7/2 binding energy, Pb-loaded TA-OSS — distinguishes Pb(II)-O coordination from PbO / Pb(OH)2 / PbCO3 / Pb(0)"
+
+xps_pb4f72_fwhm_ev:
+  value: null
+  uncertainty: null
+  n: null
+  units: "eV"
+  source_dataset: "DS-23"
+  status: PENDING
+  note: "Pb 4f7/2 FWHM"
+
+xps_o1s_phenolic_ta_ev:
+  value: null
+  uncertainty: null
+  n: null
+  units: "eV"
+  source_dataset: "DS-23"
+  status: PENDING
+  note: "O 1s phenolic component, fresh TA-OSS"
+
+xps_o1s_phenolic_pbloaded_ev:
+  value: null
+  uncertainty: null
+  n: null
+  units: "eV"
+  source_dataset: "DS-23"
+  status: PENDING
+  note: "O 1s phenolic component, Pb-loaded — shift on binding is the evidence"
+
+xps_n1s_ta_ev:
+  value: null
+  uncertainty: null
+  n: null
+  units: "eV"
+  source_dataset: "DS-23"
+  status: PENDING
+  note: "N 1s collagen amide"
+
+xps_pb_atomic_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "at.%"
+  source_dataset: "DS-23"
+  status: PENDING
+  note: "surface atomic percentage; surface-sensitive, not a bulk loading measurement"
+
+
+# ------------------------------------------------------------------------------
+# SEM-EDX  —  §4.1, Fig 4.2  [BLOCKED]
+# ------------------------------------------------------------------------------
+
+edx_pb_present:
+  value: null
+  uncertainty: null
+  n: null
+  units: "qualitative"
+  source_dataset: "DS-24"
+  status: PENDING
+  note: "EDX is SEMI-QUANTITATIVE on this material; presented as spatial distribution and presence, never as a loading measurement"
+
+
+# ------------------------------------------------------------------------------
+# pH OPTIMISATION  —  §4.1
+# ------------------------------------------------------------------------------
+
+ph_operating:
+  value: null
+  uncertainty: null
+  n: null
+  units: "pH units"
+  source_dataset: "DS-13"
+  status: PENDING
+  note: "the optimum, used in every subsequent batch and column step"
+
+removal_pb_ph3_ta_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "%"
+  source_dataset: "DS-13"
+  status: PENDING
+
+removal_pb_ph4_ta_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "%"
+  source_dataset: "DS-13"
+  status: PENDING
+
+removal_pb_ph5_ta_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "%"
+  source_dataset: "DS-13"
+  status: PENDING
+
+removal_pb_ph6_ta_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "%"
+  source_dataset: "DS-13"
+  status: PENDING
+
+removal_pb_ph6_blank_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "%"
+  source_dataset: "DS-13"
+  status: PENDING
+  note: "sorbent-free precipitation control"
+
+
+# ------------------------------------------------------------------------------
+# SINGLE-METAL ISOTHERMS  —  §4.2, Fig 4.5, Tables 4.2 and 4.3
+# ------------------------------------------------------------------------------
+
+qmax_pb_mg_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/g"
+  source_dataset: "DS-05"
+  status: PENDING
+  note: "non-linear Langmuir; uncertainty is the 95% CI half-width"
+
+qmax_pb_mmol_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mmol/g"
+  source_dataset: "derived"
+  status: PENDING
+  note: "MOLAR basis — the ordering inverts here (audit B10.2, attack A23)"
+
+kl_pb_L_per_mg:
+  value: null
+  uncertainty: null
+  n: null
+  units: "L/mg"
+  source_dataset: "DS-05"
+  status: PENDING
+  note: "Langmuir affinity constant"
+
+r2_langmuir_pb:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-05"
+  status: PENDING
+
+chi2red_langmuir_pb:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-05"
+  status: PENDING
+  note: "reduced chi-squared"
+
+rmse_langmuir_pb:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/g"
+  source_dataset: "DS-05"
+  status: PENDING
+
+aic_langmuir_pb:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-05"
+  status: PENDING
+  note: "for model discrimination against Freundlich and Sips"
+
+kf_pb:
+  value: null
+  uncertainty: null
+  n: null
+  units: "(mg/g)(L/mg)^(1/n)"
+  source_dataset: "DS-05"
+  status: PENDING
+  note: "Freundlich"
+
+nfreundlich_pb:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-05"
+  status: PENDING
+
+r2_freundlich_pb:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-05"
+  status: PENDING
+
+aic_freundlich_pb:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-05"
+  status: PENDING
+
+qmax_pb_raw_mg_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/g"
+  source_dataset: "DS-05"
+  status: PENDING
+  note: "non-linear Langmuir; uncertainty is the 95% CI half-width"
+
+qmax_pb_raw_mmol_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mmol/g"
+  source_dataset: "derived"
+  status: PENDING
+  note: "MOLAR basis — the ordering inverts here (audit B10.2, attack A23)"
+
+kl_pb_raw_L_per_mg:
+  value: null
+  uncertainty: null
+  n: null
+  units: "L/mg"
+  source_dataset: "DS-05"
+  status: PENDING
+  note: "Langmuir affinity constant"
+
+r2_langmuir_pb_raw:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-05"
+  status: PENDING
+
+chi2red_langmuir_pb_raw:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-05"
+  status: PENDING
+  note: "reduced chi-squared"
+
+rmse_langmuir_pb_raw:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/g"
+  source_dataset: "DS-05"
+  status: PENDING
+
+aic_langmuir_pb_raw:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-05"
+  status: PENDING
+  note: "for model discrimination against Freundlich and Sips"
+
+kf_pb_raw:
+  value: null
+  uncertainty: null
+  n: null
+  units: "(mg/g)(L/mg)^(1/n)"
+  source_dataset: "DS-05"
+  status: PENDING
+  note: "Freundlich"
+
+nfreundlich_pb_raw:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-05"
+  status: PENDING
+
+r2_freundlich_pb_raw:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-05"
+  status: PENDING
+
+aic_freundlich_pb_raw:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-05"
+  status: PENDING
+
+qmax_cu_mg_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/g"
+  source_dataset: "DS-05"
+  status: PENDING
+  note: "non-linear Langmuir; uncertainty is the 95% CI half-width"
+
+qmax_cu_mmol_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mmol/g"
+  source_dataset: "derived"
+  status: PENDING
+  note: "MOLAR basis — the ordering inverts here (audit B10.2, attack A23)"
+
+kl_cu_L_per_mg:
+  value: null
+  uncertainty: null
+  n: null
+  units: "L/mg"
+  source_dataset: "DS-05"
+  status: PENDING
+  note: "Langmuir affinity constant"
+
+r2_langmuir_cu:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-05"
+  status: PENDING
+
+chi2red_langmuir_cu:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-05"
+  status: PENDING
+  note: "reduced chi-squared"
+
+rmse_langmuir_cu:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/g"
+  source_dataset: "DS-05"
+  status: PENDING
+
+aic_langmuir_cu:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-05"
+  status: PENDING
+  note: "for model discrimination against Freundlich and Sips"
+
+kf_cu:
+  value: null
+  uncertainty: null
+  n: null
+  units: "(mg/g)(L/mg)^(1/n)"
+  source_dataset: "DS-05"
+  status: PENDING
+  note: "Freundlich"
+
+nfreundlich_cu:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-05"
+  status: PENDING
+
+r2_freundlich_cu:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-05"
+  status: PENDING
+
+aic_freundlich_cu:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-05"
+  status: PENDING
+
+qmax_zn_mg_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/g"
+  source_dataset: "DS-05"
+  status: PENDING
+  note: "non-linear Langmuir; uncertainty is the 95% CI half-width"
+
+qmax_zn_mmol_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mmol/g"
+  source_dataset: "derived"
+  status: PENDING
+  note: "MOLAR basis — the ordering inverts here (audit B10.2, attack A23)"
+
+kl_zn_L_per_mg:
+  value: null
+  uncertainty: null
+  n: null
+  units: "L/mg"
+  source_dataset: "DS-05"
+  status: PENDING
+  note: "Langmuir affinity constant"
+
+r2_langmuir_zn:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-05"
+  status: PENDING
+
+chi2red_langmuir_zn:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-05"
+  status: PENDING
+  note: "reduced chi-squared"
+
+rmse_langmuir_zn:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/g"
+  source_dataset: "DS-05"
+  status: PENDING
+
+aic_langmuir_zn:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-05"
+  status: PENDING
+  note: "for model discrimination against Freundlich and Sips"
+
+kf_zn:
+  value: null
+  uncertainty: null
+  n: null
+  units: "(mg/g)(L/mg)^(1/n)"
+  source_dataset: "DS-05"
+  status: PENDING
+  note: "Freundlich"
+
+nfreundlich_zn:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-05"
+  status: PENDING
+
+r2_freundlich_zn:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-05"
+  status: PENDING
+
+aic_freundlich_zn:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-05"
+  status: PENDING
+
+rl_pb:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "derived from DS-05"
+  status: PENDING
+  note: "Langmuir separation factor at the highest C0"
+
+qmax_pb_sips_mg_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/g"
+  source_dataset: "DS-05"
+  status: PENDING
+  note: "three-parameter model restricted to the six-point Pb isotherm; over-parameterised on the four-point Cu and Zn series"
+
+
+# ------------------------------------------------------------------------------
+# KINETICS  —  §4.3, Fig 4.6, Table 4.4
+# ------------------------------------------------------------------------------
+
+k1_pb:
+  value: null
+  uncertainty: null
+  n: null
+  units: "1/min"
+  source_dataset: "DS-10"
+  status: PENDING
+  note: "pseudo-first-order"
+
+qe1_pb_mg_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/g"
+  source_dataset: "DS-10"
+  status: PENDING
+
+r2_pfo_pb:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-10"
+  status: PENDING
+
+k2_pb:
+  value: null
+  uncertainty: null
+  n: null
+  units: "g/(mg.min)"
+  source_dataset: "DS-10"
+  status: PENDING
+  note: "pseudo-second-order"
+
+qe2_pb_mg_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/g"
+  source_dataset: "DS-10"
+  status: PENDING
+
+r2_pso_pb:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-10"
+  status: PENDING
+
+kid_pb:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/(g.min^0.5)"
+  source_dataset: "DS-10"
+  status: PENDING
+  note: "Weber-Morris intraparticle diffusion"
+
+elovich_alpha_pb:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/(g.min)"
+  source_dataset: "DS-10"
+  status: PENDING
+
+elovich_beta_pb:
+  value: null
+  uncertainty: null
+  n: null
+  units: "g/mg"
+  source_dataset: "DS-10"
+  status: PENDING
+
+k1_cu:
+  value: null
+  uncertainty: null
+  n: null
+  units: "1/min"
+  source_dataset: "DS-10"
+  status: PENDING
+  note: "pseudo-first-order"
+
+qe1_cu_mg_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/g"
+  source_dataset: "DS-10"
+  status: PENDING
+
+r2_pfo_cu:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-10"
+  status: PENDING
+
+k2_cu:
+  value: null
+  uncertainty: null
+  n: null
+  units: "g/(mg.min)"
+  source_dataset: "DS-10"
+  status: PENDING
+  note: "pseudo-second-order"
+
+qe2_cu_mg_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/g"
+  source_dataset: "DS-10"
+  status: PENDING
+
+r2_pso_cu:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-10"
+  status: PENDING
+
+kid_cu:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/(g.min^0.5)"
+  source_dataset: "DS-10"
+  status: PENDING
+  note: "Weber-Morris intraparticle diffusion"
+
+elovich_alpha_cu:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/(g.min)"
+  source_dataset: "DS-10"
+  status: PENDING
+
+elovich_beta_cu:
+  value: null
+  uncertainty: null
+  n: null
+  units: "g/mg"
+  source_dataset: "DS-10"
+  status: PENDING
+
+equilibrium_time_min:
+  value: null
+  uncertainty: null
+  n: null
+  units: "min"
+  source_dataset: "DS-10"
+  status: PENDING
+  note: "justifies the 120 min contact time used throughout"
+
+
+# ------------------------------------------------------------------------------
+# COMPETITIVE SORPTION  —  §4.4, Fig 4.7, Table 4.5, Finding 2
+# ------------------------------------------------------------------------------
+
+# Minority-target 25/100/100 is the HEADLINE condition (Phase 4 answer Q3).
+
+c0_pb_minority_mg_per_L:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/L"
+  source_dataset: "DS-01"
+  status: PENDING
+  note: "MEASURED initial aliquot, not nominal"
+
+removal_pb_minority_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "%"
+  source_dataset: "DS-01"
+  status: PENDING
+
+qe_pb_minority_mg_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/g"
+  source_dataset: "derived"
+  status: PENDING
+
+qe_pb_minority_mmol_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mmol/g"
+  source_dataset: "derived"
+  status: PENDING
+  note: "molar uptake ordering differs from the mass ordering"
+
+kd_pb_minority_L_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "L/g"
+  source_dataset: "derived"
+  status: PENDING
+
+c0_pb_minority_raw_mg_per_L:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/L"
+  source_dataset: "DS-01"
+  status: PENDING
+  note: "MEASURED initial aliquot, not nominal"
+
+removal_pb_minority_raw_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "%"
+  source_dataset: "DS-01"
+  status: PENDING
+
+qe_pb_minority_raw_mg_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/g"
+  source_dataset: "derived"
+  status: PENDING
+
+qe_pb_minority_raw_mmol_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mmol/g"
+  source_dataset: "derived"
+  status: PENDING
+  note: "molar uptake ordering differs from the mass ordering"
+
+kd_pb_minority_raw_L_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "L/g"
+  source_dataset: "derived"
+  status: PENDING
+
+c0_cu_minority_mg_per_L:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/L"
+  source_dataset: "DS-01"
+  status: PENDING
+  note: "MEASURED initial aliquot, not nominal"
+
+removal_cu_minority_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "%"
+  source_dataset: "DS-01"
+  status: PENDING
+
+qe_cu_minority_mg_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/g"
+  source_dataset: "derived"
+  status: PENDING
+
+qe_cu_minority_mmol_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mmol/g"
+  source_dataset: "derived"
+  status: PENDING
+  note: "molar uptake ordering differs from the mass ordering"
+
+kd_cu_minority_L_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "L/g"
+  source_dataset: "derived"
+  status: PENDING
+
+c0_cu_minority_raw_mg_per_L:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/L"
+  source_dataset: "DS-01"
+  status: PENDING
+  note: "MEASURED initial aliquot, not nominal"
+
+removal_cu_minority_raw_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "%"
+  source_dataset: "DS-01"
+  status: PENDING
+
+qe_cu_minority_raw_mg_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/g"
+  source_dataset: "derived"
+  status: PENDING
+
+qe_cu_minority_raw_mmol_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mmol/g"
+  source_dataset: "derived"
+  status: PENDING
+  note: "molar uptake ordering differs from the mass ordering"
+
+kd_cu_minority_raw_L_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "L/g"
+  source_dataset: "derived"
+  status: PENDING
+
+c0_zn_minority_mg_per_L:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/L"
+  source_dataset: "DS-01"
+  status: PENDING
+  note: "MEASURED initial aliquot, not nominal"
+
+removal_zn_minority_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "%"
+  source_dataset: "DS-01"
+  status: PENDING
+
+qe_zn_minority_mg_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/g"
+  source_dataset: "derived"
+  status: PENDING
+
+qe_zn_minority_mmol_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mmol/g"
+  source_dataset: "derived"
+  status: PENDING
+  note: "molar uptake ordering differs from the mass ordering"
+
+kd_zn_minority_L_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "L/g"
+  source_dataset: "derived"
+  status: PENDING
+
+c0_zn_minority_raw_mg_per_L:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/L"
+  source_dataset: "DS-01"
+  status: PENDING
+  note: "MEASURED initial aliquot, not nominal"
+
+removal_zn_minority_raw_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "%"
+  source_dataset: "DS-01"
+  status: PENDING
+
+qe_zn_minority_raw_mg_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/g"
+  source_dataset: "derived"
+  status: PENDING
+
+qe_zn_minority_raw_mmol_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mmol/g"
+  source_dataset: "derived"
+  status: PENDING
+  note: "molar uptake ordering differs from the mass ordering"
+
+kd_zn_minority_raw_L_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "L/g"
+  source_dataset: "derived"
+  status: PENDING
+
+alpha_pb_cu_minority:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "derived"
+  status: PENDING
+  note: "alpha = Kd_Pb/Kd_M; INVARIANT to mass-vs-molar basis"
+
+alpha_pb_cu_minority_raw:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "derived"
+  status: PENDING
+  note: "alpha = Kd_Pb/Kd_M; INVARIANT to mass-vs-molar basis"
+
+alpha_pb_zn_minority:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "derived"
+  status: PENDING
+  note: "alpha = Kd_Pb/Kd_M; INVARIANT to mass-vs-molar basis"
+
+alpha_pb_zn_minority_raw:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "derived"
+  status: PENDING
+  note: "alpha = Kd_Pb/Kd_M; INVARIANT to mass-vs-molar basis"
+
+c0_pb_equalmass_mg_per_L:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/L"
+  source_dataset: "DS-02"
+  status: PENDING
+  note: "MEASURED initial aliquot, not nominal"
+
+removal_pb_equalmass_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "%"
+  source_dataset: "DS-02"
+  status: PENDING
+
+qe_pb_equalmass_mg_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/g"
+  source_dataset: "derived"
+  status: PENDING
+
+qe_pb_equalmass_mmol_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mmol/g"
+  source_dataset: "derived"
+  status: PENDING
+  note: "molar uptake ordering differs from the mass ordering"
+
+kd_pb_equalmass_L_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "L/g"
+  source_dataset: "derived"
+  status: PENDING
+
+c0_pb_equalmass_raw_mg_per_L:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/L"
+  source_dataset: "DS-02"
+  status: PENDING
+  note: "MEASURED initial aliquot, not nominal"
+
+removal_pb_equalmass_raw_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "%"
+  source_dataset: "DS-02"
+  status: PENDING
+
+qe_pb_equalmass_raw_mg_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/g"
+  source_dataset: "derived"
+  status: PENDING
+
+qe_pb_equalmass_raw_mmol_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mmol/g"
+  source_dataset: "derived"
+  status: PENDING
+  note: "molar uptake ordering differs from the mass ordering"
+
+kd_pb_equalmass_raw_L_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "L/g"
+  source_dataset: "derived"
+  status: PENDING
+
+c0_cu_equalmass_mg_per_L:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/L"
+  source_dataset: "DS-02"
+  status: PENDING
+  note: "MEASURED initial aliquot, not nominal"
+
+removal_cu_equalmass_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "%"
+  source_dataset: "DS-02"
+  status: PENDING
+
+qe_cu_equalmass_mg_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/g"
+  source_dataset: "derived"
+  status: PENDING
+
+qe_cu_equalmass_mmol_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mmol/g"
+  source_dataset: "derived"
+  status: PENDING
+  note: "molar uptake ordering differs from the mass ordering"
+
+kd_cu_equalmass_L_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "L/g"
+  source_dataset: "derived"
+  status: PENDING
+
+c0_cu_equalmass_raw_mg_per_L:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/L"
+  source_dataset: "DS-02"
+  status: PENDING
+  note: "MEASURED initial aliquot, not nominal"
+
+removal_cu_equalmass_raw_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "%"
+  source_dataset: "DS-02"
+  status: PENDING
+
+qe_cu_equalmass_raw_mg_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/g"
+  source_dataset: "derived"
+  status: PENDING
+
+qe_cu_equalmass_raw_mmol_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mmol/g"
+  source_dataset: "derived"
+  status: PENDING
+  note: "molar uptake ordering differs from the mass ordering"
+
+kd_cu_equalmass_raw_L_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "L/g"
+  source_dataset: "derived"
+  status: PENDING
+
+c0_zn_equalmass_mg_per_L:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/L"
+  source_dataset: "DS-02"
+  status: PENDING
+  note: "MEASURED initial aliquot, not nominal"
+
+removal_zn_equalmass_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "%"
+  source_dataset: "DS-02"
+  status: PENDING
+
+qe_zn_equalmass_mg_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/g"
+  source_dataset: "derived"
+  status: PENDING
+
+qe_zn_equalmass_mmol_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mmol/g"
+  source_dataset: "derived"
+  status: PENDING
+  note: "molar uptake ordering differs from the mass ordering"
+
+kd_zn_equalmass_L_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "L/g"
+  source_dataset: "derived"
+  status: PENDING
+
+c0_zn_equalmass_raw_mg_per_L:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/L"
+  source_dataset: "DS-02"
+  status: PENDING
+  note: "MEASURED initial aliquot, not nominal"
+
+removal_zn_equalmass_raw_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "%"
+  source_dataset: "DS-02"
+  status: PENDING
+
+qe_zn_equalmass_raw_mg_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/g"
+  source_dataset: "derived"
+  status: PENDING
+
+qe_zn_equalmass_raw_mmol_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mmol/g"
+  source_dataset: "derived"
+  status: PENDING
+  note: "molar uptake ordering differs from the mass ordering"
+
+kd_zn_equalmass_raw_L_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "L/g"
+  source_dataset: "derived"
+  status: PENDING
+
+alpha_pb_cu_equalmass:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "derived"
+  status: PENDING
+  note: "alpha = Kd_Pb/Kd_M; INVARIANT to mass-vs-molar basis"
+
+alpha_pb_cu_equalmass_raw:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "derived"
+  status: PENDING
+  note: "alpha = Kd_Pb/Kd_M; INVARIANT to mass-vs-molar basis"
+
+alpha_pb_zn_equalmass:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "derived"
+  status: PENDING
+  note: "alpha = Kd_Pb/Kd_M; INVARIANT to mass-vs-molar basis"
+
+alpha_pb_zn_equalmass_raw:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "derived"
+  status: PENDING
+  note: "alpha = Kd_Pb/Kd_M; INVARIANT to mass-vs-molar basis"
+
+molar_ratio_cu_to_pb_minority:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "derived from DS-01"
+  status: PENDING
+
+molar_ratio_zn_to_pb_minority:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "derived from DS-01"
+  status: PENDING
+
+molar_ratio_cu_to_pb_equalmass:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "derived from DS-02"
+  status: PENDING
+
+molar_ratio_zn_to_pb_equalmass:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "derived from DS-02"
+  status: PENDING
+
+selectivity_increment_pb_cu:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "derived"
+  status: PENDING
+  note: "alpha(TA-OSS)/alpha(RAW-OSS) — how much of the selectivity the grafting contributes, per Bible §4.4"
+
+
+# ------------------------------------------------------------------------------
+# THERMODYNAMICS  —  §4.5, Fig 4.8, Table 4.6, Finding 3
+# ------------------------------------------------------------------------------
+
+delta_h_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "DS-09"
+  status: PENDING
+  note: "van 't Hoff slope; sign and magnitude are CONVENTION-INDEPENDENT"
+
+delta_s_J_per_mol_K:
+  value: null
+  uncertainty: null
+  n: null
+  units: "J/(mol.K)"
+  source_dataset: "DS-09"
+  status: PENDING
+  note: "van 't Hoff intercept; convention-dependent"
+
+r2_vant_hoff:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-09"
+  status: PENDING
+
+temperature_1_K:
+  value: null
+  uncertainty: null
+  n: null
+  units: "K"
+  source_dataset: "DS-09"
+  status: PENDING
+  note: "MEASURED, not setpoint — TODOPAL Q8"
+
+delta_g_t1_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "DS-09"
+  status: PENDING
+  note: "= -RT ln K-dimensionless; convention declared in §2.5.7"
+
+temperature_2_K:
+  value: null
+  uncertainty: null
+  n: null
+  units: "K"
+  source_dataset: "DS-09"
+  status: PENDING
+  note: "MEASURED, not setpoint — TODOPAL Q8"
+
+delta_g_t2_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "DS-09"
+  status: PENDING
+  note: "= -RT ln K-dimensionless; convention declared in §2.5.7"
+
+temperature_3_K:
+  value: null
+  uncertainty: null
+  n: null
+  units: "K"
+  source_dataset: "DS-09"
+  status: PENDING
+  note: "MEASURED, not setpoint — TODOPAL Q8"
+
+delta_g_t3_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "DS-09"
+  status: PENDING
+  note: "= -RT ln K-dimensionless; convention declared in §2.5.7"
+
+temperature_4_K:
+  value: null
+  uncertainty: null
+  n: null
+  units: "K"
+  source_dataset: "DS-09"
+  status: PENDING
+  note: "MEASURED, not setpoint — TODOPAL Q8"
+
+delta_g_t4_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "DS-09"
+  status: PENDING
+  note: "= -RT ln K-dimensionless; convention declared in §2.5.7"
+
+
+# ------------------------------------------------------------------------------
+# FIXED-BED COLUMN  —  §4.8, Figs 4.14-4.16, Table 4.11
+# ------------------------------------------------------------------------------
+
+vbed_mL:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mL"
+  source_dataset: "DS-06"
+  status: PENDING
+  note: "MEASURED packed-bed volume; every BV figure depends on it"
+
+rho_b_g_per_cm3:
+  value: null
+  uncertainty: null
+  n: null
+  units: "g/cm^3"
+  source_dataset: "DS-06"
+  status: PENDING
+
+bed_height_cm:
+  value: null
+  uncertainty: null
+  n: null
+  units: "cm"
+  source_dataset: "DS-06"
+  status: PENDING
+
+h_to_d_ratio:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-06"
+  status: PENDING
+
+ebct_min:
+  value: null
+  uncertainty: null
+  n: null
+  units: "min"
+  source_dataset: "DS-06"
+  status: PENDING
+
+bv10_cycle1:
+  value: null
+  uncertainty: null
+  n: null
+  units: "bed volumes"
+  source_dataset: "DS-07"
+  status: PENDING
+
+bv10_cycle2:
+  value: null
+  uncertainty: null
+  n: null
+  units: "bed volumes"
+  source_dataset: "DS-07"
+  status: PENDING
+
+bv10_cycle3:
+  value: null
+  uncertainty: null
+  n: null
+  units: "bed volumes"
+  source_dataset: "DS-07"
+  status: PENDING
+
+bv50_cycle1:
+  value: null
+  uncertainty: null
+  n: null
+  units: "bed volumes"
+  source_dataset: "DS-07"
+  status: PENDING
+
+bv90_cycle1:
+  value: null
+  uncertainty: null
+  n: null
+  units: "bed volumes"
+  source_dataset: "DS-07"
+  status: PENDING
+
+qcol_cycle1_mg_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/g"
+  source_dataset: "derived from DS-07"
+  status: PENDING
+  note: "dynamic capacity by numerical integration; available for cycle 1 only if cycles 2-3 were terminated early"
+
+qcol_utilisation_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "%"
+  source_dataset: "derived"
+  status: PENDING
+  note: "qcol as a percentage of the batch equilibrium capacity — the quantity attack A21 demands"
+
+ef_cycle1:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-08"
+  status: PENDING
+  note: "enrichment factor = C_regenerate/C_feed"
+
+desorption_efficiency_cycle1_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "%"
+  source_dataset: "DS-08"
+  status: PENDING
+
+ef_cycle2:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-08"
+  status: PENDING
+  note: "enrichment factor = C_regenerate/C_feed"
+
+desorption_efficiency_cycle2_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "%"
+  source_dataset: "DS-08"
+  status: PENDING
+
+ef_cycle3:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-08"
+  status: PENDING
+  note: "enrichment factor = C_regenerate/C_feed"
+
+desorption_efficiency_cycle3_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "%"
+  source_dataset: "DS-08"
+  status: PENDING
+
+retention_column_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "%"
+  source_dataset: "derived from DS-07"
+  status: PENDING
+  note: "= BV10(cycle 3)/BV10(cycle 1) x 100 — TODOPAL Q23: is this the reported 80.1%?"
+
+mass_balance_closure_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "%"
+  source_dataset: "derived from DS-07 and DS-08"
+  status: PENDING
+  note: "attack A27"
+
+thomas_kth:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mL/(mg.min)"
+  source_dataset: "derived from DS-07"
+  status: PENDING
+
+thomas_q0_mg_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/g"
+  source_dataset: "derived from DS-07"
+  status: PENDING
+
+yoon_nelson_kyn:
+  value: null
+  uncertainty: null
+  n: null
+  units: "1/min"
+  source_dataset: "derived from DS-07"
+  status: PENDING
+
+yoon_nelson_tau_min:
+  value: null
+  uncertainty: null
+  n: null
+  units: "min"
+  source_dataset: "derived from DS-07"
+  status: PENDING
+
+adams_bohart_kab:
+  value: null
+  uncertainty: null
+  n: null
+  units: "L/(mg.min)"
+  source_dataset: "derived from DS-07"
+  status: PENDING
+
+adams_bohart_n0_mg_per_L:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/L"
+  source_dataset: "derived from DS-07"
+  status: PENDING
+
+bv10_columnB_pb:
+  value: null
+  uncertainty: null
+  n: null
+  units: "bed volumes"
+  source_dataset: "DS-15"
+  status: PENDING
+  note: "expect Cu and Zn below Pb"
+
+bv10_columnB_cu:
+  value: null
+  uncertainty: null
+  n: null
+  units: "bed volumes"
+  source_dataset: "DS-15"
+  status: PENDING
+  note: "expect Cu and Zn below Pb"
+
+bv10_columnB_zn:
+  value: null
+  uncertainty: null
+  n: null
+  units: "bed volumes"
+  source_dataset: "DS-15"
+  status: PENDING
+  note: "expect Cu and Zn below Pb"
+
+overshoot_max_cu_columnB:
+  value: null
+  uncertainty: null
+  n: null
+  units: "C/C0"
+  source_dataset: "DS-15"
+  status: PENDING
+  note: "values above 1 are the signature of competitive displacement by Pb"
+
+overshoot_max_zn_columnB:
+  value: null
+  uncertainty: null
+  n: null
+  units: "C/C0"
+  source_dataset: "DS-15"
+  status: PENDING
+
+
+# ------------------------------------------------------------------------------
+# BATCH REGENERATION  —  §4.8, Fig 4.16
+# ------------------------------------------------------------------------------
+
+# Cycle 1 = the FIRST single-metal Pb re-adsorption after the initial desorption (amendment A-15).
+
+qe_batch_cycle1_mg_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/g"
+  source_dataset: "DS-14"
+  status: PENDING
+
+retention_batch_cycle1_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "%"
+  source_dataset: "derived from DS-14"
+  status: PENDING
+
+qe_batch_cycle2_mg_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/g"
+  source_dataset: "DS-14"
+  status: PENDING
+
+retention_batch_cycle2_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "%"
+  source_dataset: "derived from DS-14"
+  status: PENDING
+
+qe_batch_cycle3_mg_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/g"
+  source_dataset: "DS-14"
+  status: PENDING
+
+retention_batch_cycle3_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "%"
+  source_dataset: "derived from DS-14"
+  status: PENDING
+
+desorption_efficiency_batch_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "%"
+  source_dataset: "DS-14"
+  status: PENDING
+
+ternary_initial_loading_mg_per_g:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/g"
+  source_dataset: "DS-14"
+  status: PENDING
+  note: "the source of the first desorbate; NOT a retention denominator"
+
+
+# ------------------------------------------------------------------------------
+# SPECIATION  —  §2.5.1, Fig 2.4, Appendix G, attacks A07 and A22
+# ------------------------------------------------------------------------------
+
+si_pbso4_equalmass:
+  value: null
+  uncertainty: null
+  n: null
+  units: "log(IAP/Ksp)"
+  source_dataset: "speciation.py"
+  status: PENDING
+  note: "REPORT THIS EVEN THOUGH IT IS POSITIVE. Audit B10.1 computes approximately +1.0 activity-corrected"
+
+si_pbso4_minority:
+  value: null
+  uncertainty: null
+  n: null
+  units: "log(IAP/Ksp)"
+  source_dataset: "speciation.py"
+  status: PENDING
+  note: "audit B10.1 computes approximately +1.3"
+
+si_pboh2_ph5:
+  value: null
+  uncertainty: null
+  n: null
+  units: "log(IAP/Ksp)"
+  source_dataset: "speciation.py"
+  status: PENDING
+
+si_pboh2_ph6:
+  value: null
+  uncertainty: null
+  n: null
+  units: "log(IAP/Ksp)"
+  source_dataset: "speciation.py"
+  status: PENDING
+  note: "the pH-6 sorbent-free control condition"
+
+fraction_pb2plus_ph5:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "speciation.py"
+  status: PENDING
+  note: "fraction of total Pb present as free Pb2+ at the operating pH"
+
+ionic_strength_equalmass_M:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mol/L"
+  source_dataset: "speciation.py"
+  status: PENDING
+
+ionic_strength_minority_M:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mol/L"
+  source_dataset: "speciation.py"
+  status: PENDING
+
+
+# ------------------------------------------------------------------------------
+# ANALYTICAL QUALITY  —  §2.5.2, Table 2.2, Appendix C
+# ------------------------------------------------------------------------------
+
+lod_pb_mg_per_L:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/L"
+  source_dataset: "DS-21"
+  status: PENDING
+  note: "IUPAC 3.3 sigma_blank / S; state if the sigma_y/x route was used instead"
+
+loq_pb_mg_per_L:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/L"
+  source_dataset: "DS-21"
+  status: PENDING
+  note: "IUPAC 10 sigma_blank / S"
+
+calibration_r2_pb:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-03"
+  status: PENDING
+  note: "must exceed 0.99"
+
+wavelength_pb_nm:
+  value: null
+  uncertainty: null
+  n: null
+  units: "nm"
+  source_dataset: "DS-03"
+  status: PENDING
+  note: "attack A25 — the Zn line and range require justification"
+
+lod_cu_mg_per_L:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/L"
+  source_dataset: "DS-21"
+  status: PENDING
+  note: "IUPAC 3.3 sigma_blank / S; state if the sigma_y/x route was used instead"
+
+loq_cu_mg_per_L:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/L"
+  source_dataset: "DS-21"
+  status: PENDING
+  note: "IUPAC 10 sigma_blank / S"
+
+calibration_r2_cu:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-03"
+  status: PENDING
+  note: "must exceed 0.99"
+
+wavelength_cu_nm:
+  value: null
+  uncertainty: null
+  n: null
+  units: "nm"
+  source_dataset: "DS-03"
+  status: PENDING
+  note: "attack A25 — the Zn line and range require justification"
+
+lod_zn_mg_per_L:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/L"
+  source_dataset: "DS-21"
+  status: PENDING
+  note: "IUPAC 3.3 sigma_blank / S; state if the sigma_y/x route was used instead"
+
+loq_zn_mg_per_L:
+  value: null
+  uncertainty: null
+  n: null
+  units: "mg/L"
+  source_dataset: "DS-21"
+  status: PENDING
+  note: "IUPAC 10 sigma_blank / S"
+
+calibration_r2_zn:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "DS-03"
+  status: PENDING
+  note: "must exceed 0.99"
+
+wavelength_zn_nm:
+  value: null
+  uncertainty: null
+  n: null
+  units: "nm"
+  source_dataset: "DS-03"
+  status: PENDING
+  note: "attack A25 — the Zn line and range require justification"
+
+spike_recovery_supernatant_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "%"
+  source_dataset: "DS-22"
+  status: PENDING
+  note: "acceptance 90-110%; the regenerate is the matrix most likely to fail"
+
+spike_recovery_effluent_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "%"
+  source_dataset: "DS-22"
+  status: PENDING
+  note: "acceptance 90-110%; the regenerate is the matrix most likely to fail"
+
+spike_recovery_regenerate_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "%"
+  source_dataset: "DS-22"
+  status: PENDING
+  note: "acceptance 90-110%; the regenerate is the matrix most likely to fail"
+
+
+# ------------------------------------------------------------------------------
+# DFT — BINDING THERMOCHEMISTRY  —  §4.6, Table 4.7, Finding 4
+# ------------------------------------------------------------------------------
+
+# NOTHING IS COMPUTED YET. The protocol is chosen for defensibility, not to
+# reproduce the outline. The outline's -145.2 / -110.4 / -85.6 kJ/mol values have
+# no stated reference state and are NOT carried forward (attack A04).
+
+dg_exchange_pb_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "dft/analysis"
+  status: PENDING
+  note: "AQUO-LIGAND EXCHANGE free energy, not naked-ion binding (attack A04)"
+
+e_int_pb_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "dft/analysis"
+  status: PENDING
+  note: "interaction energy at the complex geometry"
+
+e_prep_pb_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "dft/analysis"
+  status: PENDING
+  note: "preparation / deformation energy"
+
+bond_length_pb_o_mean_ang:
+  value: null
+  uncertainty: null
+  n: null
+  units: "angstrom"
+  source_dataset: "dft/analysis"
+  status: PENDING
+  note: "mean M-O distance in the optimised complex"
+
+coordination_number_pb:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "dft/analysis"
+  status: PENDING
+
+hemidirection_displacement_pb_ang:
+  value: null
+  uncertainty: null
+  n: null
+  units: "angstrom"
+  source_dataset: "hemidirection.py"
+  status: PENDING
+  note: "displacement of the metal from the donor-set centroid — MEASURED, never asserted (attack A14)"
+
+void_hemisphere_angle_pb_deg:
+  value: null
+  uncertainty: null
+  n: null
+  units: "degrees"
+  source_dataset: "hemidirection.py"
+  status: PENDING
+  note: "after Shimoni-Livny et al."
+
+dg_exchange_cu_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "dft/analysis"
+  status: PENDING
+  note: "AQUO-LIGAND EXCHANGE free energy, not naked-ion binding (attack A04)"
+
+e_int_cu_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "dft/analysis"
+  status: PENDING
+  note: "interaction energy at the complex geometry"
+
+e_prep_cu_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "dft/analysis"
+  status: PENDING
+  note: "preparation / deformation energy"
+
+bond_length_cu_o_mean_ang:
+  value: null
+  uncertainty: null
+  n: null
+  units: "angstrom"
+  source_dataset: "dft/analysis"
+  status: PENDING
+  note: "mean M-O distance in the optimised complex"
+
+coordination_number_cu:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "dft/analysis"
+  status: PENDING
+
+hemidirection_displacement_cu_ang:
+  value: null
+  uncertainty: null
+  n: null
+  units: "angstrom"
+  source_dataset: "hemidirection.py"
+  status: PENDING
+  note: "displacement of the metal from the donor-set centroid — MEASURED, never asserted (attack A14)"
+
+void_hemisphere_angle_cu_deg:
+  value: null
+  uncertainty: null
+  n: null
+  units: "degrees"
+  source_dataset: "hemidirection.py"
+  status: PENDING
+  note: "after Shimoni-Livny et al."
+
+dg_exchange_zn_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "dft/analysis"
+  status: PENDING
+  note: "AQUO-LIGAND EXCHANGE free energy, not naked-ion binding (attack A04)"
+
+e_int_zn_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "dft/analysis"
+  status: PENDING
+  note: "interaction energy at the complex geometry"
+
+e_prep_zn_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "dft/analysis"
+  status: PENDING
+  note: "preparation / deformation energy"
+
+bond_length_zn_o_mean_ang:
+  value: null
+  uncertainty: null
+  n: null
+  units: "angstrom"
+  source_dataset: "dft/analysis"
+  status: PENDING
+  note: "mean M-O distance in the optimised complex"
+
+coordination_number_zn:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "dft/analysis"
+  status: PENDING
+
+hemidirection_displacement_zn_ang:
+  value: null
+  uncertainty: null
+  n: null
+  units: "angstrom"
+  source_dataset: "hemidirection.py"
+  status: PENDING
+  note: "displacement of the metal from the donor-set centroid — MEASURED, never asserted (attack A14)"
+
+void_hemisphere_angle_zn_deg:
+  value: null
+  uncertainty: null
+  n: null
+  units: "degrees"
+  source_dataset: "hemidirection.py"
+  status: PENDING
+  note: "after Shimoni-Livny et al."
+
+s_squared_cu:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "dft/analysis"
+  status: PENDING
+  note: "<S^2> for the d9 open-shell doublet; ideal 0.75 (attack A02)"
+
+ddg_pb_cu_calc_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "derived"
+  status: PENDING
+
+ddg_pb_zn_calc_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "derived"
+  status: PENDING
+
+ddg_pb_cu_exp_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "derived from alpha"
+  status: PENDING
+  note: "= -RT ln alpha(Pb/Cu); the correct experimental counterpart to the computed value"
+
+ddg_pb_zn_exp_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "derived from alpha"
+  status: PENDING
+
+ddg_deviation_pb_cu_factor:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "derived"
+  status: PENDING
+  note: "EXPECT roughly an order of magnitude. Confront it in §4.6.3 — attack A05"
+
+validation_deviation_pct:
+  value: null
+  uncertainty: null
+  n: null
+  units: "%"
+  source_dataset: "dft/validation"
+  status: PENDING
+  note: "deviation of the protocol-validation quantity from its known experimental value"
+
+
+# ------------------------------------------------------------------------------
+# DFT — ENERGY DECOMPOSITION  —  §4.7, Table 4.8, Finding 5
+# ------------------------------------------------------------------------------
+
+# The decomposition SCHEME AND SOFTWARE are named exactly in dft/DFT_PROTOCOL.md.
+# The analysis is NOT described as ETS-NOCV unless ADF/AMS produced it (attack A01).
+
+e_elstat_pb_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "dft/analysis"
+  status: PENDING
+
+e_orb_pb_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "dft/analysis"
+  status: PENDING
+
+e_pauli_pb_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "dft/analysis"
+  status: PENDING
+
+e_disp_pb_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "dft/analysis"
+  status: PENDING
+
+f_orb_pb:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "derived"
+  status: PENDING
+  note: "= E_orb/(E_elstat + E_orb). SCHEME-DEPENDENT: internally comparable across these three metals under identical settings, NOT transferable across studies (attack A13)"
+
+dg_hyd_pb_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "literature"
+  status: PENDING
+  note: "CITE THE SOURCE AND STATE THE CONVENTION; absolute single-ion values are convention-dependent, so prefer relative values (attack A12)"
+
+e_elstat_cu_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "dft/analysis"
+  status: PENDING
+
+e_orb_cu_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "dft/analysis"
+  status: PENDING
+
+e_pauli_cu_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "dft/analysis"
+  status: PENDING
+
+e_disp_cu_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "dft/analysis"
+  status: PENDING
+
+f_orb_cu:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "derived"
+  status: PENDING
+  note: "= E_orb/(E_elstat + E_orb). SCHEME-DEPENDENT: internally comparable across these three metals under identical settings, NOT transferable across studies (attack A13)"
+
+dg_hyd_cu_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "literature"
+  status: PENDING
+  note: "CITE THE SOURCE AND STATE THE CONVENTION; absolute single-ion values are convention-dependent, so prefer relative values (attack A12)"
+
+e_elstat_zn_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "dft/analysis"
+  status: PENDING
+
+e_orb_zn_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "dft/analysis"
+  status: PENDING
+
+e_pauli_zn_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "dft/analysis"
+  status: PENDING
+
+e_disp_zn_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "dft/analysis"
+  status: PENDING
+
+f_orb_zn:
+  value: null
+  uncertainty: null
+  n: null
+  units: "dimensionless"
+  source_dataset: "derived"
+  status: PENDING
+  note: "= E_orb/(E_elstat + E_orb). SCHEME-DEPENDENT: internally comparable across these three metals under identical settings, NOT transferable across studies (attack A13)"
+
+dg_hyd_zn_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "literature"
+  status: PENDING
+  note: "CITE THE SOURCE AND STATE THE CONVENTION; absolute single-ion values are convention-dependent, so prefer relative values (attack A12)"
+
+nocv_channel1_energy_kJ_per_mol:
+  value: null
+  uncertainty: null
+  n: null
+  units: "kJ/mol"
+  source_dataset: "dft/analysis"
+  status: PENDING
+  note: "leading deformation-density channel, Pb complex"
+
+nocv_channel1_eigenvalue:
+  value: null
+  uncertainty: null
+  n: null
+  units: "e"
+  source_dataset: "dft/analysis"
+  status: PENDING
+
+nocv_isovalue:
+  value: null
+  uncertainty: null
+  n: null
+  units: "e/bohr^3"
+  source_dataset: "dft/analysis"
+  status: PENDING
+  note: "the isosurface value used in Fig 4.12; must be stated"
+
+
+# ------------------------------------------------------------------------------
+# BENCHMARKING  —  §4.9, Table 4.12
+# ------------------------------------------------------------------------------
+
+benchmark_row_count:
+  value: null
+  uncertainty: null
+  n: null
+  units: "count"
+  source_dataset: "refs/library.bib"
+  status: PENDING
+  note: "10-18 named published sorbents; place this material HONESTLY among them"
+

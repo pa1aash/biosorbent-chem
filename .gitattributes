@@ -1,0 +1,46 @@
+# Normalise line endings for everything text-like.
+* text=auto eol=lf
+
+# ── Explicit text types ────────────────────────────────────────────────────────
+*.md        text diff=markdown
+*.tex       text diff=tex
+*.sty       text diff=tex
+*.cls       text diff=tex
+*.bib       text diff=bibtex
+*.py        text diff=python
+*.sh        text eol=lf
+*.yaml      text
+*.yml       text
+*.csv       text
+*.json      text
+*.txt       text
+Makefile    text
+
+# ── Quantum-chemistry text formats (diffable, and evidence) ───────────────────
+*.xyz       text
+*.inp       text
+*.out       text
+*.hess      text
+*.engrad    text
+
+# ── Binary: never diff, never merge ───────────────────────────────────────────
+*.pdf       binary
+*.png       binary
+*.jpg       binary
+*.jpeg      binary
+*.tif       binary
+*.tiff      binary
+*.docx      binary
+*.xlsx      binary
+*.zip       binary
+*.gbw       binary
+*.mp4       binary
+*.mov       binary
+
+# ── Generated files: collapse in review, they are not hand-authored ───────────
+report/preamble/numbers.tex linguist-generated=true
+tables/out/*.tex            linguist-generated=true
+refs/VERIFICATION_LOG.csv   linguist-generated=true
+
+# ── Laboratory photographs are evidence: keep EXIF, never rewrite ─────────────
+figures/photos/** binary

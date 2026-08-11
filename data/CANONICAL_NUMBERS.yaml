@@ -1,0 +1,4 @@
+# Chem-151 canonical numbers - the single source of truth for every number the report states.
+# PLACEHOLDER - populated in Phase 5. Nothing is pre-filled from the Stage-1 outline.
+# Every key: {value: null, uncertainty: null, n: null, units: <str>, source_dataset: <str>, status: PENDING}
+# No numeric result may be hard-coded in any .tex file. scripts/emit_numbers.py is the only route.

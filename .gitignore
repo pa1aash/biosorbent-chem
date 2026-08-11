@@ -1,0 +1,90 @@
+# ── Secrets: never, under any circumstances ────────────────────────────────────
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+.env
+.env.*
+!.env.example
+hcloud.token
+dft/hetzner/*.token
+dft/hetzner/secrets/
+.ssh/
+
+# ── LaTeX build artefacts ──────────────────────────────────────────────────────
+report/build/
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.nav
+*.snm
+*.vrb
+*.xdv
+# but the generated numbers file must be inspectable in a diff, so it is NOT ignored:
+!report/preamble/numbers.tex
+
+# ── Python ─────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+.venv/
+venv/
+env/
+.mypy_cache/
+.ruff_cache/
+
+# ── Quantum-chemistry scratch (large, regenerable, or licence-restricted) ──────
+# Keep .out, .xyz, .hess and property files. Discard binaries and scratch.
+dft/outputs/**/*.gbw
+dft/outputs/**/*.tmp
+dft/outputs/**/*.tmp.*
+dft/outputs/**/*.densities
+dft/outputs/**/*.densitiesinfo
+dft/outputs/**/*.cpcm*
+dft/outputs/**/*.bas*
+dft/outputs/**/*.opt
+dft/outputs/**/*_atom*.out
+dft/outputs/**/*.ges
+dft/scratch/
+*.molden.input.bak
+
+# ── Vendored licence-restricted software: notes are tracked, binaries are not ──
+vendor/orca/
+vendor/multiwfn/
+vendor/**/*.tar.xz
+vendor/**/*.tar.gz
+vendor/**/*.zip
+vendor/**/*.dmg
+!vendor/README*.md
+!vendor/jinst/
+
+# ── Reference PDFs are copyrighted; kept locally, not pushed ───────────────────
+refs/pdfs/*.pdf
+
+# ── OS and editor noise ────────────────────────────────────────────────────────
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+*.swp
+*~
+.vscode/
+.idea/
+
+# ── Local-only session scratch ─────────────────────────────────────────────────
+.remember/
+scratch/
+tmp/

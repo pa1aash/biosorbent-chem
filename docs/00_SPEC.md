@@ -139,7 +139,7 @@ Chemistry Silver (35 pp) had one.
 | 4.9 Benchmarking against literature | 1–2 |
 
 ### 3.4 Figure and table counts
-**Target 20–26 figures and 12–16 tables.** Every figure needs a caption understandable without the
+**Target 20–26 figures and 12–16 tables.** Current registry: **24 figures** (4.3 designed out, 4.18 added) and **18 tables** (4.13, 4.14 added). The table count sits two above the Bible's band; the overage is deliberate and both additions carry load-bearing evidence. Every figure needs a caption understandable without the
 body text.
 
 ---
@@ -288,7 +288,7 @@ macro; `check_placeholders.py` warns on any Results subsection lacking one.
 | 2.5 | Fixed-bed column and counter-current regeneration schematic | Schematic | Clarity | drawn | `figures/schemes/` | PENDING |
 | 4.1 | ATR-FTIR overlay with annotated bands | Spectra | Functionalisation proof | `data/provided/characterisation/ftir/` | `figures/src/fig4_1_ftir.py` | PENDING |
 | 4.2 | SEM before/after + EDX maps | Micrographs | Morphology and elemental confirmation | `data/provided/characterisation/sem_edx/` | `figures/src/fig4_2_sem_edx.py` | PENDING |
-| 4.3 | TGA overlay | Thermogram | Independent grafting proof | — | — | PENDING → see amendment **A-01** |
+| 4.3 | ~~TGA overlay~~ | — | — | — | — | **DESIGNED-OUT** — instrument unavailable; amendment **A-01**, audit B5. Replaced by the six-line evidence set and by Fig 4.18. |
 | 4.4 | pH_PZC determination plot | Plot | Justifies the pH choice | `data/provided/characterisation/ph_pzc/` | `figures/src/fig4_4_ph_pzc.py` | PENDING |
 | 4.5 | Single-metal isotherms, three metals, functionalised vs control, non-linear fits with residuals | Plot | Core equilibrium data | `data/provided/batch/` | `figures/src/fig4_5_isotherms.py` | PENDING |
 | 4.6 | Kinetic fits + Weber–Morris plot | Plot | Rate-limiting step | `data/provided/kinetics/` | `figures/src/fig4_6_kinetics.py` | PENDING |
@@ -302,7 +302,8 @@ macro; `check_placeholders.py` warns on any Results subsection lacking one.
 | 4.14 | Breakthrough curve with Thomas / Yoon–Nelson fits | Plot | Process performance | `data/provided/column_A/`, `column_B/` | `figures/src/fig4_14_breakthrough.py` | PENDING |
 | 4.15 | Elution profile showing the concentration factor | Plot | Recovery | `data/provided/column_A/` | `figures/src/fig4_15_elution.py` | PENDING |
 | 4.16 | Three-cycle capacity retention bar chart with error bars | Plot | Durability | `data/provided/column_A/`, `regeneration/` | `figures/src/fig4_16_retention.py` | PENDING |
-| 4.17 | Failed conditions gallery (rejected grafting ratios / failed eluents) | Photo/plot | Authenticity + competence (Bible Obs. 3) | `figures/photos/` | `figures/src/fig4_17_failed.py` | PENDING |
+| 4.17 | Failed conditions gallery (rejected grafting ratios / failed eluents) | Photo/plot | Authenticity + competence (Bible Obs. 3) | `figures/photos/` | `figures/src/fig4_17_failed.py` | PENDING — source depends on the Phase 4 answer (audit B10.17) |
+| 4.18 | **XPS high-resolution Pb 4f, O 1s, C 1s, N 1s with fitted components**, RAW-OSS / fresh TA-OSS / Pb-loaded TA-OSS | Spectra | **The strongest direct evidence of Pb–O coordination and oxidation state.** Added by amendment **A-03** | `data/provided/characterisation/xps/` | `figures/src/fig4_18_xps.py` | PENDING |
 
 ---
 
@@ -326,6 +327,8 @@ macro; `check_placeholders.py` warns on any Results subsection lacking one.
 | 4.10 | Hydration free energies used, with sources and convention | Pre-empts Attack 12 | literature (cited) | `tables/src/tab4_10_hydration.py` | PENDING |
 | 4.11 | Column model parameters (Thomas, Yoon–Nelson, Adams–Bohart) | Process rigour | `data/processed/` | `tables/src/tab4_11_column_models.py` | PENDING |
 | 4.12 | **Literature benchmark table** — 10–18 named published sorbents | Winner signature (Bible Obs. 2) | `refs/library.bib` + `data/processed/` | `tables/src/tab4_12_benchmark.py` | PENDING |
+| 4.13 | XPS binding energies, assignments and fitted component areas | Direct coordination evidence; amendment **A-03** | `data/provided/characterisation/xps/` | `tables/src/tab4_13_xps.py` | PENDING |
+| 4.14 | Tannic-acid leaching at pH 5 and pH 2, and the galloyl site balance | Answers Attack A10 with a number; amendment **A-04**; audit D.3 | `data/provided/characterisation/leaching/` | `tables/src/tab4_14_leaching.py` | PENDING |
 
 ---
 

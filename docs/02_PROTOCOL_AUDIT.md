@@ -498,6 +498,22 @@ which is Finding 2, the centrepiece of the experimental arm — would have a tri
 explanation that the report had not excluded. A referee who checks the salt list against the
 composition will find this in under five minutes.
 
+**Independent confirmation (added 2026-08-11, Phase 6).** The hand calculation above was repeated
+with **PHREEQC** (`phreeqpython`, `phreeqc.dat` database), which applies full ion-pairing speciation
+rather than a bare ion product. For the equal-mass ternary at pH 5.0 it returns:
+
+| Phase | SI |
+|---|---|
+| **Anglesite, PbSO₄** | **+0.86** |
+| Pb(OH)₂ | −2.05 |
+| ionic strength | 5.8 × 10⁻³ M |
+
+The two independent methods agree to within 0.15 log units — the difference is the ion-pairing
+treatment and the K_sp value used. **The finding is robust: the equal-mass ternary is supersaturated
+with respect to anglesite by roughly an order of magnitude.** The same calculation also confirms
+that **Pb(OH)₂ is strongly undersaturated at pH 5**, which independently closes the classical
+hydrolysis form of attack A07 — a useful result to report in its own right.
+
 **Mitigating considerations, stated honestly rather than used as an excuse:**
 - SI ≈ +1 is modest. PbSO₄ nucleation from a solution supersaturated by ~10× at sub-millimolar
   concentrations can be slow, and 120 min may be short relative to the induction time.

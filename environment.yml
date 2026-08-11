@@ -1,3 +1,67 @@
-# Chem-151 Python environment.
-# PLACEHOLDER - authored and locked in Phase 6.
+# Chem-151 — analysis and computational-chemistry environment
+# S.T. Yau High School Science Award (Asia) 2026 · Palaash Gang
+#
+#   mamba env create -f environment.yml
+#   mamba activate biosorb
+#   python -m ipykernel install --user --name biosorb --display-name biosorb
+#
+# Regenerate the lock after any change:
+#   mamba env export --from-history > environment.lock.yml
 name: biosorb
+
+channels:
+  - conda-forge
+
+dependencies:
+  - python=3.11
+
+  # ── core numerics and I/O ───────────────────────────────────────────────────
+  - numpy
+  - scipy
+  - pandas
+  - matplotlib
+  - openpyxl
+  - pyyaml
+
+  # ── fitting and uncertainty — NON-LINEAR REGRESSION IS MANDATORY ────────────
+  # Every isotherm, kinetic, thermodynamic and column model is fitted by
+  # non-linear least squares with lmfit, reporting parameter confidence
+  # intervals, R^2, reduced chi-squared, RMSE and AIC. Linearised transforms
+  # distort the error structure (Tran et al. 2017) and are used only in the
+  # appendix comparison. See docs/EXPERIMENTAL_PROTOCOL_v2.md §2.10.
+  - lmfit
+  - uncertainties
+  - statsmodels
+  - scikit-learn
+
+  # ── units ───────────────────────────────────────────────────────────────────
+  - pint
+
+  # ── computational chemistry ─────────────────────────────────────────────────
+  - ase                  # structure building and manipulation
+  - cclib                # parses ORCA / PySCF output
+  - rdkit                # ligand fragment construction
+  - openbabel            # format conversion
+  - geometric            # geometry optimisation driver
+  - pyscf                # cross-check and fallback path to ORCA
+  - py3dmol              # structure visualisation in notebooks
+  - xtb                  # semi-empirical pre-optimisation
+  - crest                # conformer search on the galloyl fragment
+
+  # ── speciation ──────────────────────────────────────────────────────────────
+  # phreeqpython is pip-only. If it fails to install, analysis/src/speciation.py
+  # falls back to a hand-rolled Pb-OH-NO3-SO4 solver over a cited constant set.
+  # Either way every equilibrium constant is cited to a source.
+
+  # ── references and web ──────────────────────────────────────────────────────
+  - habanero             # Crossref DOI verification
+  - bibtexparser
+  - requests
+
+  # ── notebooks ───────────────────────────────────────────────────────────────
+  - jupyterlab
+  - ipykernel
+
+  - pip
+  - pip:
+      - phreeqpython

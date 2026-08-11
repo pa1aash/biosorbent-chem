@@ -1,0 +1,22 @@
+% ============================================================================
+% 01_fonts.tex  —  typography
+%
+% The serif text face and matching mathematics come from yhsa-jinst.sty, which
+% loads newtxtext + newtxmath + newtxtt. That IS the JINST look and it is not
+% overridden here. This file adds only what the style does not provide.
+% ============================================================================
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}          % protrusion and expansion; visibly better justification
+\usepackage{textcomp}
+% NO lmodern. yhsa-jinst loads newtxtext + newtxmath, which cover text and maths
+% completely. Loading lmodern afterwards re-points the maths symbol families at
+% Latin Modern, which then lacks glyphs newtx supplied -- producing a flood of
+% "Missing character ... in font lmsy10" warnings and wrong symbols.
+
+% Widow and orphan control. A single line stranded at a page break reads as
+% carelessness in a document that is otherwise carefully set.
+\widowpenalty=10000
+\clubpenalty=10000
+\displaywidowpenalty=10000

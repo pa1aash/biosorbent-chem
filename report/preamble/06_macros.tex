@@ -1,0 +1,123 @@
+% ============================================================================
+% 06_macros.tex  —  project macros
+%
+% THE CANONICAL-NUMBERS RULE (CLAUDE.md §5):
+%   No numeric result may be hard-coded in any .tex file. Every number reaches
+%   LaTeX through \num{key}, generated from data/CANONICAL_NUMBERS.yaml by
+%   scripts/emit_numbers.py into report/preamble/numbers.tex.
+%
+% THE THREE PLACEHOLDERS (CLAUDE.md §4). Never silently fill any of them.
+%   \PENDING{key}{what is needed}      a missing NUMBER
+%   \NEEDSDATA{id}{which dataset}      a missing FIGURE or TABLE
+%   \TODOPAL{question}                 something only Palaash can answer
+% ============================================================================
+
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+
+% ---------------------------------------------------------------------------
+% \num{key} — canonical-number lookup
+%
+% numbers.tex defines one \DeclareNum{key}{rendered value} per VERIFIED entry.
+% A key with no definition is by construction still PENDING, and renders as a
+% loud red marker rather than silently producing nothing.
+% ---------------------------------------------------------------------------
+\makeatletter
+\newcommand{\DeclareNum}[2]{\expandafter\gdef\csname yhsa@num@#1\endcsname{#2}}
+\newcommand{\num}[1]{%
+  \ifcsname yhsa@num@#1\endcsname
+    \csname yhsa@num@#1\endcsname
+  \else
+    \yhsa@missingnum{#1}%
+  \fi
+}
+\makeatother
+
+% ---------------------------------------------------------------------------
+% Semantic macros
+% ---------------------------------------------------------------------------
+\newcommand{\Pb}{\ce{Pb^2+}}
+\newcommand{\Cu}{\ce{Cu^2+}}
+\newcommand{\Zn}{\ce{Zn^2+}}
+\newcommand{\PbII}{Pb(II)}
+\newcommand{\CuII}{Cu(II)}
+\newcommand{\ZnII}{Zn(II)}
+\newcommand{\TAOSS}{TA--OSS}
+\newcommand{\RAWOSS}{RAW--OSS}
+\newcommand{\qmax}{q_{\mathrm{max}}}
+\newcommand{\qe}{q_{\mathrm{e}}}
+\newcommand{\Ce}{C_{\mathrm{e}}}
+\newcommand{\Kd}{K_{\mathrm{d}}}
+\newcommand{\forb}{f_{\mathrm{orb}}}
+\newcommand{\BVten}{\mathrm{BV}_{10}}
+
+% ---------------------------------------------------------------------------
+% \finding{n}{text} — the numbered Findings (Bible §10, Device 3)
+% Stated in bold at the point they are established, recalled by number in the
+% Conclusion. Gives the referee a skeleton to score against.
+% ---------------------------------------------------------------------------
+\newcounter{yhsafinding}
+\newcommand{\finding}[2]{%
+  \par\medskip
+  \begin{tcolorbox}[
+    enhanced, breakable, sharp corners,
+    colback=black!3, colframe=black!55, boxrule=0.8pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    before skip=6pt, after skip=10pt]
+    \setstretch{1.0}\noindent\textbf{Finding #1.}\ #2
+  \end{tcolorbox}
+  \par\medskip
+}
+
+% ---------------------------------------------------------------------------
+% \noveltybox — the boxed hypothesis / aim / contributions block (§1.4)
+% Bible §10, Device 1. This is where a referee should be able to state the
+% novelty in one sentence.
+% ---------------------------------------------------------------------------
+\newenvironment{noveltybox}[1][Hypothesis, aim and original contributions]{%
+  \begin{tcolorbox}[
+    enhanced, breakable, sharp corners,
+    colback=black!2, colframe=black!70, boxrule=1pt,
+    left=10pt, right=10pt, top=8pt, bottom=8pt,
+    title={\normalfont\bfseries #1}, fonttitle=\bfseries,
+    coltitle=white, colbacktitle=black!70]
+  \setstretch{1.05}%
+}{\end{tcolorbox}}
+
+% ---------------------------------------------------------------------------
+% \verdict{} — the mandatory closing sentence of every Results subsection
+% Bible §8: "each subsection = one claim = one figure or table = one closing
+% sentence that states what has now been established. Never leave a figure
+% without a verdict."
+% ---------------------------------------------------------------------------
+\newcommand{\verdict}[1]{%
+  \par\medskip
+  \noindent\begin{minipage}{\linewidth}%
+    \color{black!85}\rule{\linewidth}{0.4pt}\par\vspace{2pt}%
+    \textit{#1}\par\vspace{2pt}%
+    \rule{\linewidth}{0.4pt}%
+  \end{minipage}\par\medskip
+}
+
+% ---------------------------------------------------------------------------
+% \origin{owner}{text} — origin tagging (Bible §10, Device 2)
+% Names the owner of every existing method in the sentence that uses it, so the
+% distinction between background and original contribution is mechanical rather
+% than implied. Criterion C7 asks for this literally.
+% ---------------------------------------------------------------------------
+\newcommand{\origin}[2]{#2\,\textsuperscript{\textit{[#1]}}}
+\newcommand{\ourwork}[1]{#1}
+
+% ---------------------------------------------------------------------------
+% Placeholders. Rendering is set by 07_draft_guards.tex: visible red boxes in
+% draft mode, hard build failure in final mode.
+% ---------------------------------------------------------------------------
+% \makeatletter is required: the internal names contain @. Without it,
+% \yhsa@pending parses as \yhsa followed by literal '@pending'.
+\makeatletter
+\newcommand{\PENDING}[2]{\yhsa@pending{#1}{#2}}
+\newcommand{\NEEDSDATA}[2]{\yhsa@needsdata{#1}{#2}}
+\newcommand{\TODOPAL}[1]{\yhsa@todopal{#1}}
+\makeatother

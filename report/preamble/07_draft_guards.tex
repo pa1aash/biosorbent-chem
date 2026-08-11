@@ -1,0 +1,128 @@
+% ============================================================================
+% 07_draft_guards.tex  —  placeholder rendering and the final-build guard
+%
+% DRAFT MODE  (default):  every placeholder renders as a loud coloured box, and
+%                         a tally is printed at the end of the log.
+% FINAL MODE  (\finaltrue): the presence of ANY placeholder FAILS THE BUILD with
+%                         an error naming every offender.
+%
+% Set final mode from main.tex or from the command line:
+%     latexmk -pdf -usepretex="\finaltrue" main.tex
+%
+% The point of this file: a placeholder can only be removed by supplying the
+% evidence behind it. Removing one without the evidence is the worst thing that
+% can be done in this repository (CLAUDE.md §4).
+% ============================================================================
+
+\newif\iffinal\finalfalse
+
+\definecolor{yhsaPending}{HTML}{C0181F}
+\definecolor{yhsaNeeds}{HTML}{9B2FAE}
+\definecolor{yhsaTodo}{HTML}{B8620A}
+
+\newcounter{yhsaPendingCount}
+\newcounter{yhsaNeedsCount}
+\newcounter{yhsaTodoCount}
+\newcounter{yhsaMissingNumCount}
+
+\makeatletter
+
+% --- the offender list, written to the log and to main.placeholders ----------
+\newwrite\yhsa@phfile
+\AtBeginDocument{\immediate\openout\yhsa@phfile=\jobname.placeholders\relax}
+% #2 is DETOKENIZED before writing. Placeholder text legitimately contains
+% macros such as \cref, and \immediate\write expands its argument -- expanding
+% cleveref at write time, before the label exists, overflows the parameter stack.
+\newcommand{\yhsa@record}[2]{%
+  \immediate\write\yhsa@phfile{#1 | p.\thepage\space | \detokenize{#2}}%
+  \iffinal
+    \PackageError{yhsa-draft-guards}{%
+      FINAL BUILD BLOCKED by an unresolved #1 on page \thepage: #2%
+    }{%
+      Every placeholder must be resolved before the final build.\MessageBreak
+      A placeholder is resolved by SUPPLYING THE EVIDENCE, never by deleting the\MessageBreak
+      marker. See CLAUDE.md section 4 and docs/DATA_REQUEST.md.\MessageBreak
+      Run scripts/check_placeholders.py for the full list.%
+    }%
+  \fi
+}
+
+% --- \PENDING{key}{what is needed} : a missing NUMBER -----------------------
+% INLINE and LINE-BREAKABLE. A missing number stands where the number will stand,
+% inside a sentence. An \fbox there is an unbreakable box in mid-paragraph that
+% overflows the margin and destroys the very page layout the draft build exists
+% to show. Loud red is enough; a frame is not. The key is DETOKENIZED and set in
+% \texttt because canonical keys contain underscores, which are subscript
+% characters in text mode.
+\newcommand{\yhsa@pending}[2]{%
+  \stepcounter{yhsaPendingCount}%
+  \yhsa@record{PENDING}{#1 -- #2}%
+  \iffinal\else
+    \allowbreak
+    \textcolor{yhsaPending}{\textbf{[\,PENDING \texttt{\detokenize{#1}}: #2\,]}}%
+  \fi
+}
+
+% --- a \num{} key with no definition ----------------------------------------
+% Distinct from \PENDING: this means the key was USED but emit_numbers.py did
+% not supply it, i.e. the canonical entry is still PENDING or the key is a typo.
+\newcommand{\yhsa@missingnum}[1]{%
+  \stepcounter{yhsaMissingNumCount}%
+  \yhsa@record{MISSING-NUM}{\detokenize{#1}}%
+  \iffinal\else
+    \textcolor{yhsaPending}{\textbf{[?\,\texttt{\detokenize{#1}}]}}%
+  \fi
+}
+
+% --- \NEEDSDATA{id}{dataset} : a missing FIGURE or TABLE --------------------
+% Rendered as a box the size of the float it will become, so that the draft PDF
+% shows the true shape and page budget of the finished report.
+\newcommand{\yhsa@needsdata}[2]{%
+  \stepcounter{yhsaNeedsCount}%
+  \yhsa@record{NEEDSDATA}{#1 -- #2}%
+  \iffinal\else
+    \begin{center}
+    \setlength{\fboxsep}{10pt}%
+    \textcolor{yhsaNeeds}{%
+      \fbox{\parbox[c][46mm][c]{\dimexpr0.88\linewidth-2\fboxsep-2\fboxrule\relax}{\centering\footnotesize\setstretch{1.0}%
+        \textbf{\large NEEDS DATA}\\[4pt]
+        \textbf{#1}\\[4pt]
+        \textit{#2}\\[6pt]
+        \tiny This box is a placeholder of approximately the size of the finished float.\\
+        See docs/DATA\_REQUEST.md and figures/FIGURE\_REGISTER.md.}}%
+    }
+    \end{center}
+  \fi
+}
+
+% --- \TODOPAL{question} : only Palaash can answer ---------------------------
+% BLOCK-LEVEL. A question is a note about the surrounding text, not a word in it,
+% so it is set as its own block. \par before and after keeps the framed box out
+% of the enclosing paragraph, where it would overflow the right margin.
+\newcommand{\yhsa@todopal}[1]{%
+  \stepcounter{yhsaTodoCount}%
+  \yhsa@record{TODOPAL}{#1}%
+  \iffinal\else
+    \par\medskip\noindent
+    \textcolor{yhsaTodo}{%
+      \fbox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{%
+        \footnotesize\setstretch{1.0}\textbf{FOR PALAASH:} #1}}%
+    }%
+    \par\medskip
+  \fi
+}
+
+% --- end-of-run tally --------------------------------------------------------
+\AtEndDocument{%
+  \immediate\closeout\yhsa@phfile
+  \message{^^J}%
+  \message{================ CHEM-151 PLACEHOLDER TALLY ================^^J}%
+  \message{  PENDING      (missing number)        : \theyhsaPendingCount^^J}%
+  \message{  MISSING-NUM  (undefined \string\num key)     : \theyhsaMissingNumCount^^J}%
+  \message{  NEEDSDATA    (missing figure/table)  : \theyhsaNeedsCount^^J}%
+  \message{  TODOPAL      (question for Palaash)  : \theyhsaTodoCount^^J}%
+  \message{  full list: \jobname.placeholders^^J}%
+  \message{============================================================^^J}%
+}
+
+\makeatother

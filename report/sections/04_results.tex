@@ -1,0 +1,513 @@
+% ============================================================================
+% SECTION IV — RESULTS AND DISCUSSION     target 20–26 pages, 7000–9500 words
+%                                         ~55% of the body. THE DECISIVE BLOCK.
+%
+% ARCHITECTURE RULE (Bible §8):
+%   each subsection = ONE CLAIM = ONE FIGURE OR TABLE = ONE CLOSING VERDICT.
+%   NEVER leave a figure without a \verdict{}.
+%
+% ANTI-PATTERN 2: do not DESCRIBE figures. ARGUE FROM them.
+%
+% PAGE SUB-ALLOCATION (Bible §7.3):
+%   4.1 functionalisation 4–5 · 4.2 equilibrium 3–4 · 4.3 kinetics 2–3
+%   4.4 competition 3–4 · 4.5 thermodynamics 2 · 4.6 DFT 3–4 · 4.7 decomposition 3–4
+%   4.8 column 2–3 · 4.9 benchmarking 1–2
+%
+% FIGURE RENUMBERING: registry Fig 4.3 (TGA) is DESIGNED OUT and registry Fig 4.18
+% (XPS) is added, so document numbering runs contiguously 4.1–4.17. The registry ID
+% is recorded in the comment above each float and in figures/FIGURE_REGISTER.md.
+% ============================================================================
+\section{Results and discussion}
+\label{sec:results}
+
+\subsection{Confirmation of galloyl functionalisation}
+\label{sec:results-functionalisation}
+% 4–5 pages. SIX INDEPENDENT LINES OF EVIDENCE (audit B5), since TGA and BET are
+% unavailable: FTIR band assignment · gravimetric loading · pH_PZC shift ·
+% residual mineral · quantified leaching · XPS.
+% Present the evidence set as a DESIGN CHOICE, not an apology: XPS Pb 4f is a
+% DIRECT observation of the binding event, whereas TGA mass loss and BET area are
+% indirect.
+
+% --- registry Fig 4.1 | source: DS-12 --- data/provided/characterisation/ftir/ | script: figures/src/fig4\_1\_ftir.py ---
+\begin{figure}[htbp]
+  \centering
+  \NEEDSDATA{Figure~\ref{fig:ftir} (registry 4.1)}{DS-12 --- data/provided/characterisation/ftir/ \\ owning script: \texttt{figures/src/fig4\_1\_ftir.py}}
+  \caption[ATR-FTIR spectra with band assignments]{ATR-FTIR spectra of \RAWOSS{}, \TAOSS{} and \PbII{}-loaded \TAOSS{}, with band assignments annotated. New aromatic \ce{C=C} and galloyl ester features confirm the presence of the galloyl unit, while the collagen Amide~I, II and III envelope is preserved, showing the scaffold survived functionalisation. Spectra were recorded at \SI{4}{\per\centi\metre} resolution with $\geq 32$ scans and are offset vertically for clarity.}
+  \label{fig:ftir}
+\end{figure}
+
+% --- registry Table 4.1 | source: DS-12 + literature | script: tables/src/tab4\_1\_ftir\_bands.py ---
+\begin{table}[htbp]
+  \centering
+  \caption[ATR-FTIR band assignments]{ATR-FTIR band assignments for \RAWOSS{}, \TAOSS{} and spent \TAOSS{}, with literature references for each assignment. Shifts of the carbonyl and ester features and dampening of the phenolic \ce{O-H} band in the spent material are consistent with lead binding at the galloyl site.}
+  \label{tab:ftir-bands}
+  \NEEDSDATA{Table~\ref{tab:ftir-bands} (registry 4.1)}{DS-12 + literature \\ owning script: \texttt{tables/src/tab4\_1\_ftir\_bands.py}}
+\end{table}
+
+% --- registry Fig 4.2 | source: DS-24 --- BLOCKED, laboratory has not released the data | script: figures/src/fig4\_2\_sem\_edx.py ---
+\begin{figure}[htbp]
+  \centering
+  \NEEDSDATA{Figure~\ref{fig:sem-edx} (registry 4.2)}{DS-24 --- BLOCKED, laboratory has not released the data \\ owning script: \texttt{figures/src/fig4\_2\_sem\_edx.py}}
+  \caption[Scanning electron micrographs and EDX elemental maps]{Scanning electron micrographs and EDX elemental maps: \textbf{(a)} \RAWOSS{}, \textbf{(b)} fresh \TAOSS{}, \textbf{(c)} \PbII{}-loaded \TAOSS{}, and \textbf{(d)} the corresponding lead elemental map. EDX on a rough, low-atomic-number, coated biological material is semi-quantitative; the maps are presented as evidence of the spatial distribution and the presence of lead, and no EDX weight percentage is quoted as a measurement of loading.}
+  \label{fig:sem-edx}
+\end{figure}
+
+% --- registry Fig 4.18 | source: DS-23 --- BLOCKED, laboratory has not released the data | script: figures/src/fig4\_18\_xps.py ---
+\begin{figure}[htbp]
+  \centering
+  \NEEDSDATA{Figure~\ref{fig:xps} (registry 4.18)}{DS-23 --- BLOCKED, laboratory has not released the data \\ owning script: \texttt{figures/src/fig4\_18\_xps.py}}
+  \caption[High-resolution X-ray photoelectron spectra]{High-resolution X-ray photoelectron spectra with fitted components: \textbf{(a)} \ce{Pb}~4f, \textbf{(b)} \ce{O}~1s, \textbf{(c)} \ce{C}~1s and \textbf{(d)} \ce{N}~1s, for \RAWOSS{}, fresh \TAOSS{} and \PbII{}-loaded \TAOSS{}. All binding energies are referenced to adventitious \ce{C}~1s at \SI{284.8}{\electronvolt}. The \ce{Pb}~4f doublet was fitted with the spin--orbit splitting constrained to \SI{4.87}{\electronvolt} and the area ratio to $4{:}3$. The \ce{Pb}~4f$_{7/2}$ position distinguishes \PbII{} coordinated to oxygen donors from \ce{PbO}, \ce{Pb(OH)2}, \ce{PbCO3} and metallic lead.}
+  \label{fig:xps}
+\end{figure}
+
+% --- registry Table 4.13 | source: DS-23 --- BLOCKED | script: tables/src/tab4\_13\_xps.py ---
+\begin{table}[htbp]
+  \centering
+  \caption[High-resolution X-ray photoelectron spectra]{X-ray photoelectron binding energies, assignments and fitted component areas. Charge referencing to adventitious \ce{C}~1s at \SI{284.8}{\electronvolt}; Shirley background; Gaussian--Lorentzian line shapes with equal FWHM constrained within each region.}
+  \label{tab:xps}
+  \NEEDSDATA{Table~\ref{tab:xps} (registry 4.13)}{DS-23 --- BLOCKED \\ owning script: \texttt{tables/src/tab4\_13\_xps.py}}
+\end{table}
+
+% --- registry Fig 4.4 | source: DS-16 --- data/provided/characterisation/ph\_pzc/ | script: figures/src/fig4\_4\_ph\_pzc.py ---
+\begin{figure}[htbp]
+  \centering
+  \NEEDSDATA{Figure~\ref{fig:ph-pzc} (registry 4.4)}{DS-16 --- data/provided/characterisation/ph\_pzc/ \\ owning script: \texttt{figures/src/fig4\_4\_ph\_pzc.py}}
+  \caption[Point-of-zero-charge determination]{Point-of-zero-charge determination for \RAWOSS{} and \TAOSS{} by the \pH{}-drift method in \SI{0.01}{\molar} \ce{NaCl}, $n$ as stated. The lower \pHpzc of the functionalised material confirms enrichment of acidic surface groups and is an independent, functional line of evidence for grafting. The determination was carried out without exclusion of atmospheric \ce{CO2}, which shifts the plateau slightly.}
+  \label{fig:ph-pzc}
+\end{figure}
+
+% --- registry Table 4.14 | source: DS-17, DS-18, DS-11 | script: tables/src/tab4\_14\_leaching.py ---
+\begin{table}[htbp]
+  \centering
+  \caption[Tannic-acid leaching and the galloyl site balance]{Tannic-acid leaching from \TAOSS{} at \pH~5.0 and \pH~2.0, reported as gallic-acid equivalents released per gram of sorbent and as a percentage of the measured galloyl loading, with the \RAWOSS{} blank at each \pH{}; and the galloyl site balance, expressed as moles of metal captured per mole of galloyl group. The site balance is a consistency check, not a proof: the ten-galloyl-per-molecule stoichiometry of tannic acid is nominal and gravimetric loading does not distinguish grafted from entrained tannin.}
+  \label{tab:leaching}
+  \NEEDSDATA{Table~\ref{tab:leaching} (registry 4.14)}{DS-17, DS-18, DS-11 \\ owning script: \texttt{tables/src/tab4\_14\_leaching.py}}
+\end{table}
+
+% VERDICT — what is now established about the material.
+\verdict{\NEEDSDATA{Verdict, §4.1}{one sentence stating what the six evidence lines jointly establish about the material}}
+
+\finding{1}{\NEEDSDATA{Finding 1}{galloyl grafting achieved at the measured loading with the collagen Amide I--III architecture intact; state the number and its uncertainty}}
+
+\subsection{Single-metal sorption equilibria}
+\label{sec:results-isotherms}
+% 3–4 pages.
+% FIT NON-LINEARLY. Report Langmuir, Freundlich, Sips/Redlich–Peterson with
+% parameter 95% CIs, R2, reduced chi2, RMSE and AIC. Cite Tran et al. 2017 and
+% STATE that linearised transformations were avoided because they distort the
+% error structure. Report the R_L separation factor.
+%
+% ############################################################################
+% THE MOLAR-BASIS PARAGRAPH — ATTACK A23, CRITICAL. THIS CANNOT BE OMITTED.
+%
+% Converting the capacities from mg/g to mmol/g INVERTS the ordering. On a molar
+% basis the single-metal data is entirely conventional and shows no
+% Irving–Williams inversion at all.
+%
+% What must be written here:
+%   1. Both units, side by side, in Table 4.5.
+%   2. An explicit statement that the ordering inverts on a molar basis.
+%   3. That alpha is INVARIANT to the mass-or-molar basis (Eq. 2.1), so the
+%      SELECTIVITY claim survives intact while the CAPACITY-ordering claim does not.
+%   4. NO sentence claiming the capacities invert Irving–Williams.
+%   5. NO unqualified "preferentially captures lead" — it captures a larger
+%      FRACTION, not a larger QUANTITY. Name the basis every time.
+%
+% Handled well this is a rigour point of the highest order: it demonstrates the
+% author understands what their own numbers mean, which is exactly what criterion
+% C4 rewards. Left for a referee to find, it reads as not having understood the
+% result.
+% ############################################################################
+
+% --- registry Fig 4.5 | source: DS-05 --- data/provided/batch/ | script: figures/src/fig4\_5\_isotherms.py ---
+\begin{figure}[htbp]
+  \centering
+  \NEEDSDATA{Figure~\ref{fig:isotherms} (registry 4.5)}{DS-05 --- data/provided/batch/ \\ owning script: \texttt{figures/src/fig4\_5\_isotherms.py}}
+  \caption[Single-metal sorption isotherms with non-linear fits]{Single-metal sorption isotherms for \PbII{}, \CuII{} and \ZnII{} on \TAOSS{}, with the \RAWOSS{} comparator, at \pH~5.0 and \SI{298}{\kelvin}. \textbf{(a)}~Non-linear Langmuir and Freundlich fits; \textbf{(b)}~fit residuals. All parameters were obtained by non-linear regression; linearised transformations were not used, as they distort the error structure. Error bars are the standard deviation of replicate measurements, $n$ as stated.}
+  \label{fig:isotherms}
+\end{figure}
+
+% --- registry Table 4.2 | source: DS-05 -> data/processed/ | script: tables/src/tab4\_2\_isotherm\_params.py ---
+\begin{table}[htbp]
+  \centering
+  \caption[Isotherm parameters from non-linear regression]{Langmuir, Freundlich and Sips parameters from non-linear regression for all three metals on both sorbents, with 95\,\% confidence intervals, $R^2$, reduced $\chi^2$, RMSE and AIC. Three-parameter models are reported only for the six-point \PbII{} isotherm; fitting three parameters to the four-point \CuII{} and \ZnII{} series would be over-parameterised.}
+  \label{tab:isotherm-params}
+  \NEEDSDATA{Table~\ref{tab:isotherm-params} (registry 4.2)}{DS-05 -> data/processed/ \\ owning script: \texttt{tables/src/tab4\_2\_isotherm\_params.py}}
+\end{table}
+
+% --- registry Table 4.3 | source: derived from DS-05 | script: tables/src/tab4\_3\_qmax.py ---
+\begin{table}[htbp]
+  \centering
+  \caption[Maximum capacities in mass and molar units]{Maximum monolayer capacities in \unit{\milli\gram\per\gram} \emph{and} \unit{\milli\mole\per\gram}. \textbf{The ordering on a molar basis differs from that on a mass basis}, since the molar masses of the three ions differ by more than a factor of three. Molar capacity is the chemically meaningful quantity for a site-binding argument and is discussed in the text.}
+  \label{tab:qmax}
+  \NEEDSDATA{Table~\ref{tab:qmax} (registry 4.3)}{derived from DS-05 \\ owning script: \texttt{tables/src/tab4\_3\_qmax.py}}
+\end{table}
+
+\verdict{\NEEDSDATA{Verdict, §4.2}{one sentence on what the single-metal equilibria establish --- and, explicitly, what they do NOT establish on a molar basis}}
+
+\subsection{Sorption kinetics and rate-limiting step}
+\label{sec:results-kinetics}
+% 2–3 pages. Pseudo-first-order, pseudo-second-order, Elovich; Weber–Morris
+% intraparticle-diffusion plot to identify the rate-limiting step; film vs pore
+% diffusion. Justify the 120 min contact time used in the isotherm work.
+% LINK FORWARD: the intraparticle-diffusion result speaks directly to the column
+% shortfall in §4.8 — a genuine cross-validation between two sections, not a
+% hand-wave.
+
+% --- registry Fig 4.6 | source: DS-10 --- data/provided/kinetics/ | script: figures/src/fig4\_6\_kinetics.py ---
+\begin{figure}[htbp]
+  \centering
+  \NEEDSDATA{Figure~\ref{fig:kinetics} (registry 4.6)}{DS-10 --- data/provided/kinetics/ \\ owning script: \texttt{figures/src/fig4\_6\_kinetics.py}}
+  \caption[Sorption kinetics and Weber--Morris analysis]{Sorption kinetics for \PbII{} and \CuII{} at \SI{50}{\milli\gram\per\litre} and \pH~5.0: \textbf{(a)}~uptake against contact time with non-linear pseudo-first-order, pseudo-second-order and Elovich fits; \textbf{(b)}~Weber--Morris intraparticle-diffusion plot, whose multilinearity identifies the rate-limiting regime. Error bars are the standard deviation of replicates, $n$ as stated.}
+  \label{fig:kinetics}
+\end{figure}
+
+% --- registry Table 4.4 | source: DS-10 -> data/processed/ | script: tables/src/tab4\_4\_kinetics.py ---
+\begin{table}[htbp]
+  \centering
+  \caption[Sorption kinetics and Weber--Morris analysis]{Kinetic model parameters from non-linear regression, with 95\,\% confidence intervals, $R^2$, reduced $\chi^2$, RMSE and AIC, and the Weber--Morris intraparticle-diffusion rate constants for each identified regime.}
+  \label{tab:kinetics}
+  \NEEDSDATA{Table~\ref{tab:kinetics} (registry 4.4)}{DS-10 -> data/processed/ \\ owning script: \texttt{tables/src/tab4\_4\_kinetics.py}}
+\end{table}
+
+\verdict{\NEEDSDATA{Verdict, §4.3}{one sentence on the rate-limiting step and what it implies for the fixed-bed performance in §4.8}}
+
+\subsection{Competitive sorption and selectivity}
+\label{sec:results-competition}
+% 3–4 pages. THE MONEY SUBSECTION.
+%
+% HEADLINE CONDITION IS THE MINORITY-TARGET RUN (Phase 4 answer Q3): Pb at a 4:1
+% mass and ~13:1 per-metal molar disadvantage, 25.7:1 against the combined
+% competitor pool. Leading with the MOST ADVERSE condition answers "did you load
+% the deck?" before it is asked. The equal-mass run is the supporting condition.
+%
+% MUST BE WRITTEN HERE:
+%  - The molar arithmetic as a NUMBER (Table 2.3), not a claim.
+%  - alpha values with error bars, TA-OSS vs RAW-OSS ON THE SAME AXES
+%    (anti-pattern 9: the control must be plotted alongside, not merely mentioned).
+%  - THE INCREMENT: the unfunctionalised ossein ALREADY shows mild Pb preference.
+%    Quantify how much of the final selectivity is attributable to GRAFTING.
+%    Honest attribution beats overclaiming, and the site balance in §4.1 makes it
+%    quantitative rather than rhetorical.
+%  - The mass-vs-mole question addressed head-on: alpha is invariant to the basis.
+%  - THE ANGLESITE SATURATION INDEX. Both ternary compositions compute
+%    supersaturated with respect to PbSO4, because the competitor salts are
+%    sulfates and the lead salt is a nitrate, and every sample was filtered at
+%    0.45 um so any precipitate would be counted as sorption. NO SORBENT-FREE
+%    TERNARY BLANK WAS RUN. Publish the SI, report the contemporaneous observation
+%    that the solutions remained clear, and state the limitation. Publishing this
+%    and explaining it is far stronger than staying silent and being found out.
+%  - NEVER the word "equimolar" (audit B3).
+%  - NEVER "significantly" without a p-value (Bible §12). Either run the test on
+%    the n=3 replicates or write "markedly".
+
+% --- registry Fig 4.7 | source: DS-01, DS-02 --- the headline figure of the report | script: figures/src/fig4\_7\_selectivity.py ---
+\begin{figure}[htbp]
+  \centering
+  \NEEDSDATA{Figure~\ref{fig:selectivity} (registry 4.7)}{DS-01, DS-02 --- the headline figure of the report \\ owning script: \texttt{figures/src/fig4\_7\_selectivity.py}}
+  \caption[Competitive sorption and selectivity factors]{Competitive sorption of \PbII{}, \CuII{} and \ZnII{} on \TAOSS{} and on the unfunctionalised \RAWOSS{} control: \textbf{(a)}~removal for the minority-target ternary, in which \PbII{} is present at an approximately thirteen-fold per-metal molar deficit; \textbf{(b)}~removal for the equal-mass ternary; \textbf{(c)}~selectivity factors $\alpha(\mathrm{Pb/Cu})$ and $\alpha(\mathrm{Pb/Zn})$ for both sorbents and both compositions. Error bars are the standard deviation of $n = 3$ replicates. Plotting the control on the same axes shows how much of the selectivity is attributable to grafting rather than to the collagen scaffold alone.}
+  \label{fig:selectivity}
+\end{figure}
+
+% --- registry Table 4.5 | source: DS-01, DS-02 -> data/processed/ | script: tables/src/tab4\_5\_selectivity.py ---
+\begin{table}[htbp]
+  \centering
+  \caption[Competitive sorption and selectivity factors]{Removal, equilibrium uptake in \unit{\milli\gram\per\gram} and \unit{\milli\mole\per\gram}, distribution coefficients and selectivity factors for both ternary compositions on \TAOSS{} and \RAWOSS{}, as mean $\pm$ standard deviation, $n = 3$. Selectivity factors are ratios of distribution coefficients and are therefore invariant to whether uptake is expressed on a mass or a molar basis.}
+  \label{tab:selectivity}
+  \NEEDSDATA{Table~\ref{tab:selectivity} (registry 4.5)}{DS-01, DS-02 -> data/processed/ \\ owning script: \texttt{tables/src/tab4\_5\_selectivity.py}}
+\end{table}
+
+\verdict{\NEEDSDATA{Verdict, §4.4}{one sentence establishing the selectivity claim in its defensible form --- a larger FRACTION of the lead present, at a stated molar deficit}}
+
+\finding{2}{\NEEDSDATA{Finding 2}{the functionalised sorbent retains \PbII{} preferentially even at a molar deficit; state the selectivity factors, their uncertainties, and the control values}}
+
+\subsection{Sorption thermodynamics}
+\label{sec:results-thermodynamics}
+% 2 pages.
+% Van 't Hoff across >=3 temperatures; report Delta-H, Delta-S, Delta-G at each T,
+% with regression R2 and uncertainties.
+% INTERPRET, DO NOT MERELY REPORT: endothermic + large positive entropy =
+% desolvation-dominated binding. Water released from the hydration shells of the
+% ion and the surface exceeds the ordering cost of complexation. THIS IS THE
+% EXPERIMENTAL FINGERPRINT THAT THE COMPUTATIONAL DESOLVATION ARGUMENT PREDICTS —
+% state the closure explicitly and refer forward to §4.7.4.
+%
+% DIMENSIONLESS-K CONVENTION — the standard referee objection to van 't Hoff
+% analyses of sorption. State the convention used (protocol v2 §2.5.7) AND state
+% that the SIGN AND MAGNITUDE OF Delta-H is convention-INDEPENDENT because it
+% derives from the temperature dependence rather than the absolute value. That
+% pre-empts the objection entirely.
+
+% --- registry Fig 4.8 | source: DS-09 --- data/provided/thermodynamics/ | script: figures/src/fig4\_8\_vant\_hoff.py ---
+\begin{figure}[htbp]
+  \centering
+  \NEEDSDATA{Figure~\ref{fig:vant-hoff} (registry 4.8)}{DS-09 --- data/provided/thermodynamics/ \\ owning script: \texttt{figures/src/fig4\_8\_vant\_hoff.py}}
+  \caption[Van~'t~Hoff analysis of \PbII{} sorption]{Van~'t~Hoff analysis of \PbII{} sorption on \TAOSS{}: $\ln K^{\circ}$ against $1/T$, with the linear regression and its confidence band. The dimensionless equilibrium constant was obtained from the fitted Langmuir affinity constant by the convention stated in \cref{sec:batch-method}; the sign and magnitude of $\Delta H^{\circ}$ derive from the temperature dependence and are independent of that convention.}
+  \label{fig:vant-hoff}
+\end{figure}
+
+% --- registry Table 4.6 | source: DS-09 -> data/processed/ | script: tables/src/tab4\_6\_thermo.py ---
+\begin{table}[htbp]
+  \centering
+  \caption[Thermodynamic parameters]{Thermodynamic parameters for \PbII{} sorption on \TAOSS{}: $\Delta H^{\circ}$, $\Delta S^{\circ}$ and $\Delta G^{\circ}$ at each temperature, with uncertainties propagated from the van~'t~Hoff regression and the regression $R^2$. The convention used to render the equilibrium constant dimensionless is stated in \cref{sec:batch-method}.}
+  \label{tab:thermo}
+  \NEEDSDATA{Table~\ref{tab:thermo} (registry 4.6)}{DS-09 -> data/processed/ \\ owning script: \texttt{tables/src/tab4\_6\_thermo.py}}
+\end{table}
+
+\verdict{\NEEDSDATA{Verdict, §4.5}{one sentence: what the sign of $\Delta H^{\circ}$ and the magnitude of $\Delta S^{\circ}$ jointly establish about the binding mechanism}}
+
+\finding{3}{\NEEDSDATA{Finding 3}{sorption is endothermic and entropy-driven, indicating desolvation control; state the values}}
+
+\subsection{DFT binding free energies}
+\label{sec:results-dft}
+% 3–4 pages.
+
+\subsubsection{Optimised coordination geometries}
+\label{sec:results-geometries}
+
+% --- registry Fig 4.10 | source: dft/structures/ --- NOTHING COMPUTED YET | script: figures/src/fig4\_10\_geometries.py ---
+\begin{figure}[htbp]
+  \centering
+  \NEEDSDATA{Figure~\ref{fig:geometries} (registry 4.10)}{dft/structures/ --- NOTHING COMPUTED YET \\ owning script: \texttt{figures/src/fig4\_10\_geometries.py}}
+  \caption[Optimised coordination geometries]{Optimised solution-phase geometries of the galloyl complexes of \textbf{(a)}~\PbII{}, \textbf{(b)}~\CuII{} and \textbf{(c)}~\ZnII{}, with key bond lengths and angles labelled, and \textbf{(d)}~the truncated cluster model with atom labels. All structures are true minima with all frequencies real. \CuII{} was treated as an open-shell doublet.}
+  \label{fig:geometries}
+\end{figure}
+
+% --- registry Table 4.7 | source: dft/analysis/ --- NOTHING COMPUTED YET | script: tables/src/tab4\_7\_dft.py ---
+\begin{table}[htbp]
+  \centering
+  \caption[Computed energetics and geometry]{Computed energetics and geometry for the three galloyl complexes: aquo-ligand exchange free energy, interaction and preparation energies, mean metal--oxygen distance, coordination number, and the hemidirection descriptors $\tilde{d}$ and $\theta_{\mathrm{void}}$ defined in \cref{eq:displacement,eq:voidangle}. Values are given for each of the three ligand protonation states, so that the robustness of the ordering to the protonation assumption can be judged.}
+  \label{tab:dft}
+  \NEEDSDATA{Table~\ref{tab:dft} (registry 4.7)}{dft/analysis/ --- NOTHING COMPUTED YET \\ owning script: \texttt{tables/src/tab4\_7\_dft.py}}
+\end{table}
+
+\subsubsection{Reproduction of the experimental ordering}
+\label{sec:results-ordering}
+% State whether the computed ordering matches the experimental one, and whether it
+% is ROBUST ACROSS ALL THREE PROTONATION STATES. If it is, say so — that is the
+% sensitivity check paying off. If it is not, report that instead.
+
+\subsubsection{Comparison of computed and experimental free-energy differences}
+\label{sec:results-ddg}
+% ############################################################################
+% ATTACK A05, CRITICAL. CONFRONT THIS BEFORE THE REFEREE DOES.
+%
+% The computed Delta-Delta-G between metals is expected to be roughly an ORDER OF
+% MAGNITUDE larger than the experimental Delta-Delta-G derived from alpha via
+% -RT ln alpha. Do not hide it, do not round it away.
+%
+% THE HONEST, CORRECT FRAMING: the cluster model computes an INTRINSIC SINGLE-SITE
+% binding preference under idealised conditions; the measured selectivity factor
+% reflects a heterogeneous site distribution, partial site accessibility,
+% competitive site occupancy, transport limitation and activity effects. The
+% calculation is therefore expected to reproduce THE ORDERING AND THE MECHANISM,
+% NOT THE MAGNITUDE.
+%
+% State this as a limitation UP FRONT and it becomes a rigour point. Let a referee
+% find it first and it becomes fatal.
+% ############################################################################
+
+% --- registry Table 4.9 | source: dft/analysis/ + data/processed/ | script: tables/src/tab4\_9\_validation.py ---
+\begin{table}[htbp]
+  \centering
+  \caption[Computed against experimental free-energy differences]{Computed against experimentally derived free-energy differences. Experimental values are obtained from the measured selectivity factors as $\Delta\Delta G_{\exp} = -RT\ln\alpha$, which is the correct experimental counterpart to a per-site computed quantity; capacities in \unit{\milli\gram\per\gram} are not comparable to a molar binding free energy. The deviation is reported and its origin discussed in the text.}
+  \label{tab:validation}
+  \NEEDSDATA{Table~\ref{tab:validation} (registry 4.9)}{dft/analysis/ + data/processed/ \\ owning script: \texttt{tables/src/tab4\_9\_validation.py}}
+\end{table}
+
+\verdict{\NEEDSDATA{Verdict, §4.6}{one sentence on what the calculation does and does not reproduce, with the magnitude discrepancy stated rather than avoided}}
+
+\finding{4}{\NEEDSDATA{Finding 4}{whether DFT reproduces the experimental ordering without parameter fitting, and across which protonation states}}
+
+\subsection{Energy decomposition and the origin of selectivity}
+\label{sec:results-eda}
+% 3–4 pages. THE INTELLECTUAL CENTREPIECE. Structure it as a FALSIFICATION —
+% Bible §5.2 notes that NONE of the four reference winning reports contains a
+% falsification test of a competing explanation. This is the project's single
+% strongest differentiator and must not be a paragraph in the discussion.
+%
+% THE SEVEN-STEP STRUCTURE:
+%   1. THE NAIVE HYPOTHESIS: selectivity should track electrostatic stabilisation,
+%      i.e. charge density; Cu(II) is the most compact and hardest, so Cu should win.
+%   2. THE TEST: the decomposition gives Delta-E_elstat highest for Cu(II).
+%   3. THE FALSIFICATION: therefore the purely electrostatic model PREDICTS THE
+%      WRONG ORDER. Say it in ONE unmissable sentence and set it as Finding 5.
+%   4. THE ALTERNATIVE: f_orb is highest for Pb — the most covalent interaction.
+%   5. THE LOCALISATION: donation from the galloate pi and oxygen lone-pair manifold
+%      into the diffuse Pb 6p acceptor orbitals. State the isovalue used.
+%   6. THE GEOMETRIC COROLLARY: the pocket accommodates the 6s2 lone pair; report
+%      the MEASURED hemidirection descriptors and show the void.
+%   7. THE THERMODYNAMIC COROLLARY: harder ions pay a larger desolvation penalty.
+%      Cite the source AND the convention for every hydration free energy; prefer
+%      RELATIVE values.
+%   8. THE CLOSURE: the desolvation prediction is INDEPENDENTLY CONFIRMED by the
+%      measured endothermic, entropy-driven signature in §4.5.
+%
+% IF THE DECOMPOSITION SOFTWARE WAS NOT OBTAINED: this subsection contains NO
+% f_orb. It argues from charge transfer and orbital composition alone and states
+% the absence of a full energy partition as a limitation. Pre-committed decision,
+% dft/DFT_PROTOCOL.md §4.3. Do not invent the number.
+
+\subsubsection{Failure of the purely electrostatic rationale}
+\label{sec:results-falsification}
+
+% --- registry Fig 4.11 | source: dft/analysis/ --- NOTHING COMPUTED YET | script: figures/src/fig4\_11\_eda.py ---
+\begin{figure}[htbp]
+  \centering
+  \NEEDSDATA{Figure~\ref{fig:eda} (registry 4.11)}{dft/analysis/ --- NOTHING COMPUTED YET \\ owning script: \texttt{figures/src/fig4\_11\_eda.py}}
+  \caption[Decomposition of the metal--ligand interaction energy]{Decomposition of the metal--ligand interaction energy for the \PbII{}, \CuII{} and \ZnII{} galloyl complexes, with the orbital-interaction fraction $\forb$ overlaid. Electrostatic stabilisation is largest for the most compact ion, so an interaction model based on electrostatics alone predicts a selectivity order that is not the one observed. The decomposition scheme and the program implementing it are named in \cref{tab:protocol}; $\forb$ is a ratio of decomposition terms and is scheme-dependent, so these values are comparable across the three metals computed here under identical settings but not to values from other schemes.}
+  \label{fig:eda}
+\end{figure}
+
+% --- registry Table 4.8 | source: dft/analysis/ --- NOTHING COMPUTED YET | script: tables/src/tab4\_8\_eda.py ---
+\begin{table}[htbp]
+  \centering
+  \caption[Decomposition of the metal--ligand interaction energy]{Decomposition terms and the orbital-interaction fraction $\forb$ for each metal, together with the fragment definition, fragment charges and fragment spin states used. All values were obtained under identical settings, so the comparison across the three metals is internally valid.}
+  \label{tab:eda}
+  \NEEDSDATA{Table~\ref{tab:eda} (registry 4.8)}{dft/analysis/ --- NOTHING COMPUTED YET \\ owning script: \texttt{tables/src/tab4\_8\_eda.py}}
+\end{table}
+
+\subsubsection{Orbital covalency and the \ce{Pb}~6p acceptor manifold}
+\label{sec:results-covalency}
+
+% --- registry Fig 4.12 | source: dft/analysis/ --- NOTHING COMPUTED YET | script: figures/src/fig4\_12\_nocv.py ---
+\begin{figure}[htbp]
+  \centering
+  \NEEDSDATA{Figure~\ref{fig:density-difference} (registry 4.12)}{dft/analysis/ --- NOTHING COMPUTED YET \\ owning script: \texttt{figures/src/fig4\_12\_nocv.py}}
+  \caption[Deformation-density isosurfaces]{Deformation-density isosurfaces for the \textbf{(a)}~\PbII{}, \textbf{(b)}~\CuII{} and \textbf{(c)}~\ZnII{} complexes, computed as the difference between the density of the complex and that of the superimposed prepared fragments. Charge accumulation and depletion are colour-coded and the isovalue is stated on the figure. The analysis route and the program implementing it are named in \cref{tab:protocol}; this is a density-difference analysis and is not described as an ETS-NOCV decomposition, which is a method of a program not used in this work.}
+  \label{fig:density-difference}
+\end{figure}
+
+\subsubsection{Hemidirected accommodation of the $6\mathrm{s}^2$ lone pair}
+\label{sec:results-hemidirection}
+% MEASURED, not asserted. Report d~ and theta_void for ALL THREE metals.
+% Both descriptors are reported because they are complementary: d~ responds to
+% radial asymmetry, theta_void is purely angular and by construction does not.
+% If the calculation does not show Pb as the most hemidirected, REPORT WHAT IT SHOWS.
+
+% --- registry Fig 4.13 | source: analysis/src/hemidirection.py applied to dft/structures/ | script: figures/src/fig4\_13\_hemidirection.py ---
+\begin{figure}[htbp]
+  \centering
+  \NEEDSDATA{Figure~\ref{fig:hemidirection} (registry 4.13)}{analysis/src/hemidirection.py applied to dft/structures/ \\ owning script: \texttt{figures/src/fig4\_13\_hemidirection.py}}
+  \caption[Hemidirection descriptors in the optimised complexes]{Hemidirection in the optimised complexes. The void hemisphere at the \PbII{} centre is shaded, and the centroid displacement $\tilde{d}$ and void-hemisphere angle $\theta_{\mathrm{void}}$ of \cref{eq:displacement,eq:voidangle} are marked for each metal. The descriptors are measured from the optimised geometries rather than inferred from the appearance of the structures.}
+  \label{fig:hemidirection}
+\end{figure}
+
+\subsubsection{Desolvation penalties and the entropic signature}
+\label{sec:results-desolvation}
+
+% --- registry Table 4.10 | source: literature (cited and read) | script: tables/src/tab4\_10\_hydration.py ---
+\begin{table}[htbp]
+  \centering
+  \caption[Hydration free energies, sources and conventions]{Hydration free energies used in the desolvation argument, with the source and the convention or scale stated for each. Absolute single-ion hydration free energies are convention-dependent; the argument is therefore made on \emph{relative} values, for which the convention cancels.}
+  \label{tab:hydration}
+  \NEEDSDATA{Table~\ref{tab:hydration} (registry 4.10)}{literature (cited and read) \\ owning script: \texttt{tables/src/tab4\_10\_hydration.py}}
+\end{table}
+
+\subsubsection{A unified mechanistic picture}
+\label{sec:results-unified}
+
+% --- registry Fig 4.9 | source: composite of this work's own results | script: figures/src/fig4\_9\_master.py ---
+\begin{figure}[htbp]
+  \centering
+  \NEEDSDATA{Figure~\ref{fig:master-mechanism} (registry 4.9)}{composite of this work's own results \\ owning script: \texttt{figures/src/fig4\_9\_master.py}}
+  \caption[The mechanistic argument in one panel]{The mechanistic argument in one panel: the galloyl pocket with \PbII{} bound in a hemidirected arrangement and the lone-pair void indicated; the direction of charge donation into the diffuse acceptor manifold; the relative desolvation penalties of the three ions; and the decomposition terms showing that electrostatic stabilisation alone predicts a different order from the one observed. A reader should be able to reconstruct the whole argument of this work from this figure and its caption.}
+  \label{fig:master-mechanism}
+\end{figure}
+
+\verdict{\NEEDSDATA{Verdict, §4.7}{one sentence stating what the decomposition establishes and what it rules out}}
+
+\finding{5}{\NEEDSDATA{Finding 5}{whether the decomposition falsifies the electrostatic rationale, and where the selectivity is localised}}
+
+\subsection{Fixed-bed performance and metal recovery}
+\label{sec:results-column}
+% 2–3 pages.
+% Fit Thomas, Yoon–Nelson and Adams–Bohart. Column data without a model fit reads
+% as under-analysed.
+%
+% ############################################################################
+% ATTACK A21 — THE BREAKTHROUGH SHORTFALL. GET THERE BEFORE THE REFEREE.
+% The design basis in the protocol predicts BV10 ~ 117 and EF ~ 56x from
+% BV_sat ~ q*.rho_b/C0 — a one-line calculation from numbers this report must
+% publish anyway. The measured values are far lower, implying the bed took up only
+% a small fraction of its batch equilibrium capacity at 10% breakthrough.
+%
+% ARGUE FROM THE DATA, not from the generic "dynamic < equilibrium" line:
+%   - MASS-TRANSFER-ZONE BREADTH is the leading hypothesis, and the BREAKTHROUGH
+%     CURVE SHAPE is the evidence. A shallow sigmoid confirms it; a sharp one
+%     refutes it and points elsewhere.
+%   - INTRAPARTICLE DIFFUSION: the Weber–Morris result of §4.3 speaks directly to
+%     this. Cross-validate the two sections.
+%   - The MEASURED V_bed and rho_b.
+%   - Dc/dp ~ 10–20 is at the lower bound of the anti-channelling rule.
+% Report q_col by integration and the utilisation as a percentage.
+% ############################################################################
+%
+% Also: MASS BALANCE closure (attack A27). Cycles 2 and 3 terminated early means
+% q_col exists for cycle 1 only and per-cycle EF values are not directly
+% comparable — state it.
+
+% --- registry Fig 4.14 | source: DS-06, DS-07, DS-15 | script: figures/src/fig4\_14\_breakthrough.py ---
+\begin{figure}[htbp]
+  \centering
+  \NEEDSDATA{Figure~\ref{fig:breakthrough} (registry 4.14)}{DS-06, DS-07, DS-15 \\ owning script: \texttt{figures/src/fig4\_14\_breakthrough.py}}
+  \caption[Fixed-bed breakthrough curves]{Breakthrough curves for the fixed bed: \textbf{(a)}~the three single-metal \PbII{} service cycles, with Thomas and Yoon--Nelson fits; \textbf{(b)}~the ternary breakthrough, showing all three metals, in which lead breaks through last and any transient overshoot of copper and zinc above $C/C_0 = 1$ is the signature of competitive displacement by lead. Bed volumes are computed from the measured packed-bed volume.}
+  \label{fig:breakthrough}
+\end{figure}
+
+% --- registry Fig 4.15 | source: DS-08 | script: figures/src/fig4\_15\_elution.py ---
+\begin{figure}[htbp]
+  \centering
+  \NEEDSDATA{Figure~\ref{fig:elution} (registry 4.15)}{DS-08 \\ owning script: \texttt{figures/src/fig4\_15\_elution.py}}
+  \caption[Counter-current elution profile]{Counter-current elution profile with \SI{3}{BV} of \SI{0.1}{\molar} \ce{HCl} at \SI{4}{BV\per\hour}, showing the concentration of lead in the regenerate relative to the feed. The enrichment factor is defined as the ratio of the lead concentration in the regenerate to that in the feed.}
+  \label{fig:elution}
+\end{figure}
+
+% --- registry Fig 4.16 | source: DS-07, DS-14 | script: figures/src/fig4\_16\_retention.py ---
+\begin{figure}[htbp]
+  \centering
+  \NEEDSDATA{Figure~\ref{fig:retention} (registry 4.16)}{DS-07, DS-14 \\ owning script: \texttt{figures/src/fig4\_16\_retention.py}}
+  \caption[Capacity retention over three cycles]{Capacity retention over three service--regeneration cycles: \textbf{(a)}~fixed-bed retention measured as $\BVten$ per cycle; \textbf{(b)}~batch retention measured as $\qe$ per cycle, where cycle~1 is the first single-metal re-adsorption following the initial desorption. Error bars are the standard deviation of $n = 3$ replicates. The mechanism of the capacity loss is attributed in the text on the evidence of the leaching measurement of \cref{tab:leaching}.}
+  \label{fig:retention}
+\end{figure}
+
+% --- registry Table 4.11 | source: DS-06, DS-07, DS-08 -> data/processed/ | script: tables/src/tab4\_11\_column\_models.py ---
+\begin{table}[htbp]
+  \centering
+  \caption[Fixed-bed parameters and column model fits]{Fixed-bed parameters and column model fits: bed characterisation, breakthrough bed volumes, dynamic column capacity by numerical integration and its utilisation relative to the batch equilibrium capacity, enrichment and desorption efficiency per cycle, mass-balance closure, and the Thomas, Yoon--Nelson and Adams--Bohart parameters with their fit statistics.}
+  \label{tab:column-models}
+  \NEEDSDATA{Table~\ref{tab:column-models} (registry 4.11)}{DS-06, DS-07, DS-08 -> data/processed/ \\ owning script: \texttt{tables/src/tab4\_11\_column\_models.py}}
+\end{table}
+
+% --- registry Fig 4.17 | source: figures/photos/ --- SOURCE OUTSTANDING, Phase 4 question Q11 | script: figures/src/fig4\_17\_failed.py ---
+\begin{figure}[htbp]
+  \centering
+  \NEEDSDATA{Figure~\ref{fig:failed} (registry 4.17)}{figures/photos/ --- SOURCE OUTSTANDING, Phase 4 question Q11 \\ owning script: \texttt{figures/src/fig4\_17\_failed.py}}
+  \caption[Conditions screened and rejected]{Conditions screened and rejected. Reporting the conditions that did not work is part of the record of what was done.}
+  \label{fig:failed}
+\end{figure}
+
+\verdict{\NEEDSDATA{Verdict, §4.8}{one sentence on process performance, including an explanation of the shortfall against the design basis}}
+
+\subsection{Benchmarking against reported sorbents}
+\label{sec:results-benchmark}
+% 1–2 pages. THE WINNER-SIGNATURE TABLE (Bible Observation 2).
+% 10–18 rows of NAMED published sorbents with journal, year, volume, page.
+% PLACE THIS MATERIAL HONESTLY AMONG THEM. If the capacity is mid-pack, SAY SO and
+% argue on selectivity + waste feedstock + mechanistic understanding + recovery,
+% exactly as the 2025 Chemistry Silver argued on cost and earth-abundance when its
+% turnover frequency lost to Ru/Pt systems.
+% Honest positioning reads as maturity; inflated positioning reads as naivety.
+% Include capacities in BOTH mg/g and mmol/g — several literature comparisons
+% change character on a molar basis.
+
+% --- registry Table 4.12 | source: refs/library.bib (every entry DOI-verified and read) | script: tables/src/tab4\_12\_benchmark.py ---
+\begin{table}[htbp]
+  \centering
+  \caption[Benchmarking against reported sorbents]{Benchmarking against reported sorbents for \PbII{}: feedstock, maximum capacity in \unit{\milli\gram\per\gram} and \unit{\milli\mole\per\gram}, selectivity factors against \CuII{} and \ZnII{} where reported, the competitive conditions under which they were measured, regenerability, and the reference. Entries for which selectivity was not measured competitively are marked, since a selectivity factor from single-metal data is not comparable to one measured in competition.}
+  \label{tab:benchmark}
+  \NEEDSDATA{Table~\ref{tab:benchmark} (registry 4.12)}{refs/library.bib (every entry DOI-verified and read) \\ owning script: \texttt{tables/src/tab4\_12\_benchmark.py}}
+\end{table}
+
+\verdict{\NEEDSDATA{Verdict, §4.9}{one sentence positioning this material honestly against the literature}}

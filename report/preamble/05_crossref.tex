@@ -1,0 +1,41 @@
+% ============================================================================
+% 05_crossref.tex  —  hyperlinks and cross-references
+%
+% Figures and tables are numbered BY SECTION so they read Figure 4.3 and
+% Table 4.2, matching the convention of the reference winning reports
+% (docs/00_SPEC.md §1, Numbering).
+% ============================================================================
+
+% yhsa-jinst already loaded hyperref with colorlinks and pdfa=true. pdfa
+% conflicts with \includepdf of the scanned Commitments form, and the all-blue
+% link scheme is harsh in print. Adjust rather than reload.
+%
+% The link colour is defined explicitly rather than taken from xcolor's
+% dvipsnames set: xcolor is already loaded (by hyperref, via yhsa-jinst) without
+% that option, and adding it later raises an option clash.
+\definecolor{yhsaLink}{HTML}{1A3E6E}
+\hypersetup{
+  colorlinks = true,
+  linkcolor  = yhsaLink,
+  citecolor  = yhsaLink,
+  urlcolor   = yhsaLink,
+  filecolor  = yhsaLink,
+  linktocpage= true,
+  pdfa       = false,
+  bookmarksnumbered = true,
+  pdftitle   = {Overcoming the Irving-Williams Preference in a Galloyl-Ossein Biosorbent through Experimentally and Computationally Driven Hemidirected Lead(II) Selectivity},
+  pdfauthor  = {Palaash Gang},
+  pdfsubject = {2026 S.T. Yau High School Science Award (Asia) - Chemistry - Chem-151},
+  pdfkeywords= {Lead(II) selectivity; Hemidirected coordination; Density-functional theory; Energy decomposition analysis; Biosorption; Irving-Williams series; Waste valorisation},
+}
+
+\usepackage[capitalise,nameinlink]{cleveref}
+\crefname{section}{Section}{Sections}
+\crefname{figure}{Figure}{Figures}
+\crefname{table}{Table}{Tables}
+\crefname{equation}{Equation}{Equations}
+\crefname{appendix}{Appendix}{Appendices}
+
+% Number floats by section: Figure 4.3, Table 4.2.
+\numberwithin{figure}{section}
+\numberwithin{table}{section}

@@ -1,0 +1,180 @@
+% ============================================================================
+% SECTION III — COMPUTATIONAL METHODOLOGY    target 4–5 pages, 1600–2200 words
+%
+% PURPOSE: reproducibility, and pre-empting "did a program produce this or did
+% you?". THIS IS WHERE A COMPUTATIONAL REFEREE WILL PROBE HARDEST.
+%
+% SOURCE TEXT: dft/DFT_PROTOCOL.md. Every field there is already decided and
+% justified; this section is its prose rendering.
+%
+% FOUR CRITICAL ATTACKS LAND HERE: A01 (which decomposition scheme), A02 (Cu(II)
+% open-shell), A03 (relativistic ECP for Pb), A04 (naked-ion reference state).
+% Each must be answered VISIBLY, without the referee having to ask.
+% ============================================================================
+\section{Computational methodology}
+\label{sec:computational}
+
+% ==========================================================================
+% CHECKLIST — Section III
+%   [ ] Cluster model figure with ATOM LABELS (part of Fig 4.9)
+%   [ ] Truncation justified: methyl cap, no dangling bonds, comparison is internal
+%   [ ] Deprotonation state a SENSITIVITY SET across P0/P1/P2, not an assumption
+%   [ ] Reaction written as AQUO-LIGAND EXCHANGE, charge-conserving (attack A04)
+%   [ ] Naked-ion form NEVER computed as the headline quantity
+%   [ ] ECP NAMED: def2-ECP, ECP60MDF, 60 core electrons (attack A03)
+%   [ ] Charge AND multiplicity for EVERY species in Table 3.1 (attack A02)
+%   [ ] Cu(II) explicitly d9 open-shell doublet; <S^2> reported for every Cu species
+%   [ ] SMD cited to Marenich, Cramer & Truhlar; program cited to Neese WITH VERSION
+%   [ ] All frequencies real, confirmed; quasi-RRHO cutoff stated
+%   [ ] 1 atm -> 1 M correction AND the 55.34 M water standard state both stated
+%   [ ] Decomposition scheme named EXACTLY with the program that implemented it (A01)
+%   [ ] 'ETS-NOCV' NOT used unless ADF/AMS produced it — it did not
+%   [ ] f_orb defined explicitly and declared scheme-dependent (attack A13)
+%   [ ] Hemidirection descriptors defined mathematically, to be MEASURED (attack A14)
+%   [ ] Protocol validation at the PRODUCTION level of theory, deviation reported
+% ==========================================================================
+
+\subsection{Cluster model construction and truncation}
+\label{sec:cluster-model}
+% Model: METHYL GALLATE — methyl 3,4,5-trihydroxybenzoate.
+% Truncation table from dft/DFT_PROTOCOL.md §1.2:
+%   - one galloyl unit, not the whole 76-heavy-atom tannic acid
+%   - ester link to glucose capped with METHYL, which preserves the
+%     electron-withdrawing ester that tunes phenolic acidity; capping with H
+%     (gallic acid) would change it to a carboxylic acid and shift the pKa
+%   - NO dangling bonds are created; no link-atom artefacts
+% DEFENSIBLE BECAUSE THE COMPARISON IS INTERNAL: all three metals see the same
+% model at the same level; truncation errors common to all three largely cancel
+% in the metal-to-metal difference, which is the quantity that carries the argument.
+%
+% DEPROTONATION AT pH 5 — A SENSITIVITY SET, NOT AN ASSUMPTION. Gallic acid's most
+% acidic phenolic OH has pKa ~8.5, so at pH 5 the galloyl is predominantly
+% PROTONATED; metal-induced deprotonation is nonetheless common at catechol-type
+% sites. Three states (P0 neutral, P1 mono-deprotonated, P2 bis-deprotonated
+% chelate) are computed for every metal and THE ORDERING IS TESTED ACROSS ALL
+% THREE. The claim reported is the one that survives all three. This converts the
+% single most attackable assumption in the model into a result.
+
+\subsection{Level of theory, basis sets and relativistic treatment}
+\label{sec:level-of-theory}
+
+% --- registry Table 3.1 | source: dft/DFT\_PROTOCOL.md | script: tables/src/tab3\_1\_protocol.py ---
+\begin{table}[htbp]
+  \centering
+  \caption[Computational protocol]{Computational protocol. Charge and spin multiplicity are stated for every species; \CuII{} is a $\mathrm{d}^9$ open-shell doublet and all \CuII{} species were treated with an unrestricted formalism, with $\langle S^2 \rangle$ reported in Appendix~E. Scalar-relativistic effects on \PbII{} are included through the named effective core potential. The decomposition scheme is named together with the program that implemented it.}
+  \label{tab:protocol}
+  \NEEDSDATA{Table~\ref{tab:protocol} (registry 3.1)}{dft/DFT\_PROTOCOL.md \\ owning script: \texttt{tables/src/tab3\_1\_protocol.py}}
+\end{table}
+
+% FUNCTIONAL: PBE0 (25% exact exchange) with D3(BJ) dispersion. Justify for a
+% heavy post-transition metal AND for d9 Cu: pure GGAs over-delocalise the singly
+% occupied orbital, high-HF functionals over-localise it; 25% is the standard
+% compromise, and ONE functional serving all three metals is what makes the
+% comparison internally consistent.
+% BASIS: def2-TZVP throughout. Pb uses the def2-ECP — NAME IT: the
+% Stuttgart–Cologne ECP60MDF small-core relativistic ECP, 60 core electrons, 22 in
+% valence. Cite Weigend & Ahlrichs 2005 and Metz, Stoll & Dolg 2000.
+% "def2-ECP" alone is insufficient; the core size must be stated.
+
+\subsection{Thermochemistry and reference state}
+\label{sec:thermochemistry}
+% THE REACTION IS AQUO-LIGAND EXCHANGE, charge-conserving:
+%   [M(H2O)6]2+ + LHn  ->  [M(LHn)(H2O)4]q + 2 H2O
+% Three properties to state: charge conserved so Born solvation error largely
+% cancels; NO FREE PROTON, avoiding the most convention-dependent quantity in
+% aqueous computational thermochemistry; species count matched across metals so
+% the metal-to-metal difference is close to isodesmic.
+%
+% NAKED-ION BINDING ENERGIES ARE NEVER COMPUTED AS THE HEADLINE QUANTITY.
+%
+% Pb aquo coordination number: BOTH [Pb(H2O)6]2+ and [Pb(H2O)8]2+ are computed and
+% the lower-free-energy structure used as reference, with the choice reported.
+% Silently assuming six for Pb is exactly what a computational referee looks for.
+%
+% STANDARD STATE, stated numerically:
+%   RT ln(24.46) = 7.91 kJ/mol per mole of species, for 1 atm -> 1 mol/L
+%   water referenced to the PURE LIQUID, 55.34 mol/L: -2RT ln(55.34) = -19.9 kJ/mol
+% FREQUENCIES: analytic, same level, same solvent, all real. Quasi-RRHO treatment
+% of modes below 100 cm-1, cited.
+% BSSE: counterpoise computed for one representative case per metal and the
+% MAGNITUDE REPORTED, rather than asserted negligible.
+
+\subsection{Energy decomposition analysis}
+\label{sec:eda-method}
+% ATTACK A01, CRITICAL. Read vendor/README_EDA.md before writing this subsection.
+%
+% ETS-NOCV IS A METHOD OF ADF/AMS. ADF IS NOT AVAILABLE TO THIS PROJECT.
+% THE TERM "ETS-NOCV" IS NOT USED ANYWHERE IN THIS REPORT.
+%
+% Name the scheme, the program AND the version. Define the fragmentation: metal
+% with retained aquo ligands vs galloyl ligand, at the complex geometry, with
+% fragment charges and spin states tabulated (for Cu the metal fragment is a
+% doublet, the ligand a singlet).
+%
+% DEFINE f_orb EXPLICITLY:
+\begin{equation}
+  \forb \;=\; \frac{\Delta E_{\mathrm{orb}}}
+                   {\Delta E_{\mathrm{elstat}} + \Delta E_{\mathrm{orb}}}
+  \label{eq:forb}
+\end{equation}
+% AND STATE: this is a ratio of decomposition terms and is SCHEME-DEPENDENT —
+% internally comparable across the three metals under identical settings, and NOT
+% transferable to values from other studies using other schemes. Saying this
+% closes attack A13 at the same time as A01.
+%
+% PRE-COMMITTED FALLBACK (dft/DFT_PROTOCOL.md §4.3): if the decomposition software
+% is not obtained in time, THE REPORT CONTAINS NO f_orb. It contains the exchange
+% free energies, the geometries, the hemidirection descriptors and the charge-
+% transfer analysis, and §4.7 argues from those alone with the absence of a full
+% energy partition stated as a limitation. A missing decomposition honestly
+% declared costs a fraction of what an invented one costs.
+
+\subsection{Geometric descriptors of hemidirection}
+\label{sec:hemidirection-method}
+% ATTACK A14: hemidirection is MEASURED, never asserted.
+% Implemented in analysis/src/hemidirection.py, unit-tested against a hand-worked
+% geometry (three orthogonal donors at 2.5 A give d = 1.4433756729740643 A and
+% theta_void = 125.26438968275465 deg).
+
+Let $\mathbf{r}_{\mathrm{M}}$ be the metal position and $\{\mathbf{r}_i\}$ the positions of the
+$n$ coordinating donor atoms, with unit vectors
+$\hat{\mathbf{u}}_i = (\mathbf{r}_i - \mathbf{r}_{\mathrm{M}})/|\mathbf{r}_i - \mathbf{r}_{\mathrm{M}}|$.
+The \emph{centroid displacement} and its normalised form are
+\begin{equation}
+  d = \left| \mathbf{r}_{\mathrm{M}} - \frac{1}{n}\sum_{i} \mathbf{r}_i \right|,
+  \qquad
+  \tilde{d} = \frac{d}{\langle |\mathbf{r}_i - \mathbf{r}_{\mathrm{M}}| \rangle},
+  \label{eq:displacement}
+\end{equation}
+and the \emph{void direction} and \emph{void-hemisphere angle} are
+\begin{equation}
+  \hat{\mathbf{v}} = -\frac{\sum_i \hat{\mathbf{u}}_i}{\left|\sum_i \hat{\mathbf{u}}_i\right|},
+  \qquad
+  \theta_{\mathrm{void}} = \min_i \arccos\!\left(\hat{\mathbf{v}} \cdot \hat{\mathbf{u}}_i\right).
+  \label{eq:voidangle}
+\end{equation}
+% NOTES TO WRITE OUT:
+%  - d~ is the PRIMARY reported quantity: normalising by the mean bond length
+%    removes the trivial dependence on ionic radius. Without it Pb would score
+%    higher simply for having longer bonds — an artefact, not a result.
+%  - When |sum u_i| ~ 0 the donor set is symmetric, no void direction exists, and
+%    the geometry is HOLODIRECTED — reported as such rather than given a spurious
+%    angle.
+%  - THE TWO DESCRIPTORS ARE COMPLEMENTARY AND BOTH ARE REPORTED: d~ responds to
+%    radial asymmetry; theta_void is purely angular and by construction does not.
+%    One number cannot capture both distortions.
+%  - Concept after Shimoni-Livny, Glusker & Bock; the operationalisation above is
+%    this work's own and is defined here rather than assumed (origin tagging).
+
+\subsection{Validation of the computational protocol}
+\label{sec:validation}
+% Short, cheap, disproportionately credibility-generating.
+% [Pb(H2O)6]2+ and [Pb(H2O)8]2+ optimised UNDER THE EXACT PRODUCTION PROTOCOL and
+% the mean Pb–O distance compared against published experimental (EXAFS / XRD) and
+% high-level computed hydration structures. Deviation reported in angstrom and as
+% a percentage.
+% VALIDATION MUST RUN AT THE PRODUCTION LEVEL. A validation at a different level
+% validates nothing.
+The deviation of the computed mean \ce{Pb-O} distance from the reference value was
+\PENDING{validation_deviation_pct}{protocol validation: deviation of the computed hydration
+structure from its known experimental value, in per cent}.

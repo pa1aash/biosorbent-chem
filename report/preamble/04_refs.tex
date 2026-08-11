@@ -1,0 +1,23 @@
+% ============================================================================
+% 04_refs.tex  —  bibliography
+%
+% ACS style, biblatex + biber. natbib is NOT loaded: yhsa-jinst.sty has it
+% commented out precisely so that this works. See JINST_PROVENANCE.md.
+%
+% RULE (CLAUDE.md §6): no citation enters refs/library.bib until
+% scripts/verify_dois.py resolves it against Crossref AND Palaash confirms he
+% has read it. A single fabricated reference is an integrity finding.
+% ============================================================================
+
+\usepackage[
+  backend=biber,
+  style=chem-acs,
+  articletitle=true,
+  biblabel=brackets,
+  doi=true,
+  sorting=none          % order of first appearance, per docs/00_SPEC.md §13
+]{biblatex}
+
+\addbibresource{../refs/library.bib}
+
+\renewcommand*{\bibfont}{\small}

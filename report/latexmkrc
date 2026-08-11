@@ -1,0 +1,31 @@
+# Chem-151 latexmk configuration.
+#
+# The JINST-derived style lives in preamble/, not on the TeX search path, so
+# TEXINPUTS is set here rather than relied upon from the environment: latexmk
+# does not reliably inherit it, and a build that works only with the right
+# variable exported is a build that breaks on a fresh clone.
+
+use Cwd qw(abs_path);
+use File::Basename qw(dirname);
+my $here = dirname(abs_path($0 eq '' ? 'latexmkrc' : 'latexmkrc'));
+$here = abs_path('.') unless -d $here;
+
+$ENV{'TEXINPUTS'} = "$here//:" . ($ENV{'TEXINPUTS'} // '');
+$ENV{'BIBINPUTS'} = "$here//:" . ($ENV{'BIBINPUTS'} // '');
+
+$pdf_mode        = 1;          # pdflatex
+$bibtex_use      = 2;          # run biber, and clean its products
+$biber           = 'biber %O %S';
+$out_dir         = 'build';
+
+# Keep going through errors so that ALL problems surface in one pass rather than
+# one per compile. The final build's gate is scripts/check_placeholders.py and
+# scripts/check_compliance.py, not latexmk's exit code.
+$pdflatex        = 'pdflatex -interaction=nonstopmode -file-line-error -synctex=1 %O %S';
+
+# The draft skeleton has many unresolved references while sections are still
+# placeholders; four passes settle the TOC, the lists of figures and tables, and
+# cleveref's labels.
+$max_repeat      = 5;
+
+@default_files   = ('main.tex');

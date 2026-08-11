@@ -1,0 +1,320 @@
+% ============================================================================
+% SECTION II — EXPERIMENTAL          target 6–8 pages, 2200–3000 words
+%
+% PURPOSE: prove the work was done and that anyone could repeat it. This is where
+% authenticity is won or lost.
+%
+% SOURCE TEXT: docs/EXPERIMENTAL_PROTOCOL_v2.md. Do not write this section from
+% Lab_Protocol.pdf — v1 contains errors that v2 corrects, and every correction is
+% marked and justified there.
+%
+% VOICE: measured passive past tense throughout ("The scales were demineralised…").
+% ============================================================================
+\section{Experimental}
+\label{sec:experimental}
+
+% ==========================================================================
+% CHECKLIST — Section II
+%   [ ] Every reagent with GRADE AND SUPPLIER (Table 2.1)
+%   [ ] Water type and resistivity
+%   [ ] §2.2 must NOT describe a demineralisation — the ossein was purchased (audit B10.6)
+%   [ ] Grafting chemistry stated with a scheme, and honest about what is NOT demonstrated
+%   [ ] Loading MEASURED with the assay given and its limitation stated (attack A11)
+%   [ ] TGA and BET explicitly DESIGNED OUT with a stated reason, not silently absent (B5)
+%   [ ] XPS charge reference named: adventitious C 1s at 284.8 eV (B6)
+%   [ ] EDX declared semi-quantitative; no wt% quoted as a loading measurement
+%   [ ] Leaching test quantified with n>=3 against a gallic-acid curve (attack A10)
+%   [ ] LOD, LOQ and spike recovery reported with the convention named (B8)
+%   [ ] Sorbent-free blank absence stated honestly (Q2) — do not imply one was run
+%   [ ] 0.45 um filtration counts precipitate as uptake — stated as a limitation (B10.13)
+%   [ ] n stated everywhere: n=3 at the 40 mg/L point, n=2 elsewhere (Q20)
+%   [ ] Ternary composition in mg/L AND mmol/L (Table 2.3) — never 'equimolar' (B3)
+% ==========================================================================
+
+\subsection{Materials}
+\label{sec:materials}
+
+% --- registry Table 2.1 | source: docs/EXPERIMENTAL\_PROTOCOL\_v2.md §2.1 | script: tables/src/tab2\_1\_reagents.py ---
+\begin{table}[htbp]
+  \centering
+  \caption[Reagents, grade and supplier]{Reagents used in this work, with grade and supplier. All reagents were used as received. \PbII{} was supplied as the nitrate and \CuII{} and \ZnII{} as sulfates; the consequences of this counter-ion mismatch for the ternary experiments are addressed in \cref{sec:solution-prep} and \cref{sec:speciation-method}.}
+  \label{tab:reagents}
+  \NEEDSDATA{Table~\ref{tab:reagents} (registry 2.1)}{docs/EXPERIMENTAL\_PROTOCOL\_v2.md §2.1 \\ owning script: \texttt{tables/src/tab2\_1\_reagents.py}}
+\end{table}
+
+\subsection{Source and conditioning of the ossein}
+\label{sec:ossein}
+% [AMENDED v2 — retitled] NO DEMINERALISATION WAS PERFORMED IN THIS WORK.
+% Demineralised fish-scale ossein was PURCHASED from Nizona Marine Products Pvt. Ltd.
+% Consequences: no yield of demineralisation is reported; Fig 2.1 is redefined as
+% supplied ossein -> sized fraction -> TA-OSS (the raw-scale panel is dropped);
+% novelty claim 1 is worded to match. See audit B10.6 and decision log Q5.
+%
+% Conditioning [UNCHANGED]: rinse x3 with 500 mL DI; dry 60 C to constant mass;
+% grind; sieve to the 0.50–1.00 mm fraction; portion.
+% Rationale for the fraction: gives Dc/dp ~ 10–20 at the 10 mm column ID.
+
+% --- registry Fig 2.1 | source: figures/photos/ --- DS-20 shot list | script: figures/src/fig2\_1\_process\_flow.py ---
+\begin{figure}[htbp]
+  \centering
+  \NEEDSDATA{Figure~\ref{fig:process-flow} (registry 2.1)}{figures/photos/ --- DS-20 shot list \\ owning script: \texttt{figures/src/fig2\_1\_process\_flow.py}}
+  \caption[Preparation of the functionalised biosorbent]{Preparation of the functionalised biosorbent: \textbf{(a)} demineralised fish-scale ossein as supplied; \textbf{(b)} the sieved \SIrange{0.50}{1.00}{\milli\metre} working fraction; \textbf{(c)} tannic-acid functionalisation in progress; \textbf{(d)} the dried \TAOSS{} product beside the \RAWOSS{} control, showing the colour change on grafting. No demineralisation was performed in this work; the ossein was obtained commercially in demineralised form.}
+  \label{fig:process-flow}
+\end{figure}
+
+\subsection{Galloyl functionalisation with tannic acid}
+\label{sec:functionalisation}
+
+\subsubsection{Grafting protocol}
+\label{sec:grafting}
+% 18 g tannic acid in 360 mL DI (5% w/v); bath to pH 5.0 with 1 M NaOH; 18 g sized
+% ossein; covered; stirred 12–16 h at 300–400 rpm. RAW-OSS control processed
+% identically without tannic acid.
+%
+% [NEW v2] STATE THE CHEMISTRY, and be honest about its limits: at pH 5 in air,
+% galloyl groups partially oxidise to ortho-quinones which can couple to collagen
+% lysine and N-terminal amines by Michael addition or Schiff-base formation;
+% hydrogen bonding and hydrophobic association also occur. THE RELATIVE
+% CONTRIBUTION OF COVALENT GRAFTING VERSUS STRONG PHYSISORPTION IS NOT RESOLVED BY
+% THE MEASUREMENTS MADE HERE. The leaching test bounds it; FTIR evidences the
+% aromatic system; neither identifies the bond. Saying so is a rigour point.
+
+% --- registry Fig 2.2 | source: drawn; no data dependency | script: figures/schemes/ ---
+\begin{figure}[htbp]
+  \centering
+  \NEEDSDATA{Figure~\ref{fig:grafting-scheme} (registry 2.2)}{drawn; no data dependency \\ owning script: \texttt{figures/schemes/}}
+  \caption[Proposed tannic acid--collagen grafting chemistry]{Proposed grafting chemistry between tannic acid and the collagen scaffold at \pH~5.0. Partial oxidation of the vicinal-trihydroxy galloyl unit to the \textit{ortho}-quinone permits coupling to lysine $\varepsilon$-amino and N-terminal amine groups; hydrogen bonding and hydrophobic association operate in parallel. The measurements reported here establish that the galloyl unit is retained on the material and bound strongly enough to resist leaching (\cref{sec:leaching-method}), but do not identify the bond type.}
+  \label{fig:grafting-scheme}
+\end{figure}
+
+\subsubsection{Washing and quantification of galloyl loading}
+\label{sec:loading}
+% [AMENDED v2] Wash endpoint is QUANTITATIVE: filtrate absorbance at 276 nm below
+% 0.05, with the visual check as fallback only. v1's own "Critical" note says
+% insufficient washing falsely raises apparent removal; a defect that serious
+% should not have a subjective endpoint.
+%
+% Loading (%) = (m_func - m_raw,eq)/m_raw,eq x 100, n>=3, mean +- SD.
+% STATE THE LIMITATION: mass difference cannot distinguish grafted from entrained
+% tannin and is sensitive to residual moisture. Attack A11 is answered by giving
+% the method AND its limitation, not the number alone.
+
+\subsubsection{Conditions screened and rejected}
+\label{sec:failed-conditions}
+% Bible Observation 3: reporting failure is reporting competence.
+\TODOPAL{Q11 --- which steps did not go as written, and what actually happened? Any batch that
+leached, bath that gelled, column that channelled, fraction ground too fine, calibration that
+failed $R^2$, or eluent tried and abandoned. If genuinely nothing failed, this subsection and
+\cref{fig:failed} are dropped --- but a report with no failures at all invites suspicion.}
+
+\subsection{Characterisation}
+\label{sec:characterisation}
+
+% --- registry Table 2.2 | source: docs/DATA\_REQUEST.md DS-03, DS-21 | script: tables/src/tab2\_2\_instruments.py ---
+\begin{table}[htbp]
+  \centering
+  \caption[Instruments and analytical figures of merit]{Instruments, operating parameters and analytical figures of merit. All measurements were carried out by the author. Limits of detection and quantitation were determined from $n \geq 7$ independent measurements of the calibration blank as $\mathrm{LOD} = 3.3\sigma_{\mathrm{blank}}/S$ and $\mathrm{LOQ} = 10\sigma_{\mathrm{blank}}/S$, where $S$ is the calibration slope.}
+  \label{tab:instruments}
+  \NEEDSDATA{Table~\ref{tab:instruments} (registry 2.2)}{docs/DATA\_REQUEST.md DS-03, DS-21 \\ owning script: \texttt{tables/src/tab2\_2\_instruments.py}}
+\end{table}
+
+% [DESIGNED OUT] Thermogravimetric analysis and nitrogen physisorption were NOT
+% available. State this explicitly here — a missing measurement that is explained
+% is a limitation; one silently absent is a hole. No specific surface area or pore
+% structure is reported, and capacity is reported per unit MASS throughout.
+% The evidence for grafting rests instead on six independent lines (audit B5),
+% two of which — the quantified leaching test and XPS — are STRONGER than TGA mass
+% loss and BET area would have been, because those are indirect whereas XPS Pb 4f
+% is a direct observation of the binding event. Present as a design choice.
+
+\subsubsection{ATR-FTIR}
+\label{sec:ftir-method}
+% 4000–400 cm-1, 4 cm-1 resolution, >=32 scans. RAW-OSS, TA-OSS, spent TA-OSS.
+% NOTE: the spent sample comes from the column, so it is Pb-only loaded, not
+% ternary-loaded. Say which.
+
+\subsubsection{Scanning electron microscopy and EDX}
+\label{sec:sem-method}
+% [NEW v2] Three magnifications per sample; accelerating voltage, working distance,
+% detector and COATING ELEMENT recorded (a C coat interferes with the EDX carbon
+% signal; an Au coat overlaps the Pb M lines). Scale bar burned in by the instrument.
+% STATE: EDX on a rough, low-Z, coated biological material is SEMI-QUANTITATIVE.
+% It evidences spatial distribution and presence. NO wt% is quoted as a loading
+% measurement.
+
+\subsubsection{X-ray photoelectron spectroscopy}
+\label{sec:xps-method}
+% [NEW v2] Survey plus high-resolution Pb 4f, O 1s, C 1s, N 1s on RAW-OSS, fresh
+% TA-OSS and DI-WASHED Pb-loaded TA-OSS. The wash step is not optional: unwashed
+% material shows surface Pb salt, not coordinated Pb.
+% CHARGE REFERENCING: adventitious C 1s set to 284.8 eV. State it — binding
+% energies are meaningless without a named reference.
+% FITTING: Shirley background; Gaussian–Lorentzian with the mixing ratio stated;
+% FWHM constrained equal within a region; Pb 4f doublet constrained to 4.87 eV
+% splitting and 4:3 area ratio; component count justified on chemical grounds, not
+% chosen to improve the residual.
+% BEAM DAMAGE: Pb 4f acquired early and re-acquired at the end to show it is
+% unchanged.
+
+\subsubsection{Residual mineral content}
+\label{sec:ash-method}
+% 550–600 C for >=4 h to constant mass, duplicate, RAW and TA.
+
+\subsubsection{Point of zero charge}
+\label{sec:pzc-method}
+% Drift method, 9 points 2–10, 0.01 M NaCl, 24 h, both sorbents.
+% CAVEAT: determined without exclusion of atmospheric CO2, which shifts the
+% plateau slightly. Note it rather than correct it.
+% A lower pH_PZC for TA-OSS is independent FUNCTIONAL evidence of grafting, not
+% merely spectroscopic. Promote it in §4.1.
+
+\subsubsection{Quantified tannic-acid leaching}
+\label{sec:leaching-method}
+% [AMENDED v2 — was optional, now mandatory] pH 5.0 and pH 2.0; 2 g/L, 120 min
+% (plus 24 h where material allowed); n>=3; released phenolics at 276 nm against a
+% GALLIC-ACID calibration curve; RAW-OSS blank at each pH.
+% REPORT AS A NUMBER: mg gallic-acid-equivalent per g sorbent, AND as a percentage
+% of the measured loading. The percentage is what answers attack A10.
+% LIMITATION: this is a gallic-acid-EQUIVALENT value, not an absolute tannic-acid mass.
+% SECOND USE: the pH 2 result evidences the mechanism of capacity loss across
+% regeneration cycles (attack A16). One experiment closes two attacks.
+
+\subsection{Batch sorption protocols}
+\label{sec:batch-method}
+
+\subsubsection{Solution preparation and pH control}
+\label{sec:solution-prep}
+% Acid-washed glassware; 1000 mg/L stocks (masses verified in audit D.4);
+% operating pH 5.0.
+% COUNTER-ION NOTE: Pb enters as nitrate, Cu and Zn as sulfates. Immaterial in
+% single-metal work; NOT immaterial in the ternary — see §2.9 and audit B10.1.
+
+% --- registry Fig 2.4 | source: analysis/src/speciation.py (computed, not measured) | script: figures/src/fig2\_4\_speciation.py ---
+\begin{figure}[htbp]
+  \centering
+  \NEEDSDATA{Figure~\ref{fig:speciation} (registry 2.4)}{analysis/src/speciation.py (computed, not measured) \\ owning script: \texttt{figures/src/fig2\_4\_speciation.py}}
+  \caption[Computed \PbII{} speciation against \pH{}]{Computed aqueous speciation of \PbII{} as a function of \pH{} under the ionic conditions of this work, with the operating \pH{} of 5.0 marked. Saturation indices for anglesite (\ce{PbSO4}), \ce{Pb(OH)2} and hydrocerussite at every experimental condition are tabulated in Appendix~G. Activity corrections follow the Davies equation; every equilibrium constant is cited to its source.}
+  \label{fig:speciation}
+\end{figure}
+
+\subsubsection{Elemental analysis and quality control}
+\label{sec:aas-method}
+% Flame AAS, air–acetylene. Pb 283.3, Cu 324.8, Zn 213.9 nm. One element per
+% aspiration. Five standards plus blank; R2 > 0.99 before any sample; mid-range
+% check standard at start/middle/end; batches failing +-5–10% rejected and re-run.
+%
+% [AMENDED v2] REPORT THE CALIBRATION RANGE PER METAL. Typical flame AAS linear
+% ranges are roughly Pb ~20, Cu ~5, Zn ~1 mg/L; a 50 mg/L Zn standard at 213.9 nm
+% would sit well above the linear range, and Zn concentrations propagate directly
+% into alpha(Pb/Zn), a headline number. Attack A25.
+\TODOPAL{Q21 --- the actual standard concentrations, wavelengths, fit form (linear or quadratic)
+and $R^2$ per metal per batch. If Zn was run at \SI{213.9}{\nano\metre} with a
+\SI{50}{\milli\gram\per\litre} top standard, state how linearity was maintained: dilution into a
+\SIrange{0.1}{1}{\milli\gram\per\litre} working range, the less sensitive
+\SI{307.6}{\nano\metre} line, or a stated quadratic fit. Any of these is acceptable if declared.}
+
+% [NEW v2] LOD/LOQ by the IUPAC convention, named. CONSEQUENCE TO STATE: every
+% value below LOQ is reported as "< LOQ" and is NOT used in a fit or an average.
+% This most likely affects the early column fractions and the low end of the
+% isotherms. Silently fitting below-LOQ points is a real error and is invisible
+% unless the LOQ is published.
+% [NEW v2] Spike recovery on three matrices, acceptance 90–110%. The diluted acid
+% regenerate is the one most likely to fail.
+
+\subsubsection{Controls, blanks and replication}
+\label{sec:controls}
+% RAW-OSS negative control throughout.
+%
+% SORBENT-FREE BLANKS — STATE THE POSITION HONESTLY. v1 ran ONE sorbent-free flask,
+% at pH 6.0 only. No sorbent-free ternary blank was performed (Phase 4 answer Q2).
+% The solutions were observed to remain visibly clear and this was recorded at the
+% time. The report therefore publishes the computed saturation indices, reports the
+% visual observation, states in §5.3 that precipitation cannot be excluded by
+% measurement — only by calculation and observation — and names the nitrate-salt
+% design as the correction in §5.4. DO NOT IMPLY A BLANK WAS RUN.
+\TODOPAL{Supply the dated laboratory note recording that the ternary solutions remained visibly
+clear. It is the evidence for this paragraph and belongs in Appendix~H.}
+
+% [NEW v2] RECOGNISED LIMITATION OF THE ANALYTICAL SCHEME: every sample is filtered
+% at 0.45 um, so any metal removed as a SOLID is retained by that filter and
+% recorded as sorption. Stated here and again in §5.3.
+%
+% REPLICATION (Phase 4 answer Q20): n = 3 at the 40 mg/L isotherm point, n = 2
+% everywhere else. All values mean +- SD, with n stated in every caption and table.
+
+\subsection{Competitive sorption design}
+\label{sec:competitive-method}
+% [AMENDED v2] The term "equimolar" is STRUCK. The 50/50/50 mg/L run is
+% EQUAL-MASS (Phase 4 answer Q1). The molar-deficit argument stands and the
+% Stage-1 abstract is correct as published.
+% The 25/100/100 mg/L MINORITY-TARGET run is the HEADLINE condition (answer Q3).
+
+% --- registry Table 2.3 | source: DS-01, DS-02 measured initial aliquots | script: tables/src/tab2\_3\_ternary\_composition.py ---
+\begin{table}[htbp]
+  \centering
+  \caption[Ternary composition in mass and molar units]{Composition of the two ternary systems in \unit{\milli\gram\per\litre} and \unit{\milli\mole\per\litre}, showing the molar ratio of each competitor to \PbII{}. Both compositions place \PbII{} at a molar deficit; the minority-target system, used as the headline competitive condition, places it at an approximately thirteen-fold per-metal molar disadvantage. Initial concentrations are the \emph{measured} values of the pre-contact aliquots, not the nominal values.}
+  \label{tab:ternary-composition}
+  \NEEDSDATA{Table~\ref{tab:ternary-composition} (registry 2.3)}{DS-01, DS-02 measured initial aliquots \\ owning script: \texttt{tables/src/tab2\_3\_ternary\_composition.py}}
+\end{table}
+
+\subsubsection{Definition of the selectivity factor}
+\label{sec:selectivity-def}
+\begin{equation}
+  \alpha(\mathrm{Pb}/\mathrm{M}) \;=\;
+  \frac{\qe(\mathrm{Pb})\,\Ce(\mathrm{M})}{\qe(\mathrm{M})\,\Ce(\mathrm{Pb})}
+  \;=\; \frac{\Kd(\mathrm{Pb})}{\Kd(\mathrm{M})},
+  \qquad \Kd = \frac{\qe}{\Ce}.
+  \label{eq:alpha}
+\end{equation}
+% [NEW v2] TWO PROPERTIES TO STATE, because both pre-empt an objection:
+%  1. This form is algebraically identical to alpha = (q_Pb/Ce_Pb)/(q_M/Ce_M).
+%  2. alpha is INVARIANT to whether q and C are expressed on a mass or molar
+%     basis, because the molar mass cancels in the ratio. The headline selectivity
+%     numbers are therefore NOT a unit artefact. One sentence here disarms attack
+%     A23 at the point of definition.
+
+\subsection{Fixed-bed column operation}
+\label{sec:column-method}
+% 10 mm ID borosilicate; 4.0 g TA-OSS wet-packed; bed height, V_bed, rho_b and H:D
+% MEASURED at packing — every bed-volume figure in the report depends on the
+% measured V_bed. Feed 100 mg/L Pb at pH 5.0, 8 BV/h downflow, EBCT ~7.5 min.
+% Fractions every 0.5 BV to 10 BV, then 2 BV to C/C0 ~ 0.5, then 5 BV to >= 0.90.
+%
+% [AMENDED v2] The v1 §5.4.3 expected-breakthrough table (BV10 ~ 117, EF ~ 56x) is
+% a PLANNING ESTIMATE, SUPERSEDED BY MEASUREMENT. Reproduce it only when discussing
+% the shortfall, never as a prediction the data confirmed.
+% [NEW v2] MASS BALANCE: Pb fed = Pb in pooled effluent + Pb in regenerate + Pb on
+% the bed. All three terms are already measurable. Attack A27.
+
+% --- registry Fig 2.5 | source: drawn; dimensions from DS-06 | script: figures/schemes/ ---
+\begin{figure}[htbp]
+  \centering
+  \NEEDSDATA{Figure~\ref{fig:column-schematic} (registry 2.5)}{drawn; dimensions from DS-06 \\ owning script: \texttt{figures/schemes/}}
+  \caption[Fixed-bed column and counter-current regeneration]{Fixed-bed column and counter-current regeneration. Service flow is downflow at \SI{8}{BV\per\hour} at \pH~5.0; regeneration is counter-current upflow with \SI{3}{BV} of \SI{0.1}{\molar} \ce{HCl} at \SI{4}{BV\per\hour}, which concentrates the desorbed lead into a small eluent volume. One bed volume is the \emph{measured} packed-bed volume determined at packing.}
+  \label{fig:column-schematic}
+\end{figure}
+
+\subsection{Regeneration and recovery}
+\label{sec:regeneration-method}
+% Batch: spent TA-OSS from the equal-mass ternary; 3 cycles x n=3; desorption into
+% 0.1 M HCl 30 min; wash; re-adsorption from single-metal 50 mg/L Pb.
+%
+% [AMENDED v2] CYCLE 1 IS DEFINED as the first single-metal Pb RE-ADSORPTION
+% following the initial desorption. The material is ternary-loaded but re-adsorbs
+% from single-metal Pb, so taking "cycle 1" to mean the original ternary uptake
+% would compare two different quantities. The initial ternary loading is reported
+% separately as the source of the first desorbate.
+\TODOPAL{Q23 --- is the reported 80.1\,\% retention the batch $\qe$ retention or the column
+$\BVten$ retention? And what denominator was actually used?}
+
+\subsection{Speciation calculations}
+\label{sec:speciation-method}
+% [NEW v2] Computed, not measured. PHREEQC via phreeqpython with a named database;
+% Davies activity corrections; every equilibrium constant cited.
+% Species and solids tested are listed in protocol v2 §2.9.
+% INTERPRETATION RULE FIXED IN ADVANCE so the result cannot be massaged:
+%   SI < 0 undersaturated · 0 < SI < 1 supersaturated but plausibly kinetically
+%   inhibited, reported and defended · SI > 1 a live confounder, result qualified.
+% KNOWN OUTCOME TO BE REPORTED, NOT BURIED: both ternary compositions compute to a
+% POSITIVE anglesite saturation index. Publishing it and explaining it is far
+% stronger than staying silent and being found out.

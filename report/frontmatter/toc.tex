@@ -1,0 +1,63 @@
+% Pages iv-vii — Table of Contents, List of Figures, List of Tables,
+% List of Abbreviations and Symbols. docs/00_SPEC.md M5-M8, assertion C-037.
+%
+% THREE LEVELS with dot leaders. yhsa-jinst suppresses the leaders; they are
+% restored in 00_compliance.tex.
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+\phantomsection
+\addcontentsline{toc}{section}{Table of Contents}
+\tableofcontents
+\clearpage
+
+\phantomsection
+\addcontentsline{toc}{section}{List of Figures}
+\listoffigures
+\clearpage
+
+\phantomsection
+\addcontentsline{toc}{section}{List of Tables}
+\listoftables
+\clearpage
+
+\phantomsection
+\addcontentsline{toc}{section}{List of Abbreviations and Symbols}
+\section*{List of Abbreviations and Symbols}
+
+\begin{longtable}{@{}p{28mm}p{110mm}@{}}
+\toprule
+\textbf{Symbol} & \textbf{Meaning} \\
+\midrule \endhead
+AAS            & Flame atomic absorption spectrometry \\
+ATR-FTIR       & Attenuated total reflectance Fourier-transform infrared spectroscopy \\
+BV             & Bed volume; the measured volume of the packed sorbent bed \\
+$\BVten$       & Bed volumes of feed processed at 10\,\% breakthrough \\
+$\Ce$          & Equilibrium concentration (\mgL) \\
+$C_0$          & Initial concentration (\mgL) \\
+EBCT           & Empty-bed contact time, $V_{\mathrm{bed}}/Q$ \\
+ECP            & Effective core potential \\
+EDX            & Energy-dispersive X-ray spectroscopy \\
+EF             & Enrichment factor, $C_{\mathrm{regenerate}}/C_{\mathrm{feed}}$ \\
+$\forb$        & Orbital-interaction fraction, $\Delta E_{\mathrm{orb}}/(\Delta E_{\mathrm{elstat}}+\Delta E_{\mathrm{orb}})$ \\
+$\Kd$          & Distribution coefficient, $\qe/\Ce$ (\Lg) \\
+$K_{\mathrm{L}}$ & Langmuir affinity constant \\
+LOD, LOQ       & Limit of detection; limit of quantitation \\
+$\qe$          & Equilibrium sorption capacity (\mgg\ and \mmolg) \\
+$\qmax$        & Langmuir maximum monolayer capacity \\
+$q_{\mathrm{col}}$ & Dynamic column capacity \\
+RAW--OSS       & Unfunctionalised ossein; the negative control \\
+SEM            & Scanning electron microscopy \\
+SI             & Saturation index, $\log(\mathrm{IAP}/K_{\mathrm{sp}})$ \\
+SMD            & Solvation model based on density \\
+TA--OSS        & Tannic-acid-functionalised ossein; the material under test \\
+XPS            & X-ray photoelectron spectroscopy \\
+$\alpha$(Pb/M) & Selectivity factor, $\Kd(\mathrm{Pb})/\Kd(\mathrm{M})$ \\
+$\rho_{\mathrm{b}}$ & Packed-bed density \\
+$\langle S^2\rangle$ & Expectation value of the total spin operator \\
+\bottomrule
+\end{longtable}
+
+\TODOPAL{Review this list once the report is written; add any abbreviation introduced later.}
+
+\clearpage

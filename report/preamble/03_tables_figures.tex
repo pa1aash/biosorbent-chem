@@ -1,0 +1,35 @@
+% ============================================================================
+% 03_tables_figures.tex  —  floats
+%
+% Figure craft rules are in figures/STYLE.md and enforced in analysis/src/style.py.
+% This file only sets what LaTeX controls.
+% ============================================================================
+
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{rotating}
+\usepackage{float}
+\usepackage{pdfpages}
+
+% C-004: captions are one of the four places single spacing is permitted.
+% stretch=1 is caption's own mechanism and does not interact with setspace.
+\usepackage[font={small,stretch=1.0},labelfont=bf,justification=justified,%
+            singlelinecheck=false]{caption}
+\usepackage[labelformat=simple]{subcaption}
+\renewcommand\thesubfigure{(\alph{subfigure})}   % (a) (b) (c), per Bible §9.3
+\renewcommand\thesubtable{(\alph{subtable})}
+
+\graphicspath{{../figures/out/}{../figures/photos/}{../figures/schemes/}{figures/out/}}
+
+% Captions stand alone: they state what is plotted, the conditions, n, and what
+% the reader should see. That is a writing rule, not a package option, but the
+% small justified setting above is what makes a long caption readable.
+\captionsetup[figure]{skip=6pt}
+\captionsetup[table]{skip=6pt,position=top}
+
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.15}

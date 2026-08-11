@@ -1,0 +1,145 @@
+% ============================================================================
+% SECTION I — INTRODUCTION           target 6–8 pages, 2600–3600 words
+%
+% PURPOSE (Bible §8): establish that the CHEMICAL question is real, unsolved and
+% worth a Chemistry panel's attention; demonstrate literature thoroughness (C6);
+% stake the novelty claim (C2).
+%
+% FRAMING RULE (anti-pattern 1): this is a COORDINATION CHEMISTRY paper, not an
+% environmental engineering paper. The stated object of study is
+%   "why does a d10s2 post-transition ion outrank a d9 ion at an O-donor site?"
+% with remediation as the application. Referees for the Chemistry panel reward
+% chemical mechanism; they discount "we made an adsorbent".
+% ============================================================================
+\section{Introduction}
+\label{sec:introduction}
+
+% ==========================================================================
+% CHECKLIST — Section I
+%   [ ] Frame as coordination chemistry in the FIRST paragraph, not as remediation
+%   [ ] Cite Irving & Williams (1953) explicitly by name in §1.2
+%   [ ] Four literature strands, each ENDING in an explicit gap sentence (§1.3)
+%   [ ] Novelty box in §1.4 with the numbered original contributions
+%   [ ] Novelty claim 1 must match reality: ossein was PURCHASED, not prepared (audit B10.6)
+%   [ ] 35-60 references overall; §1.3 carries most of them
+%   [ ] Every DOI verified via scripts/verify_dois.py before any citation is written
+% ==========================================================================
+
+\subsection{Trace \PbII{} in mixed-metal aqueous streams}
+\label{sec:problem}
+% 0.75–1 page. Two paragraphs of scale and toxicity framing, kept SHORT and cited.
+% Then: why SELECTIVE RECOVERY rather than bulk removal — recovery enables
+% valorisation, reduces sludge, permits reuse. This is where the concentration
+% factor becomes meaningful.
+% Name the real streams with real concentration ranges AND citations:
+%   battery recycling leachate · e-waste · mine drainage · electroplating rinse.
+
+\subsection{The Irving--Williams trap in non-specific biosorbents}
+\label{sec:irving-williams}
+% 1–1.5 pages. THE CONCEPTUAL SEED OF THE WHOLE PAPER. Bible: "write it three
+% times until it is airtight."
+%
+%   1. State the Irving–Williams series explicitly; cite Irving & Williams 1953.
+%   2. Mechanism of the trap: finite O-donor sites; higher-stability transition
+%      metal complexes outcompete for them; a non-specific sorbent is
+%      THERMODYNAMICALLY STEERED AWAY from Pb(II).
+%   3. CRITICAL FRAMING MOVE: Pb(II) sits OUTSIDE the classical series because it
+%      is not a first-row d-block ion. Selectivity for Pb(II) is therefore not a
+%      matter of beating Irving–Williams on its own terms, but of engineering a
+%      site whose SELECTION RULES ARE DIFFERENT — geometry, polarisability,
+%      covalency and desolvation rather than charge density.
+
+
+% --- registry Fig 1.1 | source: literature values (cited) | script: figures/src/fig1\_1\_irving\_williams.py ---
+\begin{figure}[htbp]
+  \centering
+  \NEEDSDATA{Figure~\ref{fig:irving-williams} (registry 1.1)}{literature values (cited) \\ owning script: \texttt{figures/src/fig1\_1\_irving\_williams.py}}
+  \caption[The Irving--Williams series with \PbII{} placed outside it]{The Irving--Williams stability sequence for first-row divalent transition-metal complexes, with \PbII{} placed outside the series. The sequence orders complex stability for a common ligand set; \PbII{}, as a $\mathrm{d}^{10}\mathrm{s}^2$ post-transition ion, is not a member of it, and its affinity at an oxygen-donor site is therefore governed by different variables.}
+  \label{fig:irving-williams}
+\end{figure}
+
+% --- registry Fig 1.2 | source: schematic; geometries from this work's DFT output | script: figures/src/fig1\_2\_holo\_hemi.py ---
+\begin{figure}[htbp]
+  \centering
+  \NEEDSDATA{Figure~\ref{fig:holo-hemi} (registry 1.2)}{schematic; geometries from this work's DFT output \\ owning script: \texttt{figures/src/fig1\_2\_holo\_hemi.py}}
+  \caption[Holodirected versus hemidirected coordination geometry]{Holodirected versus hemidirected coordination geometry at a divalent metal centre. In the holodirected case the donor atoms surround the metal evenly; in the hemidirected case they are gathered into one hemisphere, leaving a void occupied by the stereochemically active $6\mathrm{s}^2$ lone pair. The void-hemisphere angle $\theta_{\mathrm{void}}$ and the normalised centroid displacement $\tilde{d}$, defined in \cref{sec:hemidirection-method}, quantify the distinction.}
+  \label{fig:holo-hemi}
+\end{figure}
+
+\subsection{Existing research}
+\label{sec:literature}
+% 2–2.5 pages, the literature review proper. FOUR STRANDS, each ending in an
+% explicit gap sentence. This subsection carries criterion C6 on its own.
+
+\subsubsection{Polyphenol and tannin sorbents for divalent metals}
+\label{sec:lit-tannin}
+% Şengil & Özacar valonia tannin resin and comparable systems; typical capacities;
+% typical selectivity ordering.
+% GAP SENTENCE: selectivity is reported, seldom explained at the electronic-structure level.
+
+\subsubsection{Collagen and ossein scaffolds}
+\label{sec:lit-collagen}
+% Fish-scale collagen isolation and thermal stability (Pati et al.); why a
+% demineralised collagen scaffold is attractive — abundant carboxylate and amide,
+% fibrous, waste-derived, low cost.
+% GAP SENTENCE: unfunctionalised collagen is non-selective.
+
+\subsubsection{\PbII{} coordination and the stereochemically active $6\mathrm{s}^2$ lone pair}
+\label{sec:lit-hemidirection}
+% Shimoni-Livny, Glusker & Bock on holodirected vs hemidirected geometries; the
+% void-hemisphere concept; when hemidirection is favoured — low coordination
+% number, soft/polarisable donors, anionic ligands.
+% GAP SENTENCE: hemidirection is well documented in crystallography, rarely used
+% as a DESIGN PRINCIPLE for a sorbent.
+
+\subsubsection{Computational treatment of metal--polyphenol binding}
+\label{sec:lit-computational}
+% DFT-D3, implicit solvation (SMD), energy-decomposition and charge-decomposition
+% approaches; what they have and have not been applied to.
+% GAP SENTENCE: no matched experimental-competitive and decomposition study for a
+% designed galloyl pocket across Pb/Cu/Zn.
+
+\subsection{Hypothesis, aim and original contributions}
+\label{sec:hypothesis}
+% 1 page. Bible §10 Device 1 — the NOVELTY BOX. A referee must be able to state
+% the novelty in one sentence after reading this page.
+
+\begin{noveltybox}
+\textbf{Hypothesis.}
+% A vicinal-trihydroxy (galloyl) oxygen-donor pocket immobilised on a collagen
+% scaffold will invert the expected Irving–Williams ordering in favour of Pb(II),
+% because (i) the pocket accommodates the stereochemically active 6s2 lone pair in
+% a hemidirected arrangement, (ii) donation into the diffuse Pb 6p manifold
+% provides a covalent channel unavailable to the harder, more contracted Cu(II)
+% and Zn(II) acceptors, and (iii) Pb(II)'s markedly lower hydration free energy
+% imposes a smaller desolvation penalty on complexation.
+\NEEDSDATA{Hypothesis statement}{written once §4.6 and §4.7 have produced numbers; the hypothesis as stated must be the one actually tested}
+
+\medskip
+\textbf{Aim.}
+% To test this hypothesis by matched experiment and first-principles calculation,
+% and to determine whether the observed selectivity is electrostatically or
+% covalently/desolvation controlled.
+
+\medskip
+\textbf{Original contributions of this work.}
+\begin{enumerate}\setstretch{1.0}
+  \item % REWORDED per audit B10.6 / Phase 4 answer Q5: the ossein was PURCHASED
+        % from Nizona Marine Products, not prepared by the author. The material is
+        % waste-derived but the waste stream was processed by the supplier. State
+        % it that way. Overstating provenance unravels under oral examination.
+        \TODOPAL{Confirm the wording of contribution 1 now that the ossein is known to be commercially purchased. Proposed: "Synthesis and full characterisation of a galloyl-functionalised biosorbent built on a commercially sourced, waste-derived fish-scale ossein scaffold."}
+  \item Quantitative demonstration of \PbII{} selectivity under a deliberately adverse molar ratio,
+        with \PbII{} at a \PENDING{molar_ratio_cu_to_pb_minority}{molar deficit to Cu in the minority-target ternary}-fold molar deficit.
+  \item A DFT model that reproduces the experimental ordering without parameter fitting.
+  \item An energy decomposition that falsifies the purely electrostatic rationale and localises the
+        selectivity to orbital covalency and desolvation.
+  \item Demonstration that the mechanistic finding translates to a working, regenerable fixed-bed
+        process with a \PENDING{ef_cycle1}{measured enrichment factor, cycle 1}-fold concentration factor.
+\end{enumerate}
+\end{noveltybox}
+
+\subsection{Structure of this report}
+\label{sec:structure}
+% 0.25 page. One short paragraph mapping the sections. Costs three sentences and
+% orients the referee. Winners do this.

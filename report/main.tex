@@ -1,2 +1,119 @@
-% Chem-151 - S.T. Yau High School Science Award (Asia) 2026
-% PLACEHOLDER - the document is assembled in Phase 8.
+% =============================================================================
+%  Chem-151 — 2026 S.T. Yau High School Science Award (Asia)
+%
+%  Overcoming the Irving–Williams Preference in a Galloyl–Ossein Biosorbent
+%  through Experimentally and Computationally Driven Hemidirected Lead(II)
+%  Selectivity
+%
+%  Palaash Gang · Indus International School, Pune · Pune, India
+%
+%  Build:
+%      make draft     placeholders render as loud coloured boxes
+%      make final     any surviving placeholder FAILS the build
+%
+%  Output filename must be exactly:  Chem-151-Research Report.pdf
+%
+%  RULES THAT GOVERN THIS FILE (CLAUDE.md):
+%    · No numeric result is hard-coded here or in any included file. Every number
+%      arrives through \num{key}, generated from data/CANONICAL_NUMBERS.yaml by
+%      scripts/emit_numbers.py.
+%    · \PENDING, \NEEDSDATA and \TODOPAL are never silently removed. A placeholder
+%      is resolved by supplying the evidence behind it.
+% =============================================================================
+\documentclass[a4paper,11pt]{article}
+
+% --- JINST typography --------------------------------------------------------
+% A DERIVED WORK from the genuine jinstpub.sty v1.1638 (SISSA Medialab, LPPL).
+% The pristine original is at vendor/jinst/jinstpub.sty. Exactly two substantive
+% edits: natbib is not loaded (incompatible with biblatex) and the TOC dot-leader
+% suppression is lifted. Full account in report/preamble/JINST_PROVENANCE.md.
+%
+% This supplies TYPOGRAPHY ONLY. Its \maketitle is never called — the official
+% YHSA(Asia) cover page is used instead — so no journal furniture is ever typeset.
+\usepackage{yhsa-jinst}
+
+% --- Compliance override layer ----------------------------------------------
+% MUST load AFTER yhsa-jinst so that it wins. JINST sets its own page geometry
+% and line spacing and both violate the competition rules.
+\input{preamble/00_compliance}
+
+\input{preamble/01_fonts}
+\input{preamble/02_math_chem}
+\input{preamble/03_tables_figures}
+\input{preamble/04_refs}
+\input{preamble/05_crossref}
+\input{preamble/06_macros}
+\input{preamble/07_draft_guards}
+
+% --- Canonical numbers -------------------------------------------------------
+% GENERATED FILE — never edited by hand. Absent on a clean checkout, which is
+% correct: every \num{} key then renders as a visible missing-number marker.
+\InputIfFileExists{preamble/numbers.tex}{}{%
+  \PackageWarningNoLine{chem151}{%
+    preamble/numbers.tex not found. Run 'make numbers'.\MessageBreak
+    Every \string\num{} key will render as a missing-number marker%
+  }%
+}
+
+\begin{document}
+
+% =============================================================================
+%  FRONT MATTER — lower-case roman
+% =============================================================================
+\pagenumbering{gobble}
+\input{frontmatter/cover}
+
+\pagenumbering{roman}
+\setcounter{page}{1}
+\input{frontmatter/abstract}
+\input{frontmatter/acknowledgement}
+\input{frontmatter/commitments}
+\input{frontmatter/toc}
+
+% =============================================================================
+%  BODY — arabic, restarting at 1
+% =============================================================================
+\clearpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\input{sections/01_introduction}
+\clearpage
+\input{sections/02_experimental}
+\clearpage
+\input{sections/03_computational}
+\clearpage
+\input{sections/04_results}
+\clearpage
+\input{sections/05_conclusion}
+
+% =============================================================================
+%  APPENDICES A–J
+% =============================================================================
+\clearpage
+\appendix
+\renewcommand{\thesection}{\Alph{section}}
+\setcounter{section}{0}
+\phantomsection
+\addcontentsline{toc}{section}{Appendices}
+\section*{Appendices}
+\input{appendices/A_ai}
+\input{appendices/B_experimental}
+\input{appendices/C_calibration}
+\input{appendices/D_full}
+\input{appendices/E_computational}
+\input{appendices/F_representative}
+\input{appendices/G_speciation}
+\input{appendices/H_laboratory}
+\input{appendices/I_experiment}
+\input{appendices/J_risk}
+
+% =============================================================================
+%  REFERENCES — ACS style, 35–60 entries, every DOI verified against Crossref
+% =============================================================================
+\clearpage
+\phantomsection
+\addcontentsline{toc}{section}{References}
+\printbibliography[title={References}]
+
+\end{document}

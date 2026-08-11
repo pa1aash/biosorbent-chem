@@ -1,0 +1,53 @@
+% ============================================================================
+% 02_math_chem.tex  —  mathematics, units and chemical notation
+%
+% Units per docs/00_SPEC.md §12 (Bible §12):
+%   capacities in mg/g AND mmol/g   ·   energies in kJ/mol throughout
+%   never kcal/mol from software output
+% ============================================================================
+
+% yhsa-jinst loads newtxmath, which already defines \Bbbk. amssymb defines it
+% again and errors. Release it before loading amssymb rather than dropping
+% amssymb, which supplies symbols the report needs.
+\usepackage{amsmath}
+\let\Bbbk\relax
+\usepackage{amssymb}
+\usepackage{siunitx}
+
+\sisetup{
+  detect-all,
+  separate-uncertainty = true,      % 40.1 +- 2.0, not 40.1(20)
+  multi-part-units     = single,
+  range-units          = single,
+  per-mode             = symbol,
+  exponent-product     = \times,
+  group-digits         = integer,
+  group-minimum-digits = 4,
+  uncertainty-mode     = separate,
+}
+
+% Project units, declared once so they cannot drift between sections.
+\DeclareSIUnit{\molar}{\mole\per\litre}
+\DeclareSIUnit{\bedvolume}{BV}
+\newcommand{\mgg}{\unit{\milli\gram\per\gram}}
+\newcommand{\mmolg}{\unit{\milli\mole\per\gram}}
+\newcommand{\kJmol}{\unit{\kilo\joule\per\mole}}
+\newcommand{\JmolK}{\unit{\joule\per\mole\per\kelvin}}
+\newcommand{\mgL}{\unit{\milli\gram\per\litre}}
+\newcommand{\mmolL}{\unit{\milli\mole\per\litre}}
+\newcommand{\Lg}{\unit{\litre\per\gram}}
+
+% siunitx defines \num. This project reserves \num{} for canonical-number lookup
+% (see 06_macros.tex), because NO numeric literal may be hard-coded in any .tex
+% file. siunitx's own numeric formatter is preserved as \sinum for internal use.
+\let\sinum\num
+\let\num\relax
+
+% pH is set upright with a lowercase p, per IUPAC. \pH is \ensuremath-wrapped so
+% it works in both modes; a subscript must therefore NOT be attached to it from
+% text mode (\pH_{...} puts the subscript outside maths). Use \pHpzc instead.
+\newcommand{\pH}{\ensuremath{\mathrm{pH}}}
+\newcommand{\pHpzc}{\ensuremath{\mathrm{pH}_{\mathrm{PZC}}}}
+
+\usepackage[version=4]{mhchem}     % \ce{Pb^2+}, \ce{PbSO4}
+\mhchemoptions{textfontcommand=\rmfamily}

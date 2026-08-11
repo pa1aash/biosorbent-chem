@@ -1,0 +1,81 @@
+% ============================================================================
+% 00_compliance.tex  —  YHSA(Asia) format compliance
+%
+% LOADED AFTER yhsa-jinst.sty SO THAT IT WINS. Order matters: the JINST style
+% sets its own page geometry and line spacing, and both violate the competition
+% rules. Every setting here traces to a numbered assertion in docs/00_SPEC.md §2.
+% ============================================================================
+
+% --- C-002: margins >= 2.5 cm on ALL FOUR sides. HARD RULE. ------------------
+%
+% FIRST reset \hoffset and \voffset. yhsa-jinst (from jinstpub) sets BOTH to
+% -1in and then works in absolute page coordinates. geometry assumes the TeX
+% default of 0 and computes \oddsidemargin and \topmargin as (margin - 1in); if
+% the offsets are left at -1in the entire text block is displaced 2.54 cm up and
+% to the left, giving a LEFT MARGIN OF ZERO. Measured on the built PDF before
+% this fix: left 0.00 cm, right 5.03 cm, top 0.22 cm. That is a formatting
+% failure of exactly the kind that loses a competition after the science is done.
+\hoffset=0pt
+\voffset=0pt
+
+% JINST also computes a top margin of roughly 1.5 cm, which fails on its own.
+% geometry is loaded here, AFTER the style, and resets every page dimension.
+\usepackage[a4paper,margin=2.5cm,includehead,includefoot,headsep=8mm,footskip=12mm]{geometry}
+
+% --- C-003 / C-004: 1.5 line spacing for body text --------------------------
+% Single spacing is permitted ONLY for quotations, footnotes, references and
+% captions. \onehalfspacing is applied globally; the carve-outs below scope
+% \singlespacing to exactly the four permitted cases and nothing else.
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage{etoolbox}
+\AtBeginEnvironment{quote}{\singlespacing}
+\AtBeginEnvironment{quotation}{\singlespacing}
+\AtBeginEnvironment{verse}{\singlespacing}
+\AtBeginEnvironment{thebibliography}{\singlespacing}
+\AtBeginEnvironment{longtable}{\singlespacing}
+\AtBeginEnvironment{tabular}{\singlespacing}
+\AtBeginEnvironment{tabularx}{\singlespacing}
+% Footnotes: setspace ALREADY single-spaces footnotes under \onehalfspacing.
+% Do NOT redefine \footnotesize to add \singlespacing -- setspace's spacing
+% commands re-invoke the current size selector, so that redefinition recurses
+% until the input stack overflows. Captions are handled in 03_tables_figures.tex
+% via caption's own stretch option.
+
+% --- Running header on every page -------------------------------------------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize\normalfont Research Report}
+\fancyhead[R]{\footnotesize\normalfont 2026 S.T.\ Yau High School Science Award (Asia)}
+\fancyfoot[C]{\footnotesize\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+% The plain style (chapter/section openings, TOC first page) must carry it too.
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyhead[L]{\footnotesize\normalfont Research Report}%
+  \fancyhead[R]{\footnotesize\normalfont 2026 S.T.\ Yau High School Science Award (Asia)}%
+  \fancyfoot[C]{\footnotesize\thepage}%
+  \renewcommand{\headrulewidth}{0.4pt}%
+}
+% yhsa-jinst redefines \ps@plain as its own footer-only style; undo that.
+% \makeatletter is required: \ps@... names contain @.
+\makeatletter
+\let\ps@myplain\ps@fancy
+\makeatother
+
+% --- C-038: neutralise the journal furniture --------------------------------
+% \maketitle is never called (the official YHSA cover page is used instead), but
+% the first-page header is blanked so it cannot appear by accident.
+\makeatletter
+\gdef\@fpheader{}
+\makeatother
+
+% --- C-037: restore TOC dot leaders -----------------------------------------
+% yhsa-jinst suppresses them with \@dotsep=10000; the competition format
+% requires a three-level TOC WITH leaders.
+\makeatletter
+\renewcommand{\@dotsep}{2.5}
+\makeatother

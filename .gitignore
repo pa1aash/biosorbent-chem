@@ -61,7 +61,7 @@ dft/scratch/
 *.molden.input.bak
 
 # ── Vendored licence-restricted software: notes are tracked, binaries are not ──
-vendor/orca/
+vendor/orca/*
 vendor/multiwfn/
 vendor/**/*.tar.xz
 vendor/**/*.tar.gz
@@ -88,3 +88,9 @@ Thumbs.db
 .remember/
 scratch/
 tmp/
+
+# Track only the provenance record, not the ORCA distribution itself
+!vendor/orca/README_ORCA.md
+
+# Track only the provenance record, not the ORCA distribution itself
+!vendor/orca/README_ORCA.md

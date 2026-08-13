@@ -1,0 +1,98 @@
+# ============================================================================
+# Chem-151 | S.T. Yau High School Science Award (Asia) 2026 | Palaash Gang
+#
+# PRODUCTION ORCA INPUT -- GENERATED FILE, DO NOT EDIT BY HAND.
+# Regenerate with:  python dft/make_orca_inputs.py
+#
+# Job            cu_P1_cplx
+# Species        [Cu(LH)(H2O)4]1+
+# Formula        C8H15O9Cu1
+# Role           product | protonation P1 | metal Cu
+#
+# GEOMETRY SOURCE
+#   dft/structures/cu_P1_cplx.xyz
+#   The lowest-energy conformer retained by the S02 conformer screen,
+#   pre-optimised at GFN2-xTB/ALPB(water). The pre-screen energy is NOT a
+#   report quantity; this geometry is a starting point only and is
+#   re-optimised in full below.
+#
+# LEVEL OF THEORY -- every setting fixed by dft/DFT_PROTOCOL.md.
+#   Functional           PBE0 (25% exact exchange)                     §3 'Functional'
+#   Dispersion           D3(BJ) — D3 with Becke–Johnson damping        §3 'Dispersion'
+#   Basis, all elements  def2-TZVP                                     §3.1
+#   Pb core treatment    def2-ECP = Stuttgart–Cologne ECP60MDF, 60     §3.1
+#                        core electrons, 22 in valence
+#   Cu, Zn, C, H, O      all-electron                                  §3.1
+#   Auxiliary basis      def2/J                                        §3.1, §3.4
+#   Acceleration         RIJCOSX                                       §3.4
+#   Solvation            SMD, solvent = water, applied during the      §3.3
+#                        optimisation
+#   Geometry convergence TightOPT                                      §3.4
+#   SCF convergence      TightSCF                                      §3.4
+#   Integration grid     DefGrid3                                      §3.4
+#   Frequencies          analytic, same level, same solvent            §3.4
+#   Opt+freq             one combined job per species (17 total)       §8
+#
+# THERMOCHEMISTRY
+#   Protocol §3.4 fixes 298.15 K, 1 atm, RRHO with Grimme's quasi-RRHO
+#   treatment of modes below 100 cm-1. That treatment is applied in
+#   post-processing by analysis/thermo.py from the frequency list printed
+#   below, per REACTIONS.md §5.1, NOT by an ORCA keyword -- so that ORCA's
+#   own default entropy treatment cannot be silently double-counted.
+#
+# CHARGE AND MULTIPLICITY
+#   Read verbatim from the .xyz provenance header written in S02. Never
+#   inferred, never defaulted. Attack A02, rated CRITICAL.
+#     charge = +1   multiplicity = 2   unpaired electrons = 1   UKS
+#   OPEN-SHELL DOUBLET. <S^2> is reported for this species with its
+#   deviation from the ideal 0.750 stated (protocol §3.2).
+# ============================================================================
+
+%pal nprocs 8 end
+%maxcore 1500
+
+! PBE0 D3BJ def2-TZVP def2/J RIJCOSX TightSCF DefGrid3 UKS
+! Opt Freq TightOPT
+
+# SMD, water. Geometries are optimised IN SOLUTION -- never optimised in
+# gas phase and single-pointed in solvent. Protocol §3.3.
+%cpcm
+  smd        true
+  SMDsolvent "water"
+end
+
+* xyz 1 2
+  Cu       -4.79320100       0.08404824      -0.59007577
+  C         4.01617194      -0.51341254      -0.02707262
+  O         2.68423212      -0.00894297      -0.08913445
+  C         1.69883502      -0.85685009       0.22027635
+  O         1.90851439      -2.01404498       0.54916188
+  C         0.36360106      -0.25507042       0.12611271
+  C        -0.74333981      -1.05486370       0.43821508
+  C        -2.01576540      -0.54061519       0.37207240
+  O        -3.13426185      -1.26681350       0.63205410
+  C        -2.23022246       0.81091494      -0.02447631
+  O        -3.40142943       1.34656116      -0.08086254
+  C        -1.08282522       1.59629032      -0.35599976
+  O        -1.28243947       2.87939902      -0.71612472
+  C         0.18942247       1.07106353      -0.26969332
+  H         4.21109415      -0.94115940       0.95762403
+  H         4.66274984       0.33749887      -0.21748971
+  H         4.15844251      -1.28762837      -0.78263303
+  H        -0.55932375      -2.07865718       0.72787759
+  H        -2.90716478      -2.19964414       0.77432640
+  H        -2.24748994       3.03986060      -0.71689390
+  H         1.03781068       1.68626236      -0.51769823
+  O        -6.22834974      -1.38158410      -0.88639343
+  H        -6.61416613      -1.60764355      -0.03154156
+  H        -6.92625684      -0.95939660      -1.40453198
+  O        -6.40570552       1.45197938      -1.27565295
+  H        -6.10539851       2.27066129      -1.68408919
+  H        -6.93339045       1.69798516      -0.50652044
+  O        -5.60835167       0.24709084       1.48080985
+  H        -5.33086683       1.11031393       1.80909723
+  H        -5.12970142      -0.40675013       2.00359946
+  O        -3.80835173      -0.69674791      -2.31809467
+  H        -4.15194293      -1.58482643      -2.48514910
+  H        -3.94400837      -0.18565071      -3.12607600
+*

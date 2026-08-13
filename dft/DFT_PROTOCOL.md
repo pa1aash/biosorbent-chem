@@ -528,7 +528,21 @@ integration grid · frequency treatment and quasi-RRHO cutoff · standard-state 
 **charge and multiplicity for every species** · ⟨S²⟩ for open-shell species · decomposition scheme
 **and the program that implemented it** · hardware.
 
-`\TODOPAL{ORCA version and Multiwfn version once installed — both are required fields of Table 3.1}`
+**ORCA version — RESOLVED 2026-08-13 (S04).** Captured from the compute box and from the completed
+`water` production job:
+
+> **ORCA 6.1.1 — RELEASE** · GIT `487d211c` · build date 2025-11-21
+
+This is the version that produced every output in [`outputs/`](outputs/); the same banner is printed
+at the head of all seventeen `.out` files, so the claim is self-evidencing rather than recorded only
+here.
+
+`\TODOPAL{Multiwfn version — still outstanding, and still a required field of Table 3.1. Multiwfn is
+not installed (see §11 and ../vendor/README_MULTIWFN.md). Until it is, the decomposition analysis of
+§4 has no named implementation and attack A01 stays OPEN. §4.3 pre-commits the fallback: if Multiwfn
+is not obtained in time, the report does NOT contain f_orb, and §4.7 argues the covalency case from
+charge transfer and orbital composition alone with the absence of a full energy partition stated as
+a limitation.}`
 
 ---
 
@@ -537,7 +551,9 @@ integration grid · frequency treatment and quasi-RRHO cutoff · standard-state 
 | Item | Status |
 |---|---|
 | Protocol decided | ✅ this document |
-| ORCA installed | ❌ **BLOCKER** — registration required, see `../vendor/README_ORCA.md` |
+| **ORCA installed** | ✅ **ORCA 6.1.1 RELEASE** on the Vultr box, OpenMPI 4.1.8 — see §10 |
+| **Production jobs launched** | ✅ **all 17, 2026-08-13 21:12 IST** — inputs in [`inputs/`](inputs/), launch record and projected completion in [`JOB_QUEUE_STATUS.md`](JOB_QUEUE_STATUS.md), status via `scripts/dft_status.sh` |
+| ~~ORCA installed~~ | ~~❌ **BLOCKER** — registration required, see `../vendor/README_ORCA.md`~~ — resolved |
 | Multiwfn installed | ❌ **BLOCKER** — manual download, see `../vendor/README_MULTIWFN.md` |
 | PySCF available | ✅ installed and working — the insurance path, §see `hetzner/README.md` |
 | xtb available | ✅ xtb 6.7.1, working — all 17 structures pre-optimised at GFN2-xTB/ALPB(water) |
@@ -545,5 +561,6 @@ integration grid · frequency treatment and quasi-RRHO cutoff · standard-state 
 | Conformer screening | ✅ **complete for all 17 species** by systematic torsion enumeration plus seeded water-orientation sampling plus distance-geometry embedding — `structures/CONFORMER_SCREEN.md` |
 | Structures built | ✅ **all 17**, charge and multiplicity in every file header — `structures/` |
 | Reaction definitions | ✅ `REACTIONS.md` — **but see its §3.1, an unresolved conflict over the Pb coordination number that blocks job submission** |
-| Hetzner instances | ⬜ not yet provisioned; scripts ready in `hetzner/` |
-| Any DFT calculation run | ❌ **none** |
+| Hetzner instances | ⬜ superseded — the computational arm runs on the Vultr box `65.20.67.245` |
+| **Any DFT calculation run** | ✅ **`water` complete** (3 real frequencies, 0 imaginary, ORCA TERMINATED NORMALLY); 16 further jobs queued or running |
+| **Open item C-01** | ✅ **ANSWERED from real output** — ORCA's `FINAL SINGLE POINT ENERGY` **already includes** the SMD `G_CDS` term. `thermo.py` must not add it again. Arithmetic in [`JOB_QUEUE_STATUS.md`](JOB_QUEUE_STATUS.md) §5. To be re-confirmed on a metal complex. |

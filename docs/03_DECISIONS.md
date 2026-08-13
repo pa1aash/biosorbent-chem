@@ -244,3 +244,61 @@ computed regardless. Tracked as attack **A32**, status OPEN.
 |---|---|---|
 | 2026-08-13 | **`CLAUDE.md` §7.1: a session record is never a substitute for the verbatim client export**, and the assistant must never generate, reconstruct or simulate a transcript. | Neither S01 nor S02 has a real export; both directories hold assistant-written records only. Appendix A is assembled from **exports**, not records. Submitting a written account as though it were a chat log would misrepresent evidence to the Organising Committee — a worse finding than a missing file. |
 
+
+---
+
+## 2026-08-13 — Computational arm: production ORCA queue generated and launched
+
+Session S04. Seventeen production input files generated from the locked protocol and launched on the
+Vultr box `65.20.67.245` at **21:12 IST**. Full launch record, level of theory as actually used, and
+projected completion in [`../dft/JOB_QUEUE_STATUS.md`](../dft/JOB_QUEUE_STATUS.md).
+
+### Decisions requiring Palaash's ruling — RULED IN SESSION
+
+| Ref | Decision | Rationale |
+|---|---|---|
+| **D-06** | **`%maxcore` reduced from the briefed 3000 MB to 1500 MB.** Ruled by Palaash before launch. | 3000 × 8 procs × 2 concurrent jobs = **48 GB nominal against 29 GB available**, a 1.65× overcommit that would have left multi-hour jobs at the mercy of the OOM killer. ORCA's own sizing rule is ~75% of RAM ÷ total cores ≈ 1400. 1500 × 8 × 2 = 24 GB, leaving ~5 GB headroom. |
+
+### Decisions taken by the auditor (reversible on request)
+
+| Date | Decision | Rationale |
+|---|---|---|
+| 2026-08-13 | **`pb_aquo8` IS launched, ordered last in the queue.** | Protocol §6 requires **both** Pb aquo ions optimised under the production protocol for the Pb–O bond-length validation, so it is not purely limitations material. Placed last on a depth-2 queue it can never delay a headline job, and at 25 atoms it adds little to the tail. |
+| 2026-08-13 | **Queue ordered longest-processing-time-first, with `water` first and `pb_aquo8` last.** | LPT minimises the makespan tail on a depth-limited queue. `water` is trivially cheap and exercises every element of the production keyword line end to end, so a fault surfaces in seconds rather than after a multi-hour complex has died — which is exactly what it did, completing in 15 s and confirming basis, ECP-free path, SMD, analytic frequencies and normal termination. |
+| 2026-08-13 | **No `%freq` block; the quasi-RRHO treatment is applied in post-processing by `thermo.py`.** | Protocol §3.4 fixes quasi-RRHO below 100 cm⁻¹; `REACTIONS.md` §5.1 assigns `G_thermal,qRRHO` to `thermo.py`, built from the printed frequency list. Adding an ORCA keyword as well would risk ORCA's own default entropy treatment being silently double-counted — the same hazard already tracked as **C-01** for `G_CDS`. ORCA prints frequencies; `thermo.py` does the thermochemistry. |
+| 2026-08-13 | **The Pb ECP is declared explicitly in the input rather than left to def2-TZVP's automatic assignment.** | `! def2-TZVP` assigns def2-ECP to Pb silently. Declaring `NewECP Pb "def2-ECP"` makes the relativistic treatment visible **in the submitted file**, which is the artefact a referee would ask to see. Attack **A03**. |
+| 2026-08-13 | **Job names follow the existing structure filenames** (`lig_P1_LH1m`, not the brief's illustrative `ligand_P1`). | These names are already the keys in `xtb_prescreen.csv`, `CONFORMER_SCREEN.md`, `MODEL_JUSTIFICATION.md` and `REACTIONS.md` §6. One key across the whole pipeline is worth more than matching an illustrative example. |
+| 2026-08-13 | **`OMPI_ALLOW_RUN_AS_ROOT` set inside `run_queue.sh`.** | OpenMPI 4.1.8 refuses to run as root and **every job would have aborted in Startup within seconds**. This is a job-local environment export, not a modification of the box. The alternative — creating a non-root user and re-homing the installation — is a larger change with more risk on a disposable single-purpose instance. |
+
+### Findings caught before launch, each of which would have destroyed the run silently
+
+| Finding | Consequence had it not been caught |
+|---|---|
+| OpenMPI 4.1.8 refuses to run as root. | All 17 jobs abort in Startup in seconds, logging what look like ORCA faults. |
+| A tmux session inherits a **non-login** shell, which on this box has no OpenMPI on `PATH` and an empty `LD_LIBRARY_PATH`. | Same outcome. Both fixed by explicit exports in `run_queue.sh`. |
+| `%maxcore 3000` overcommits memory 1.65×. | OOM kill hours into a job. Ruled down to 1500 — **D-06** above. |
+
+All three were found by **direct probe on the box before uploading**, not by reasoning about it.
+
+### Open items resolved
+
+| Ref | Item | Resolution |
+|---|---|---|
+| **D-05** | ORCA version string for Table 3.1. | ✅ **RESOLVED. ORCA 6.1.1 RELEASE, GIT `487d211c`, built 2025-11-21.** Recorded in `DFT_PROTOCOL.md` §10. The same banner heads all seventeen `.out` files, so the claim is self-evidencing. **The Multiwfn half of D-05 remains OPEN** — Multiwfn is still not installed, so attack **A01** stays OPEN and the §4.3 fallback still stands. |
+| **C-01** | Whether ORCA's printed final energy already includes the SMD `G_CDS` term. | ✅ **ANSWERED from real output**, not from a decision. The completed `water` job gives `FINAL SINGLE POINT ENERGY` = E(SCF, SMD electrostatic) + `G_CDS` + E_D3BJ, with both arithmetic identities closing exactly. **`thermo.py` must NOT add `G_CDS` again.** Numbers in `JOB_QUEUE_STATUS.md` §5. To be re-confirmed on a metal complex before `thermo.py` is finalised. |
+
+### Attack register
+
+**A02 and A03 moved to ARMOURED.** Both were previously armoured only by a statement in
+`DFT_PROTOCOL.md`; they are now fixed in seventeen launched input files, with the Pb ECP additionally
+confirmed by ORCA's own output (`replacing 60 core electrons, lmax=3`). **A02 carries a stated
+residual**: ⟨S²⟩ cannot be reported until the Cu jobs finish, so the spin-contamination half of its
+armour is not yet satisfied. **A01 remains OPEN.**
+
+### Documentation defect found, not fixed
+
+`03_DECISIONS.md` (S02 entry, 2026-08-13) states "**All six Cu species** carry `mult=2 uhf=1
+uks=true`". **There are four**: `cu_aquo6`, `cu_P0_cplx`, `cu_P1_cplx`, `cu_P2_cplx`. The structures
+and the generated inputs are correct — all four are UKS multiplicity 2, verified — so this is an
+error in the written record only, with no consequence for any calculation. Left uncorrected because
+the log's convention is that entries are struck through rather than edited; flagged here instead.

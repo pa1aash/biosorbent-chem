@@ -1,0 +1,20 @@
+# Chem-151 | queue order consumed by run_queue.sh
+# Longest-processing-time-first. water first (cheap end-to-end
+# validation), pb_aquo8 last (not a headline job, delays nothing).
+water
+cu_P0_cplx
+pb_P0_cplx
+zn_P0_cplx
+cu_P1_cplx
+pb_P1_cplx
+zn_P1_cplx
+cu_P2_cplx
+pb_P2_cplx
+zn_P2_cplx
+lig_P0_LH2
+lig_P1_LH1m
+lig_P2_L2m
+cu_aquo6
+pb_aquo6
+zn_aquo6
+pb_aquo8

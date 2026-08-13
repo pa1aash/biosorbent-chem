@@ -361,6 +361,10 @@ integration grid · frequency treatment and quasi-RRHO cutoff · standard-state 
 | ORCA installed | ❌ **BLOCKER** — registration required, see `../vendor/README_ORCA.md` |
 | Multiwfn installed | ❌ **BLOCKER** — manual download, see `../vendor/README_MULTIWFN.md` |
 | PySCF available | ✅ installed and working — the insurance path, §see `hetzner/README.md` |
-| xtb / CREST available | ✅ installed — conformer pre-pass can start today |
+| xtb available | ✅ xtb 6.7.1, working — all 17 structures pre-optimised at GFN2-xTB/ALPB(water) |
+| **CREST available** | ❌ **installed but NON-FUNCTIONAL on this machine.** CREST 3.0.2 aborts in its metadynamics driver (`Factorisation of matrix failed lapack_sytrf`) at GFN2 and GFN-FF, in gas phase and in solvent, on one thread and on eight. Characterised and worked around — see `structures/CONFORMER_SCREEN.md` §2.1. |
+| Conformer screening | ✅ **complete for all 17 species** by systematic torsion enumeration plus seeded water-orientation sampling plus distance-geometry embedding — `structures/CONFORMER_SCREEN.md` |
+| Structures built | ✅ **all 17**, charge and multiplicity in every file header — `structures/` |
+| Reaction definitions | ✅ `REACTIONS.md` — **but see its §3.1, an unresolved conflict over the Pb coordination number that blocks job submission** |
 | Hetzner instances | ⬜ not yet provisioned; scripts ready in `hetzner/` |
-| Any calculation run | ❌ **none** |
+| Any DFT calculation run | ❌ **none** |

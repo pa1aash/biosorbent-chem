@@ -1,0 +1,21 @@
+19
+charge=+2 | mult=1 | uhf=0 | uks=false | species=pb_aquo6 | label=[Pb(H2O)6]2+ | formula=H12O6Pb1 | role=reactant | protonation=n-a | metal=Pb | config=6s2, closed shell | preopt=GFN2-xTB/ALPB(water)/opt-tight | conformer_search=systematic torsion enumeration (0 torsions, 1 start geometries) + 20 seeded random water reorientations + GFN2-xTB/ALPB(water) opt-tight | conformers_unique=17 | conformers_within_3kcal=17 | E_xtb_Eh=-32.29152179 | preopt_is_not_a_report_quantity=true | builder=build_structures.py+run_xtb_preopt.py+build_rotamers.py
+Pb     0.00054876    -0.04461465    -0.01645497
+O      2.49915629     0.18097183     0.03244303
+H      3.08416632    -0.13935605    -0.66304051
+H      2.94803012     0.06843891     0.87781721
+O     -2.50185457    -0.23606300    -0.05627321
+H     -3.08319059     0.08080650     0.64376844
+H     -2.95538974    -0.12093939    -0.89884585
+O      0.04127038     2.45736577     0.06344808
+H      0.88879354     2.89352594    -0.07751965
+H     -0.65558722     3.04287556    -0.25309731
+O     -0.02378016    -2.55060489    -0.11544659
+H      0.68032593    -3.12894051     0.19816048
+H     -0.86541023    -2.99889907     0.02289157
+O      0.16107376     0.05971526     2.48406111
+H     -0.14640059    -0.63104682     3.08144699
+H      0.02993916     0.91119367     2.91582508
+O     -0.13917883    -0.15479183    -2.51657797
+H      0.16707684     0.53263170    -3.11838177
+H     -0.01177009    -1.00860970    -2.94463343

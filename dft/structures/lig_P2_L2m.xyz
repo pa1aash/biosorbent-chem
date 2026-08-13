@@ -1,0 +1,21 @@
+19
+charge=-2 | mult=1 | uhf=0 | uks=false | species=lig_P2_L2m | label=L2- (3,4-bis-deprotonated catecholate) | formula=C8H6O5 | role=ligand | protonation=P2 | metal=none | preopt=GFN2-xTB/ALPB(water)/opt-tight | conformer_search=systematic torsion enumeration (2 torsions, 4 start geometries) + RDKit ETKDGv3 (60 unpruned embeddings) + MMFF94 + GFN2-xTB/ALPB(water) opt-tight | conformers_unique=4 | conformers_within_3kcal=2 | E_xtb_Eh=-41.13724270 | preopt_is_not_a_report_quantity=true | builder=build_structures.py+run_xtb_preopt.py+build_rotamers.py
+C      3.98415018    -0.26529905    -0.17168410
+O      2.62858634     0.15200662    -0.29944697
+C      1.68588508    -0.67724020     0.25305821
+O      2.05884657    -1.71514466     0.81844776
+C      0.34375564    -0.22262698     0.10094132
+C     -0.71139912    -0.99291044     0.63099502
+C     -2.05971385    -0.64508008     0.54057939
+O     -3.00551323    -1.38096994     1.04207721
+C     -2.35036423     0.59644263    -0.15162710
+O     -3.54046541     1.08289915    -0.33555706
+C     -1.26438748     1.35079677    -0.67571735
+O     -1.65210844     2.51926616    -1.31951523
+C      0.04675724     0.97819752    -0.56712104
+H      4.12389840    -1.23671435    -0.65070736
+H      4.56558507     0.50763662    -0.66497286
+H      4.25126434    -0.35329776     0.88357074
+H     -0.45966700    -1.91742250     1.14340943
+H     -2.63428905     2.47118134    -1.21290955
+H      0.83020666     1.59138577    -0.98512081

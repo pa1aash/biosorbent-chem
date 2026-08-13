@@ -1,0 +1,47 @@
+[
+  {
+    "species": "lig_P0_LH2",
+    "label": "LH2 (methyl gallate, neutral)",
+    "charge": "+0",
+    "multiplicity": "1",
+    "metal": "none",
+    "status": "crest exit 1",
+    "wall_seconds": 0.2,
+    "method": "iMTD-GC / GFN2-xTB / ALPB(water) / --noreftopo",
+    "n_rotamers_returned": 0,
+    "n_conformers_returned": 0,
+    "n_conformers_rejected_by_topology_check": 0,
+    "n_conformers_valid": 0,
+    "energy_window_kcal": 3.0
+  },
+  {
+    "species": "lig_P1_LH1m",
+    "label": "LH- (mono-deprotonated at the 4-OH)",
+    "charge": "-1",
+    "multiplicity": "1",
+    "metal": "none",
+    "status": "crest exit 1",
+    "wall_seconds": 0.1,
+    "method": "iMTD-GC / GFN2-xTB / ALPB(water) / --noreftopo",
+    "n_rotamers_returned": 0,
+    "n_conformers_returned": 0,
+    "n_conformers_rejected_by_topology_check": 0,
+    "n_conformers_valid": 0,
+    "energy_window_kcal": 3.0
+  },
+  {
+    "species": "lig_P2_L2m",
+    "label": "L2- (3,4-bis-deprotonated catecholate)",
+    "charge": "-2",
+    "multiplicity": "1",
+    "metal": "none",
+    "status": "crest exit 1",
+    "wall_seconds": 0.1,
+    "method": "iMTD-GC / GFN2-xTB / ALPB(water) / --noreftopo",
+    "n_rotamers_returned": 0,
+    "n_conformers_returned": 0,
+    "n_conformers_rejected_by_topology_check": 0,
+    "n_conformers_valid": 0,
+    "energy_window_kcal": 3.0
+  }
+]

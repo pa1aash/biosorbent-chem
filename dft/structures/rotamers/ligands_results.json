@@ -1,0 +1,111 @@
+[
+  {
+    "species": "lig_P0_LH2",
+    "label": "LH2 (methyl gallate, neutral)",
+    "charge": "+0",
+    "multiplicity": "1",
+    "metal": "none",
+    "method": "systematic torsion enumeration (4 torsions, 16 start geometries) + RDKit ETKDGv3 (60 unpruned embeddings) + MMFF94 + GFN2-xTB/ALPB(water) opt-tight",
+    "energy_window_kcal": 3.0,
+    "n_optimisations_failed": 0,
+    "n_rejected_topology_or_coordination": 0,
+    "n_torsions": 4,
+    "n_torsion_start_geometries": 16,
+    "n_etkdg_seeds": 60,
+    "n_water_orientation_samples": 0,
+    "n_start_geometries_total": 76,
+    "status": "ok",
+    "n_optimisations_converged": 76,
+    "n_unique_conformers": 22,
+    "n_within_window": 13,
+    "E_lowest_Eh": "-41.57953966",
+    "rel_energies_kcal": [
+      0.0,
+      0.004,
+      0.029,
+      0.029,
+      0.296,
+      0.298,
+      0.325,
+      0.329,
+      2.392,
+      2.397,
+      2.427,
+      2.432,
+      2.457
+    ],
+    "rel_energies_kJ": [
+      0.0,
+      0.02,
+      0.12,
+      0.12,
+      1.24,
+      1.25,
+      1.36,
+      1.38,
+      10.01,
+      10.03,
+      10.15,
+      10.18,
+      10.28
+    ]
+  },
+  {
+    "species": "lig_P1_LH1m",
+    "label": "LH- (mono-deprotonated at the 4-OH)",
+    "charge": "-1",
+    "multiplicity": "1",
+    "metal": "none",
+    "method": "systematic torsion enumeration (3 torsions, 8 start geometries) + RDKit ETKDGv3 (60 unpruned embeddings) + MMFF94 + GFN2-xTB/ALPB(water) opt-tight",
+    "energy_window_kcal": 3.0,
+    "n_optimisations_failed": 0,
+    "n_rejected_topology_or_coordination": 0,
+    "n_torsions": 3,
+    "n_torsion_start_geometries": 8,
+    "n_etkdg_seeds": 60,
+    "n_water_orientation_samples": 0,
+    "n_start_geometries_total": 68,
+    "status": "ok",
+    "n_optimisations_converged": 68,
+    "n_unique_conformers": 10,
+    "n_within_window": 2,
+    "E_lowest_Eh": "-41.37635180",
+    "rel_energies_kcal": [
+      0.0,
+      0.005
+    ],
+    "rel_energies_kJ": [
+      0.0,
+      0.02
+    ]
+  },
+  {
+    "species": "lig_P2_L2m",
+    "label": "L2- (3,4-bis-deprotonated catecholate)",
+    "charge": "-2",
+    "multiplicity": "1",
+    "metal": "none",
+    "method": "systematic torsion enumeration (2 torsions, 4 start geometries) + RDKit ETKDGv3 (60 unpruned embeddings) + MMFF94 + GFN2-xTB/ALPB(water) opt-tight",
+    "energy_window_kcal": 3.0,
+    "n_optimisations_failed": 0,
+    "n_rejected_topology_or_coordination": 0,
+    "n_torsions": 2,
+    "n_torsion_start_geometries": 4,
+    "n_etkdg_seeds": 60,
+    "n_water_orientation_samples": 0,
+    "n_start_geometries_total": 64,
+    "status": "ok",
+    "n_optimisations_converged": 64,
+    "n_unique_conformers": 4,
+    "n_within_window": 2,
+    "E_lowest_Eh": "-41.13724270",
+    "rel_energies_kcal": [
+      0.0,
+      0.122
+    ],
+    "rel_energies_kJ": [
+      0.0,
+      0.51
+    ]
+  }
+]

@@ -717,3 +717,28 @@ Carried as `\TODOPAL` markers in the build.
 | Q23 | Which quantity is 80.1% — batch q_e retention or column BV₁₀ retention. |
 | Q24 | The facility for each technique, and any supervision received, even where Palaash operated the instrument himself. |
 | — | The dated laboratory note recording that the ternary solutions remained visibly clear (Appendix H). |
+
+---
+
+## Computational-arm decisions needed from Palaash
+
+Added 2026-08-13. These are **rulings**, not datasets, and each one blocks work that is otherwise
+ready. Sources: [`dft/REACTIONS.md`](../dft/REACTIONS.md),
+[`dft/structures/MODEL_JUSTIFICATION.md`](../dft/structures/MODEL_JUSTIFICATION.md),
+[`dft/structures/CONFORMER_SCREEN.md`](../dft/structures/CONFORMER_SCREEN.md).
+
+| Ref | Decision needed | What it blocks |
+|---|---|---|
+| **D-01** | **The Pb reactant coordination number.** `DFT_PROTOCOL.md` §2 says the lower-free-energy Pb aquo ion is the reference; §3.5 says Δn = +1, which requires a six-coordinate reactant. Both cannot hold if [Pb(H₂O)₈]²⁺ wins. Options A/B/C set out in `dft/REACTIONS.md` §3.1; Option A recommended. | **Submission of every ORCA exchange job.** The reaction stoichiometry is undetermined until this is ruled. |
+| **D-02** | **How the Cu P0 complex is handled** if monodentate coordination survives DFT. A monodentate Cu product displaces one water where bidentate Pb and Zn displace two, breaking the matched stoichiometry. | The P0 row of the ΔΔG comparison. Checkable only after the P0 complexes are optimised, but the fallback should be decided in advance rather than under deadline pressure. |
+| **D-03** | **The P1 deprotonation site.** The protocol fixes the charge of LH⁻ but not which hydroxyl is removed. The GFN2 screen cannot discriminate: the conformational effect (16.96 kJ mol⁻¹) is five times the isomer gap (3.30 kJ mol⁻¹). | Whether the P1 site is reported as a screened result or as a stated assumption. Two extra production jobs would settle it. |
+| **D-04** | **A verified citation for the gallic acid pK_a ≈ 8.5** asserted in `DFT_PROTOCOL.md` §1.3 with no source. It underpins the claim that the galloyl group is predominantly protonated at pH 5, which motivates the whole three-state design. | §3.1 of the report. Per the reference rule the value must be sourced or removed. |
+| **D-05** | **ORCA and Multiwfn version strings**, once installed. Required fields of Table 3.1. | Table 3.1 completion. Already carried as `\TODOPAL` in `DFT_PROTOCOL.md` §10. |
+
+## Computational checks that need output, not a decision
+
+| Ref | Check | When |
+|---|---|---|
+| **C-01** | Whether ORCA's printed final energy already contains the SMD non-electrostatic (CDS) term, or whether it must be added. Getting this wrong double-counts it in every free energy. | Against the first real ORCA output, before `dft/analysis/thermo.py` sums anything. |
+| **C-02** | Whether the Cu(II) Jahn–Teller distortion optimises to an **elongated** octahedron at DFT level. The GFN2 pre-screen gives a *compressed* one, which is not the expected form and is not trusted. | First `cu_aquo6` optimisation. |
+| **C-03** | Whether any Pb structure optimises to a holodirected rather than hemidirected geometry, and whether an alternative basin exists that the symmetric starting geometry did not reach. | After the Pb optimisations; feeds the §5.3 limitation on coordination-sphere isomerism. |

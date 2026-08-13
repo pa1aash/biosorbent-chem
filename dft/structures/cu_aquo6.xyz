@@ -1,0 +1,21 @@
+19
+charge=+2 | mult=2 | uhf=1 | uks=true | species=cu_aquo6 | label=[Cu(H2O)6]2+ | formula=H12O6Cu1 | role=reactant | protonation=n-a | metal=Cu | config=d9, OPEN SHELL DOUBLET (UKS) | preopt=GFN2-xTB/ALPB(water)/opt-tight | conformer_search=systematic torsion enumeration (0 torsions, 1 start geometries) + 20 seeded random water reorientations + GFN2-xTB/ALPB(water) opt-tight | conformers_unique=16 | conformers_within_3kcal=16 | E_xtb_Eh=-33.83911617 | preopt_is_not_a_report_quantity=true | builder=build_structures.py+run_xtb_preopt.py+build_rotamers.py
+Cu    -0.02639294     0.06099500    -0.06372806
+O      1.90924663    -0.11449996     0.12804077
+H      2.41255625     0.34567778    -0.55695679
+H      2.12691258    -1.05543943     0.07093859
+O     -1.96510439     0.21455688    -0.23420032
+H     -2.43876808    -0.22360583     0.48620761
+H     -2.19613850     1.15364696    -0.20635250
+O      0.00784126     2.25161729     0.01412904
+H      0.65316401     2.64680586     0.61227128
+H      0.18128828     2.60866727    -0.86595008
+O     -0.05961595    -2.12699665    -0.13575219
+H     -0.68099262    -2.52414255    -0.75767829
+H     -0.25926131    -2.49065583     0.73580134
+O     -0.26160414    -0.15354228     2.13364134
+H     -0.60260361     0.62558060     2.58828928
+H      0.57739308    -0.37353526     2.55516294
+O      0.18852659     0.35134957    -2.25342648
+H     -0.66805672     0.49437493    -2.67278923
+H      0.62252354    -0.35632091    -2.74390236

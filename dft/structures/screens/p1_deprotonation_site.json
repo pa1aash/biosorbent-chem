@@ -1,0 +1,25 @@
+{
+  "method": "GFN2-xTB/ALPB(water)/opt-tight",
+  "is_a_report_quantity": false,
+  "purpose": "order the three LH- isomers; DFT confirmation required",
+  "results": [
+    {
+      "isomer": "lig_P1_4OH",
+      "site": "4OH",
+      "E_Eh": -41.369892847206,
+      "rel_kJ_per_mol": 0.0
+    },
+    {
+      "isomer": "lig_P1_3OH",
+      "site": "3OH",
+      "E_Eh": -41.368636449673,
+      "rel_kJ_per_mol": 3.3
+    },
+    {
+      "isomer": "lig_P1_5OH",
+      "site": "5OH",
+      "E_Eh": -41.35783545825,
+      "rel_kJ_per_mol": 31.66
+    }
+  ]
+}

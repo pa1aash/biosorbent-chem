@@ -1,0 +1,29 @@
+[
+  {
+    "species": "water",
+    "label": "H2O",
+    "charge": "+0",
+    "multiplicity": "1",
+    "metal": "none",
+    "method": "systematic torsion enumeration (0 torsions, 1 start geometries) + GFN2-xTB/ALPB(water) opt-tight",
+    "energy_window_kcal": 3.0,
+    "n_optimisations_failed": 0,
+    "n_rejected_topology_or_coordination": 0,
+    "n_torsions": 0,
+    "n_torsion_start_geometries": 1,
+    "n_etkdg_seeds": 0,
+    "n_water_orientation_samples": 0,
+    "n_start_geometries_total": 1,
+    "status": "ok",
+    "n_optimisations_converged": 1,
+    "n_unique_conformers": 1,
+    "n_within_window": 1,
+    "E_lowest_Eh": "-5.08502109",
+    "rel_energies_kcal": [
+      0.0
+    ],
+    "rel_energies_kJ": [
+      0.0
+    ]
+  }
+]

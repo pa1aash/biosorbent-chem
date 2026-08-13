@@ -116,3 +116,39 @@ Recorded so they can be reversed on request.
 | 2026-08-11 | **Attribution suppression and the commit-msg hook installed in Phase 1** rather than Phase 10. | The absolute attribution rule applies to *every* commit, including the first. |
 | 2026-08-11 | **LICENSE is split: MIT for code, all rights reserved for research content.** | Not specified in the brief. A competition submission under assessment should not be openly licensed; the tooling reasonably can be. **Reversible on request.** |
 | 2026-08-11 | **The three source documents remain at the repository root under their original filenames**, untouched. | They are Palaash's files; renaming or moving them silently would be a surprise. Referenced by path from `README.md`. |
+
+---
+
+## 2026-08-13 — Computational arm: cluster model, structures and reaction definitions
+
+Session S02. All structure preparation done locally in the `biosorb` environment; ORCA was still
+transferring to the compute box, so nothing was submitted and no DFT input file was written.
+
+### Decisions taken by the auditor (reversible on request)
+
+| Date | Decision | Rationale |
+|---|---|---|
+| 2026-08-13 | **The full protocol species set was built — 17 structures, not the 6 originally scoped for the session.** | `DFT_PROTOCOL.md` §1.3 fixes **three** protonation states, not one, and §2 requires **both** Pb aquo coordination numbers. Building only six would have meant choosing a protonation state by default, which §1.3 exists to prevent. The 17 built match the §8 job inventory exactly. |
+| 2026-08-13 | **Metal coordination spheres built as ideal, undistorted polyhedra. No hemidirected distortion imposed on any Pb starting geometry.** | Hemidirection is a quantity this work *measures* (§5, attack A14). Building it into the input would beg the question the calculation exists to answer. The single exception is a Jahn–Teller axial elongation on Cu(II), because an undistorted octahedron is a saddle point for d⁹. |
+| 2026-08-13 | **GFN2-xTB pre-optimisation performed with the ALPB water model rather than in gas phase.** | §3.3 fixes solution-phase geometries throughout. Gas-phase relaxation of a dianionic ligand or a bare dication produces structures that do not exist in water. |
+| 2026-08-13 | **Charge and multiplicity written into every `.xyz` header as machine-readable `key=value` fields**, not only into a separate table. | Attack A02. The ORCA input generator reads them off the structure file and can never infer them. All six Cu species carry `mult=2 uhf=1 uks=true`. |
+| 2026-08-13 | **CREST replaced by systematic torsion enumeration plus seeded water-orientation sampling plus unpruned distance-geometry embedding.** | CREST 3.0.2 is non-functional on this machine — see below. The replacement is documented, reproducible and verified, and it is stronger than CREST for this system in one respect: it samples coordinated-water orientation, which has no rotatable covalent torsion and which CREST's torsion-driven metadynamics does not target. |
+| 2026-08-13 | **CREST's reference-topology check disabled (`--noreftopo`) and replaced by an explicit per-structure connectivity and first-shell coordination check.** | CREST's check fired on every species including the already-optimised free ligand, flagging all atoms; direct comparison showed 21 bonds before and after with no difference. Disabling a safety check is only defensible if something replaces it, so a stricter check was written. |
+| 2026-08-13 | **The P1 deprotonation site set to the 4-OH as a stated assumption, not as a screened result.** | The screen ran, but cannot discriminate: the conformational effect (16.96 kJ mol⁻¹) is five times the isomer gap (3.30 kJ mol⁻¹). Recorded honestly rather than presented as settled. Carried as **D-03**. |
+| 2026-08-13 | **No ORCA input file written, and no functional, basis set or ECP choice made beyond what `DFT_PROTOCOL.md` §3 already fixes.** | Per the session brief. The protocol's choices are confirmed against the compute box before any input is generated. |
+
+### Findings requiring Palaash's ruling
+
+| Ref | Finding |
+|---|---|
+| **D-01** | **`DFT_PROTOCOL.md` contradicts itself on the Pb coordination number.** §2 adopts the lower-free-energy Pb aquo ion as the exchange reference; §3.5 states Δn = +1, which requires a six-coordinate reactant and two released waters. If [Pb(H₂O)₈]²⁺ is lower, x = 4 for Pb against x = 2 for Cu and Zn, and ΔΔG stops being isodesmic. **This blocks submission of every exchange job.** Three options and a recommendation in `dft/REACTIONS.md` §3.1. |
+| **D-02** | At GFN2-xTB level the neutral P0 ligand relaxes to **monodentate** coordination on Cu(II) (second O at 3.24 Å) while Pb and Zn stay bidentate. If this survives DFT, the P0 comparison is not stoichiometrically matched. |
+| **D-03** | The P1 deprotonation site is not settled — see above. |
+| **D-04** | `DFT_PROTOCOL.md` §1.3 asserts gallic acid pK_a ≈ 8.5 **with no citation**, and that value motivates the entire three-state design. Per the reference rule it must be sourced or removed. |
+
+### Repository finding
+
+| Ref | Finding |
+|---|---|
+| — | **`.gitignore` line 25 ignores `*.out` globally** (a LaTeX rule). The block at lines 48–58 is written on the assumption that ORCA `.out` files are kept — its own comment says "Keep .out, .xyz, .hess and property files" — but the global rule overrides it, so **every ORCA output file would be silently untracked**. Since the report requires every quoted energy to be traceable to a file in `dft/outputs/`, this must be fixed with a negation rule before the first production run. Not fixed in this session because it touches build behaviour outside the session's scope. |
+

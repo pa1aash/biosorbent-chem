@@ -1,0 +1,21 @@
+19
+charge=+2 | mult=1 | uhf=0 | uks=false | species=zn_aquo6 | label=[Zn(H2O)6]2+ | formula=H12O6Zn1 | role=reactant | protonation=n-a | metal=Zn | config=d10, closed shell | preopt=GFN2-xTB/ALPB(water)/opt-tight | conformer_search=systematic torsion enumeration (0 torsions, 1 start geometries) + 20 seeded random water reorientations + GFN2-xTB/ALPB(water) opt-tight | conformers_unique=4 | conformers_within_3kcal=4 | E_xtb_Eh=-30.55756622 | preopt_is_not_a_report_quantity=true | builder=build_structures.py+run_xtb_preopt.py+build_rotamers.py
+Zn     0.00143562     0.00460334     0.01168438
+O      1.98978515    -0.00361198     0.02007754
+H      2.55381527    -0.78482761     0.04137402
+H      2.56556604     0.76919634     0.03453099
+O     -1.98725029     0.01353616     0.00325578
+H     -2.56232482    -0.75982005    -0.00912424
+H     -2.55212923     0.79413423    -0.01895733
+O      0.00781077     1.99351047     0.00444673
+H      0.00552800     2.56722161     0.77889356
+H      0.03162828     2.56013546    -0.77480444
+O     -0.00495300    -1.98390558     0.01863749
+H     -0.02838621    -2.55054048     0.79792411
+H     -0.00450169    -2.55739645    -0.75596123
+O     -0.01096637     0.01050439     2.00016806
+H     -0.79416035     0.02360527     2.56173439
+H      0.75971571     0.01420851     2.57892924
+O      0.01352887    -0.00259842    -1.97690647
+H     -0.75759521     0.00441612    -2.55527521
+H      0.79614814    -0.01294778    -2.53906394

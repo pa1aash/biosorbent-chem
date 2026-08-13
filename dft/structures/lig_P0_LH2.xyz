@@ -1,0 +1,23 @@
+21
+charge=+0 | mult=1 | uhf=0 | uks=false | species=lig_P0_LH2 | label=LH2 (methyl gallate, neutral) | formula=C8H8O5 | role=ligand | protonation=P0 | metal=none | preopt=GFN2-xTB/ALPB(water)/opt-tight | conformer_search=systematic torsion enumeration (4 torsions, 16 start geometries) + RDKit ETKDGv3 (60 unpruned embeddings) + MMFF94 + GFN2-xTB/ALPB(water) opt-tight | conformers_unique=22 | conformers_within_3kcal=13 | E_xtb_Eh=-41.57953966 | preopt_is_not_a_report_quantity=true | builder=build_structures.py+run_xtb_preopt.py+build_rotamers.py
+C      3.99351641     0.12736958     0.12619524
+O      2.59591193     0.41606095     0.08423613
+C      1.76459291    -0.62519019     0.03730015
+O      2.16205022    -1.77879280     0.02790452
+C      0.34591093    -0.23890170    -0.00010089
+C     -0.04471964     1.09692657     0.01274577
+C     -1.39132790     1.42157737    -0.01951937
+O     -1.77271834     2.72068333    -0.00672563
+C     -2.35238009     0.40364151    -0.06379909
+O     -3.66578639     0.75622358    -0.09148028
+C     -1.95283714    -0.93757383    -0.07659762
+O     -2.95023393    -1.86552424    -0.11858968
+C     -0.60847486    -1.25483019    -0.04595462
+H      4.28667090    -0.43182083    -0.76344105
+H      4.22576181    -0.46814984     1.01027565
+H      4.48951336     1.09207593     0.16300938
+H      0.68540736     1.88695214     0.04851305
+H     -2.74391884     2.76899794    -0.03197538
+H     -4.21000588    -0.04793801    -0.11981837
+H     -2.58543882    -2.76193740    -0.11690999
+H     -0.27149404    -2.27984987    -0.05526791

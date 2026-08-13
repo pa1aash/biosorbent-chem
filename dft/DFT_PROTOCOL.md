@@ -40,10 +40,31 @@ largely cancel in ΔΔG.
 **Figure requirement:** the model is shown with atom labels as part of Fig 4.10.
 
 ### 1.3 Deprotonation state at pH 5 — a sensitivity set, not an assumption
-Gallic acid's most acidic phenolic OH has pK_a ≈ 8.5, so **at pH 5.0 the galloyl group is
-predominantly protonated**. Metal binding at catechol-type sites nevertheless commonly proceeds with
-metal-induced deprotonation. Assuming either extreme would be a bare assumption of exactly the kind
-the Bible §3.1 warns against.
+
+**The pK_a that motivates this whole design is not yet sourced.**
+
+`\TODOPAL{source this pKa value before it is used in the report. The three-state P0/P1/P2 design
+rests on the claim that the galloyl group is predominantly protonated at pH 5, and that claim rests
+on a phenolic pKa. This document previously asserted "gallic acid's most acidic phenolic OH has pKa
+approximately 8.5" with NO citation, and that assertion has been withdrawn rather than retained.
+STRONGEST SOURCE: a compound-level NMR study of methyl gallate's microscopic phenolic pKa values, if
+one exists -- search terms "methyl gallate" microscopic pKa NMR ellagitannin deprotonation. That
+would be both compound-specific and position-specific, and position-specific matters here because
+the model chelates through a particular vicinal pair. ACCEPTABLE FALLBACK: a generic gallic acid
+phenolic pKa (values around 8.7 appear in standard compilations), but ONLY if cited to a real,
+verified source AND accompanied by the caveat that methyl gallate lacks the carboxylic acid group
+present in gallic acid, so the value may not transfer exactly. Per the reference rule, whatever is
+used must resolve against Crossref and must have been read.}`
+
+Until that citation exists, the following statement is **carried as an unsourced premise and must not
+be repeated in the report**: that at pH 5.0 the galloyl group is predominantly protonated, on the
+grounds that its most acidic phenolic OH has a pK_a well above 5.
+
+**The three-state design does not collapse if the premise is wrong** — it is what makes the premise
+unnecessary. Metal binding at catechol-type sites commonly proceeds with metal-induced deprotonation,
+so assuming either extreme would be a bare assumption of exactly the kind the Bible §3.1 warns
+against. The pK_a determines only which state is described as the *expected* dominant one; all three
+are computed regardless, and the reported claim is the one that survives all three.
 
 **Three states are therefore computed for every metal**, and the *ordering* is tested across all
 three:
@@ -58,6 +79,30 @@ three:
 P0, P1 and P2, it is robust to the protonation assumption and the report says so. If it does not,
 the report reports that instead. This *is* the sensitivity check, and it converts the single most
 attackable assumption in the model into a result.
+
+#### 1.3.1 The P1 deprotonation site is a STATED ASSUMPTION, not a resolved result
+
+**This is a labelled assumption. It must be described as one wherever P1 results appear.**
+
+This protocol fixes the *charge* of the LH⁻ state. It does not fix **which** of the three phenolic
+hydroxyls loses its proton, and methyl gallate has three, so LH⁻ is three distinct isomers. The
+structures carried forward are deprotonated at the **4-OH**, chosen because that oxygen is one of the
+chelating vicinal pair and because the resulting phenolate is conjugated *para* to the
+electron-withdrawing ester.
+
+**A screen was run and it could not settle the question.** All three mono-deprotonated isomers were
+optimised at GFN2-xTB/ALPB(water), giving the 4-OH isomer lowest and the 3-OH isomer **3.30 kJ mol⁻¹**
+above it. That signal is **five times smaller** than the **16.96 kJ mol⁻¹** conformational effect
+subsequently found *within the same species* by the conformer search — so the isomer comparison,
+which used one conformer per isomer, cannot discriminate between the two candidate sites. It
+establishes only that the 5-OH isomer is the poor one.
+
+**Consequence:** the site is an assumption pending resolution, not a screened result, and the report
+says so rather than implying the screen decided it. Resolving it requires a conformer search per
+isomer followed by confirmation at the production level of theory — two additional jobs. **Not
+attempted in the current scope.** Full detail and the numbers in
+[`structures/MODEL_JUSTIFICATION.md`](structures/MODEL_JUSTIFICATION.md) §3.1 and
+[`structures/CONFORMER_SCREEN.md`](structures/CONFORMER_SCREEN.md). Ruling **D-03** of 13 August 2026.
 
 ---
 
@@ -85,11 +130,65 @@ Three properties make this the defensible choice:
 3. **The number and type of species is matched across the three metals**, so the metal-to-metal
    difference ΔΔG — the quantity that actually carries the argument — is close to isodesmic.
 
-**Coordination number of the aquo ion.** Six is used for Cu(II) and Zn(II). **Pb(II) is the
-exception**: its hydration number is not firmly six, and the 6s² lone pair distorts the shell.
-Both **[Pb(H₂O)₆]²⁺** and **[Pb(H₂O)₈]²⁺** are computed and the lower-free-energy structure is used
-as the reference, with the choice reported. Silently assuming six for Pb is exactly the sort of
-detail a computational referee looks for.
+### 2.1 Coordination number of the aquo ion — RULED, 13 August 2026
+
+**n = 6 for all three metals. [Pb(H₂O)₆]²⁺ is the reference state for the headline ΔG_exchange
+comparison.** This supersedes the earlier provision that the lower-free-energy Pb structure would be
+adopted as the reference, which contradicted §3.5 and is withdrawn.
+
+**[Pb(H₂O)₈]²⁺ is retained** — the structure, its pre-screen energy and its production job all stand.
+Its **role is reclassified**: it is a computed alternative for the limitations discussion and for the
+§6 validation of the Pb–O bond length, **not** the headline reference state.
+
+**Why six, when the GFN2-xTB screen prefers eight.** The screen does prefer the eight-coordinate ion,
+and that preference is not disputed here. It is set aside for two reasons.
+
+1. **The screening result is not decisive for a question this subtle.** It is a semi-empirical
+   tight-binding energy, and the comparison it makes is between species of different composition.
+   A coordination-number preference for a heavy post-transition ion in water is not something a
+   GFN2-xTB screen settles.
+2. **Six is required for a controlled comparison.** The argument the report advances is a
+   *difference between metals*. That difference is interpretable only if the three reactions are of
+   the same class — same denticity, same number of waters displaced, same Δn, same species count on
+   each side. Fixing n = 6 across all three metals makes the comparison isodesmic, so that any energy
+   difference found is attributable to **the metal** rather than to comparing reactions of different
+   order. Allowing Pb alone to react from an eight-coordinate reactant would release four waters
+   against two for Cu and Zn, and the extra water terms would not cancel in ΔΔG. The Pb preference
+   would then be contaminated by the hydration-number difference rather than measuring it.
+
+**Pb's preference for variable and higher coordination numbers is not being denied.** It is a real
+consequence of the stereochemically active 6s² lone pair, and it is exactly the chemistry this report
+is about. It is being **set aside as a controlled-comparison decision** and stated as a limitation —
+see §2.2. Silently assuming six for Pb would be the flaw a computational referee looks for; assuming
+six, saying so, giving the reason and computing the alternative anyway is not.
+
+### 2.2 LIMITATION — the fixed Pb coordination number
+
+*Reusable near-verbatim in report §5.3.*
+
+> The lead(II) aquo ion was modelled as six-coordinate, [Pb(H₂O)₆]²⁺, to match the six-coordinate
+> reference states used for copper(II) and zinc(II). This was a deliberate choice in favour of a
+> controlled comparison: holding the coordination number, the denticity and the number of displaced
+> water molecules constant across the three metals makes the three exchange reactions isodesmic, so
+> that the computed differences between them are attributable to the identity of the metal rather
+> than to a difference in the reaction being computed.
+>
+> The choice is nevertheless a simplification, and the present study's own screening indicates as
+> much: at the GFN2-xTB level the eight-coordinate ion [Pb(H₂O)₈]²⁺ is favoured. Lead(II) is known to
+> adopt variable and often higher coordination numbers, a consequence of the same stereochemically
+> active 6s² lone pair that produces the hemidirected geometry this work reports. Constraining it to
+> six therefore describes the lead centre less faithfully than it describes the two transition-metal
+> comparators, and the absolute lead binding free energy reported here should be read with that in
+> mind. The *relative* quantity that carries the argument is less affected, because the constraint is
+> applied identically in every reaction entering the comparison.
+>
+> Two directions would resolve it. The first is a direct comparison of lead at both coordination
+> numbers at the density-functional level rather than at the semi-empirical level used for screening,
+> which would establish whether the eight-coordinate preference survives a proper treatment. The
+> second is an assessment of which coordination number is favoured **in water** rather than in the
+> gas phase, with the implicit solvation model applied to both, since the hydration free energy of
+> the additional water molecules is precisely what the gas-phase screen omits. Both are named as
+> future work in §5.4.
 
 ---
 
@@ -181,6 +280,86 @@ For the **exchange free energies** the correction is expected to be small and la
 because the reactant and product complexes are of similar size and composition; the counterpoise
 correction is computed for one representative case per metal and the magnitude reported, rather than
 asserted to be negligible. Asserting negligibility without a number is what invites the question.
+
+### 3.7 QC CHECKPOINT — denticity is measured on every optimised complex, never assumed
+
+**Attack A31.** A specification for a check that runs once jobs exist. It is written now so that it
+is not improvised later.
+
+**The starting geometry is not constrained.** The GFN2-xTB pre-screen showed the neutral P0 ligand
+opening to **monodentate** coordination on Cu(II) — the second galloyl oxygen relaxing to 3.24 Å —
+while the Pb and Zn P0 complexes retained bidentate coordination. **The DFT starting geometry is
+deliberately not constrained to force the bidentate mode.** Imposing a restraint would decide the
+chemistry rather than measure it, in exactly the way §5 forbids for hemidirection. The optimiser is
+allowed to find whatever mode the level of theory supports, and the mode it finds is a result.
+
+**Required of the harvesting script**, for **every** metal × protonation-state combination, not for
+Cu P0 alone and not sampled:
+
+| Reported quantity | Definition |
+|---|---|
+| M–O(galloyl) distance, **both** oxygens | Distance from the metal to each of the two vicinal galloyl oxygens O3 and O4, in Å, individually — never averaged, because averaging is what would hide a monodentate structure. |
+| Denticity verdict | **bidentate** if both galloyl oxygens lie within the first-shell cutoff; **monodentate** if one does; **dissociated** if neither does. |
+| First-shell donor count | Total oxygens within the cutoff, and the split into galloyl and water oxygens. |
+| Flag | Set whenever the verdict differs from bidentate, **or** differs from the verdict for the same protonation state on another metal. |
+
+**This is not optional, and the result is not assumed uniform.** Report **Table 4.7 carries a
+denticity and first-shell-donor-count column for every metal-protonation-state combination**, filled
+from the measured geometry. A table that reports one coordination mode as though it applied to all
+nine species would be asserting the thing the checkpoint exists to test.
+
+The same cutoffs and the same first-shell logic already used at the pre-screening stage are reused,
+so the pre-screen and production verdicts are directly comparable:
+[`structures/geom_utils.py`](structures/geom_utils.py) and
+[`structures/check_geometries.py`](structures/check_geometries.py).
+
+### 3.8 CONTINGENCY — if Cu(II) P0 is genuinely monodentate at DFT level
+
+*Decided in advance, on 13 August 2026, so that it does not have to be decided under deadline
+pressure. Written out in full for that reason.*
+
+**Case A — the P0 complex optimises to bidentate for all three metals.** The GFN2 result was a
+semi-empirical artefact. Nothing changes: x = 2 holds for all nine reactions, the P0 row of the
+comparison is reported without qualification, and the pre-screen discrepancy is noted in one sentence
+as an example of why the denticity checkpoint exists.
+
+**Case B — Cu(II) P0 remains monodentate while Pb and Zn P0 are bidentate.** This is **a finding, not
+a failure**, and it is reported as one:
+
+1. **State it as a result.** Copper(II) cannot maintain the same coordination mode as lead(II) and
+   zinc(II) toward the neutral galloyl ligand at this protonation state. The interpretation offered
+   is the one the geometry supports — a neutral catechol is a weak donor, and the Jahn–Teller
+   distortion of a d⁹ centre disfavours a sixth short bond — stated with that basis rather than
+   asserted.
+2. **The stoichiometry is no longer matched.** A monodentate Cu product displaces **one** water where
+   the bidentate Pb and Zn products displace two. The P0 Cu reaction is then
+
+   ```
+   [Cu(H2O)6]2+  +  LH2  ->  [Cu(LH2)(H2O)5]2+  +  1 H2O        x = 1,  dn = 0
+   ```
+
+   against x = 2 and Δn = +1 for Pb and Zn. **The standard-state correction differs, and the water
+   terms no longer cancel in ΔΔG.**
+3. **The P0 cross-metal comparison carries an explicit caveat and is not presented as directly
+   comparable.** The P0 row of Table 4.9 and every statement of P0 selectivity is marked with the
+   denticity mismatch, in the table itself and not only in a footnote. **ΔΔG(Pb − Cu) at P0 is not
+   quoted as a like-for-like selectivity figure.** Quoting it without qualification would compare
+   reactions of different order and attribute the difference to the metal, which is precisely the
+   error the n = 6 ruling of §2.1 exists to prevent — the same principle applies here.
+4. **The argument does not depend on P0.** The report's claim is the one that survives all three
+   protonation states (§1.3). P1 and P2 both retained bidentate coordination for all three metals at
+   the pre-screen stage, so the ordering can still be tested on a matched basis at those states, and
+   the P0 result enters as supporting evidence with its caveat rather than as a headline number.
+5. **What is *not* done.** The Cu P0 complex is **not** re-optimised under a restraint to force
+   bidentate coordination in order to restore comparability. A restrained geometry is not a minimum,
+   its frequencies are not meaningful, and its free energy would be a number with no physical
+   referent. If a matched comparison is wanted at P0, the correct route is to compute the
+   **monodentate form for all three metals** as a second, internally matched set — and that is named
+   as future work rather than attempted before the deadline.
+
+**Case C — Pb or Zn P0 also goes monodentate.** If all three go monodentate, comparability is
+restored at x = 1 and the P0 row is reported on that matched basis, with the change of reaction class
+stated. If the pattern is mixed in some other way, Case B applies to whichever metals differ.
 
 ---
 
@@ -315,7 +494,7 @@ convention** and are not carried forward until traced to a paper that has been r
 |---|---|---|---|---|
 | 1 | H₂O | 1 | 1 | trivial |
 | 2 | Ligand LH₂ / LH⁻ / L²⁻ | 3 | 3 | CREST conformer pre-pass, lowest conformer optimised |
-| 3 | [Pb(H₂O)₆]²⁺, [Pb(H₂O)₈]²⁺ | 2 | 2 | both, lower used as reference |
+| 3 | [Pb(H₂O)₆]²⁺, [Pb(H₂O)₈]²⁺ | 2 | 2 | **n = 6 is the reference state (§2.1). n = 8 is computed as the limitations-discussion alternative and for the §6 validation — it is not the headline reference.** |
 | 4 | [Cu(H₂O)₆]²⁺, [Zn(H₂O)₆]²⁺ | 2 | 2 | Cu unrestricted doublet |
 | 5 | Complexes, 3 metals × 3 protonation states | 9 | 9 | the expensive set |
 | 6 | Validation | — | included in 3 | |

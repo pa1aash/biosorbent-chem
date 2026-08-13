@@ -29,7 +29,7 @@ HERE = Path(__file__).resolve().parent
 CSV_PATH = HERE / "xtb_prescreen.csv"
 HARTREE_TO_KJ = 2625.499639
 
-FIELDS = ["species", "label", "formula", "role", "protonation", "metal",
+FIELDS = ["species", "label", "formula", "role", "role_note", "protonation", "metal",
           "charge", "multiplicity", "unpaired_electrons", "unrestricted",
           "n_atoms", "method", "solvation", "opt_level",
           "conformer_search", "conformers_unique", "conformers_within_3kcal",
@@ -47,6 +47,7 @@ def main() -> int:
             "label": h.get("label", ""),
             "formula": h.get("formula", ""),
             "role": h.get("role", ""),
+            "role_note": h.get("role_note", ""),
             "protonation": h.get("protonation", ""),
             "metal": h.get("metal", "none"),
             "charge": h.get("charge", ""),

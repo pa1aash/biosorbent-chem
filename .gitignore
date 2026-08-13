@@ -12,24 +12,28 @@ dft/hetzner/secrets/
 .ssh/
 
 # ── LaTeX build artefacts ──────────────────────────────────────────────────────
+# NOTE ON SCOPING. These extensions are scoped to report/ deliberately. A bare
+# *.out here would also match ORCA's primary output files, which are the evidence
+# every energy in the report has to be traceable to -- they would have been
+# silently untracked. Keep LaTeX rules under report/; never make them repo-wide.
 report/build/
-*.aux
-*.bbl
-*.bcf
-*.blg
-*.fdb_latexmk
-*.fls
-*.lof
-*.log
-*.lot
-*.out
-*.run.xml
-*.synctex.gz
-*.toc
-*.nav
-*.snm
-*.vrb
-*.xdv
+report/**/*.aux
+report/**/*.bbl
+report/**/*.bcf
+report/**/*.blg
+report/**/*.fdb_latexmk
+report/**/*.fls
+report/**/*.lof
+report/**/*.log
+report/**/*.lot
+report/**/*.out
+report/**/*.run.xml
+report/**/*.synctex.gz
+report/**/*.toc
+report/**/*.nav
+report/**/*.snm
+report/**/*.vrb
+report/**/*.xdv
 # but the generated numbers file must be inspectable in a diff, so it is NOT ignored:
 !report/preamble/numbers.tex
 
@@ -47,6 +51,16 @@ env/
 
 # ── Quantum-chemistry scratch (large, regenerable, or licence-restricted) ──────
 # Keep .out, .xyz, .hess and property files. Discard binaries and scratch.
+#
+# ORCA writes its primary output as .out, and every energy quoted in the report
+# must be traceable to one of those files. They are kept by DEFAULT -- nothing in
+# this file ignores them, and nothing may be added that does. A repo-wide *.out
+# rule (there was one, a LaTeX rule, until 2026-08-13) silently untracks the
+# entire evidence base. An explicit "!dft/outputs/**/*.out" negation is
+# deliberately NOT used: it would make "git check-ignore" report a match for
+# these files, which obscures the check that verifies this invariant, and it
+# would need careful ordering against the *_atom*.out rule below to avoid
+# re-including the one ORCA output that IS discarded.
 dft/outputs/**/*.gbw
 dft/outputs/**/*.tmp
 dft/outputs/**/*.tmp.*

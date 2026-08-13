@@ -175,6 +175,28 @@ At the end of **every** session, in this order:
 3. **Run `make check`.**
 4. **Commit.**
 
+### 7.1 ABSOLUTE RULE — A SESSION RECORD IS NOT A TRANSCRIPT
+
+**Two separate artefacts are required for every session, and one cannot stand in for the other.**
+
+| Artefact | Who produces it | What it is |
+|---|---|---|
+| **Session record** — `logs/sessions/<date>_<ID>_<slug>.md` | The assistant | An accurate written account of what the session did. **Not a chat log.** |
+| **Verbatim transcript** | **Palaash, exported from the Claude Code client** | The actual chat record the 2026 rules require as Appendix A. |
+
+**The assistant must never generate, reconstruct, simulate or "reproduce from the working record" a
+verbatim transcript.** A written account of a conversation is not a record of that conversation, and
+submitting one as though it were would misrepresent the evidence to the Organising Committee — which
+is a far worse finding than a missing file. If the export does not exist, the correct state is a
+**visible, outstanding `\TODOPAL`**, not a plausible substitute.
+
+Every session record therefore carries, at the top, a banner stating that it is not the verbatim
+export, and a `\TODOPAL` naming the export still owed. **Those markers are cleared only when the real
+export file is present in `logs/sessions/`** — never because the record looks complete.
+
+**Appendix A is assembled from the exports, not from the records.** The records are supporting
+context. A session with no export has no Appendix A entry.
+
 This is not bookkeeping. The Acknowledgement's AI declaration and Appendix A are **generated from
 this record**. The 2026 rules require names and versions, specific stages and purposes, and timing
 and frequency, with chat records attached for verification. The log exists so that the declaration

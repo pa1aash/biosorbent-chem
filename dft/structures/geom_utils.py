@@ -134,7 +134,7 @@ def coordination_signature(syms: list[str], xyz: np.ndarray, metal: str
 # Canonical field order for a structure header.  Anything not listed keeps its
 # relative order after these.
 HEADER_ORDER = ["charge", "mult", "uhf", "uks", "species", "label", "formula",
-                "role", "protonation", "metal", "config", "ligand_source",
+                "role", "role_note", "protonation", "metal", "config", "ligand_source",
                 "preopt", "conformer_search", "conformers_unique",
                 "conformers_within_3kcal", "E_xtb_Eh",
                 "preopt_is_not_a_report_quantity", "builder"]

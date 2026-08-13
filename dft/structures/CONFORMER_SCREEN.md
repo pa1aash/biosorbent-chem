@@ -163,7 +163,20 @@ conformer that passed verification.** The retained window is kept in
 [`rotamers/<species>_ensemble.xyz`](rotamers/) so the selection can be audited and so the
 conformational spread can be quoted as an uncertainty alongside the production free energies.
 
-### 3.1 A note on the "unique" counts
+### 3.1 Consequence for the P1 deprotonation site — a STATED ASSUMPTION
+
+The `lig_P1_LH1m` row above carries a result that reaches beyond conformer selection. The search
+lowered that species by **16.96 kJ mol⁻¹**, which is **five times** the **3.30 kJ mol⁻¹** gap that the
+earlier deprotonation-site screen (`screens/p1_deprotonation_site.json`) reported between the 4-OH
+and 3-OH isomers. That screen used **one conformer per isomer**, so it confounded isomer identity
+with conformer choice, and a conformational effect five times the size of the signal makes it
+incapable of discriminating between the two candidate sites.
+
+**The P1 deprotonation site is therefore a stated assumption, not a screened result**, and must be
+described that way wherever P1 results appear. See [`../DFT_PROTOCOL.md`](../DFT_PROTOCOL.md) §1.3.1
+and [`MODEL_JUSTIFICATION.md`](MODEL_JUSTIFICATION.md) §3.1. Ruling **D-03** of 13 August 2026.
+
+### 3.2 A note on the "unique" counts
 
 The deduplication aligns structures by rotation and translation but not by reflection, so a pair of
 mirror-image conformers — identical in energy, distinct in coordinates — is counted twice. This

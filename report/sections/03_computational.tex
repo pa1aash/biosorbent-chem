@@ -47,13 +47,23 @@
 % model at the same level; truncation errors common to all three largely cancel
 % in the metal-to-metal difference, which is the quantity that carries the argument.
 %
-% DEPROTONATION AT pH 5 — A SENSITIVITY SET, NOT AN ASSUMPTION. Gallic acid's most
-% acidic phenolic OH has pKa ~8.5, so at pH 5 the galloyl is predominantly
-% PROTONATED; metal-induced deprotonation is nonetheless common at catechol-type
-% sites. Three states (P0 neutral, P1 mono-deprotonated, P2 bis-deprotonated
-% chelate) are computed for every metal and THE ORDERING IS TESTED ACROSS ALL
-% THREE. The claim reported is the one that survives all three. This converts the
-% single most attackable assumption in the model into a result.
+% DEPROTONATION AT pH 5 — A SENSITIVITY SET, NOT AN ASSUMPTION.
+% !! DO NOT UNCOMMENT THE pKa NUMBER. The previously noted "pKa ~8.5" was
+% !! UNSOURCED and has been withdrawn from dft/DFT_PROTOCOL.md §1.3, which now
+% !! carries a \TODOPAL for it. Ruling D-04, 2026-08-13. Write no pKa value into
+% !! this section until a verified citation exists in refs/library.bib.
+% Metal-induced deprotonation is common at catechol-type sites, so assuming
+% either extreme would be a bare assumption. Three states (P0 neutral, P1 mono-
+% deprotonated, P2 bis-deprotonated chelate) are computed for every metal and
+% THE ORDERING IS TESTED ACROSS ALL THREE. The claim reported is the one that
+% survives all three. This converts the single most attackable assumption in the
+% model into a result — and it is what makes the pKa premise unnecessary.
+%
+% P1 SITE IS A STATED ASSUMPTION, NOT A RESULT (D-03, dft/DFT_PROTOCOL.md
+% §1.3.1): deprotonation is placed at the 4-OH, but the GFN2 site screen
+% (3.30 kJ/mol) is five times smaller than the conformational effect in the same
+% species (16.96 kJ/mol) and cannot discriminate. Say so; do not imply it was
+% resolved.
 
 \subsection{Level of theory, basis sets and relativistic treatment}
 \label{sec:level-of-theory}

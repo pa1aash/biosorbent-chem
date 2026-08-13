@@ -183,7 +183,8 @@ Stated here so that §5.3 of the report can state it, rather than being asked it
 | **No glucose core, no ossein peptide.** | Any contribution from backbone carbonyls, amide nitrogens or neighbouring hydroxyls to the first or second coordination sphere is absent. | Report §5.3. |
 | **No explicit second solvation shell.** Solvation is implicit (SMD). | Implicit solvation cannot represent specific hydrogen bonding into the vacant hemisphere of a hemidirected Pb(II) centre — and that vacant hemisphere is exactly what the mechanism claims exists. | Protocol §3.3; report §5.3. This is the most directly relevant limitation in the list and is stated, not hidden. |
 | **The graft is modelled as a free molecule**, not as a species tethered to a solid surface. | No steric constraint from the fibre, and no restriction on the ligand's conformational freedom. | Report §5.3. |
-| **A single chelation mode is imposed** — bidentate through the vicinal O3/O4 pair. Monodentate and bridging modes were not searched. | The computed complexes are the bidentate chelate, and the report must describe them as such rather than as "the" complex. | See §6 below — this is not purely hypothetical. |
+| **A single chelation mode is imposed** — bidentate through the vicinal O3/O4 pair. Monodentate and bridging modes were not searched. | The computed complexes are the bidentate chelate, and the report must describe them as such rather than as "the" complex. | See §6 below — this is not purely hypothetical. The *starting* mode is imposed; the *optimised* mode is measured, not assumed — `../DFT_PROTOCOL.md` §3.7. |
+| **Lead(II) is constrained to six-coordinate** to match the Cu and Zn reference states, although the GFN2-xTB screen favours the eight-coordinate aquo ion. | The lead centre is modelled less faithfully than the two comparators, and the absolute Pb binding free energy should be read with that in mind. The *relative* quantity carrying the argument is less affected, because the constraint applies identically in every reaction entering the comparison. | Ruling **D-01** of 2026-08-13. Limitation written out in full in `../DFT_PROTOCOL.md` §2.2, reusable near-verbatim in report §5.3. Attack **A33**, ACCEPTED RISK. |
 
 ---
 
@@ -199,9 +200,14 @@ d⁹ Cu(II) disfavours a sixth short bond — but it matters for the reaction sc
 5-coordinate monodentate Cu product is **not** the same species as the 6-coordinate bidentate Pb and
 Zn products, and the ΔΔG comparison assumes matched species on both sides.
 
-**It is not yet known whether this survives at the production level of theory**, and no decision is
-taken on it here. It is recorded as an open item in [`../REACTIONS.md`](../REACTIONS.md) §5 and must
-be resolved once the P0 complexes have been optimised in ORCA.
+**It is not yet known whether this survives at the production level of theory.** Ruled 13 August
+2026 (**D-02**): the DFT starting geometry is **not** constrained to force bidentate coordination.
+Imposing a restraint would decide the chemistry rather than measure it, and a restrained geometry is
+not a minimum — its frequencies and its free energy would have no physical referent. Denticity is
+instead **measured** on every optimised complex by the QC checkpoint in
+[`../DFT_PROTOCOL.md`](../DFT_PROTOCOL.md) §3.7, which reports both M–O(galloyl) distances
+individually for every metal-protonation-state combination, and the contingency for a confirmed
+mismatch is written out in advance in §3.8. Tracked as attack **A31**.
 
 ---
 
@@ -246,13 +252,18 @@ and must be resolved to verified entries:
 | ETKDGv3 | Riniker & Landrum, experimental-torsion distance geometry |
 | MMFF94 | Halgren, the MMFF94 series |
 | Tannic acid structure and galloyl chelation | a verified source for the decagalloyl glucose structure |
-| **pK_a of gallic acid** | [`../DFT_PROTOCOL.md`](../DFT_PROTOCOL.md) §1.3 states "pK_a ≈ 8.5" **with no citation**. This value underpins the claim that the galloyl group is predominantly protonated at pH 5, which in turn motivates the whole three-state design. It requires a verified source or it must be removed. |
+| **Phenolic pK_a** | **Resolved as far as it can be without Palaash: the unsourced assertion has been withdrawn.** [`../DFT_PROTOCOL.md`](../DFT_PROTOCOL.md) §1.3 previously stated "pK_a ≈ 8.5" with no citation; it now carries a `\TODOPAL` naming the preferred source — a compound-level NMR study of **methyl gallate's** *microscopic* phenolic pK_a values, which is both compound- and position-specific — and the acceptable fallback of a generic gallic acid phenolic pK_a, cited to a real verified source and carrying the caveat that methyl gallate **lacks the carboxylic acid group** present in gallic acid so the value may not transfer exactly. Ruling **D-04**, attack **A32**. **Awaiting Palaash's citation.** |
 
 ---
 
 ## 9. OPEN ITEMS
 
-1. **P1 deprotonation site** — confirm 4-OH against 3-OH at the production level of theory (§3.1).
-2. **Cu P0 chelation mode** — determine whether monodentate coordination survives DFT optimisation,
-   and if it does, decide how the P0 comparison is reported (§6).
-3. **pK_a citation** — supply or withdraw (§8).
+All three were ruled on 13 August 2026. None now blocks work; each remains open only in the sense
+noted.
+
+| Ref | Item | State after the ruling |
+|---|---|---|
+| **D-03** | P1 deprotonation site (§3.1). | **Carried as a labelled stated assumption**, not a result. Resolving it needs a conformer search per isomer plus production-level confirmation — two jobs, out of current scope. |
+| **D-02** | Cu P0 chelation mode (§6). | **Measured, not forced.** No restraint applied; QC checkpoint specified and contingency pre-written. Resolvable only once the DFT geometry exists. Attack **A31**. |
+| **D-04** | Phenolic pK_a citation (§8). | **Assertion withdrawn**, `\TODOPAL` in place. **Requires Palaash to supply or confirm a citation.** Attack **A32**. |
+| **D-01** | Pb coordination number (§5). | **CLOSED — CN = 6.** Retained as a stated limitation, not an open question. Attack **A33**, ACCEPTED RISK. |

@@ -118,7 +118,8 @@ class Species:
     atoms: list[tuple[str, np.ndarray]]
     note: str
     config: str = ""
-    role: str = ""        # reactant / product / ligand / solvent
+    role: str = ""        # reactant / product / ligand / alternative
+    role_note: str = ""   # why a species is not a headline reactant, if it is not
     protonation: str = "" # P0 / P1 / P2 / n-a
     metal: str = ""
     donor_indices: list[int] = field(default_factory=list)  # 0-based, into atoms
@@ -155,6 +156,8 @@ def comment_line(sp: Species, extra: str = "") -> str:
     ]
     if sp.config:
         fields.append(f"config={sp.config}")
+    if sp.role_note:
+        fields.append(f"role_note={sp.role_note}")
     if extra:
         fields.append(extra)
     fields.append("builder=build_structures.py")
@@ -318,7 +321,7 @@ def square_antiprism_directions() -> list[np.ndarray]:
     return dirs
 
 
-def build_aquo(metal: str, n: int) -> Species:
+def build_aquo(metal: str, n: int, role: str = "reactant", role_note: str = "") -> Species:
     m = np.zeros(3)
     atoms: list[tuple[str, np.ndarray]] = [(metal, m)]
     donors: list[int] = []
@@ -354,8 +357,8 @@ def build_aquo(metal: str, n: int) -> Species:
         label=f"[{metal}(H2O){n}]2+",
         charge=2, mult=METAL_MULT[metal], atoms=atoms,
         note=f"Ideal {geom} starting geometry; no distortion imposed.",
-        config=METAL_CONFIG[metal], role="reactant", protonation="n-a", metal=metal,
-        donor_indices=donors,
+        config=METAL_CONFIG[metal], role=role, role_note=role_note,
+        protonation="n-a", metal=metal, donor_indices=donors,
     )
 
 
@@ -450,7 +453,11 @@ def main() -> None:
     built.extend(ligs)
     built.append(build_water())
     built.append(build_aquo("Pb", 6))
-    built.append(build_aquo("Pb", 8))
+    built.append(build_aquo(
+        "Pb", 8, role="alternative",
+        role_note=("limitations-discussion alternative and section 6 validation only; "
+                   "NOT the headline reference state -- see DFT_PROTOCOL.md 2.1, "
+                   "ruling D-01 of 2026-08-13")))
     built.append(build_aquo("Cu", 6))
     built.append(build_aquo("Zn", 6))
 

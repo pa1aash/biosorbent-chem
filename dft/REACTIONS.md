@@ -99,46 +99,45 @@ What survives the cancellation in ΔΔG(Pb − Cu) and ΔΔG(Pb − Zn) is the d
 how strongly the galloyl ligand is preferred over two waters. That difference is the result the
 report advances.
 
-### 3.1 UNRESOLVED — the Pb coordination number conflicts with x = 2
+### 3.1 The Pb coordination number — RULED AND LOCKED, 13 August 2026
 
-**This must be ruled on before any ORCA job is submitted. It is not decided here.**
+**n = 6 for all three metals. This is a closed design decision, not an open question.**
 
-[`DFT_PROTOCOL.md`](DFT_PROTOCOL.md) contains two statements that cannot both be honoured:
+The metal-side reference states for all nine headline equations are, without exception:
 
-> **§2:** "Six is used for Cu(II) and Zn(II). **Pb(II) is the exception**: … Both **[Pb(H₂O)₆]²⁺** and
-> **[Pb(H₂O)₈]²⁺** are computed and the lower-free-energy structure is used as the reference."
+| Metal | Reference state | File |
+|---|---|---|
+| Pb | **[Pb(H₂O)₆]²⁺** | `structures/pb_aquo6.xyz` |
+| Cu | **[Cu(H₂O)₆]²⁺** | `structures/cu_aquo6.xyz` |
+| Zn | **[Zn(H₂O)₆]²⁺** | `structures/zn_aquo6.xyz` |
 
-> **§3.5:** "…applied according to the change in the number of species (**Δn = +1** for the exchange
-> reactions as written)."
+with **x = 2 uniformly** and **Δn = +1 uniformly**.
 
-Δn = +1 requires exactly two waters to be released, which requires a six-coordinate reactant aquo ion
-and a four-water product. **If [Pb(H₂O)₈]²⁺ turns out to be the lower-free-energy Pb aquo ion and is
-adopted as the reference, then for Pb:**
+**What this resolves.** [`DFT_PROTOCOL.md`](DFT_PROTOCOL.md) previously contained two statements that
+could not both be honoured — §2 adopted the lower-free-energy Pb aquo ion as the reference, while
+§3.5 stated Δn = +1, which requires a six-coordinate reactant. The GFN2-xTB pre-screen does favour
+the eight-coordinate ion, so the conflict was live rather than hypothetical. **§2 has been withdrawn
+and replaced by §2.1, which fixes n = 6.** The ruling and its full rationale are recorded there and
+in [`../docs/03_DECISIONS.md`](../docs/03_DECISIONS.md); the substance is that a semi-empirical
+gas-phase screen does not settle a coordination-number question this subtle, and that a controlled
+comparison across three metals requires the same reaction class for all three.
+
+Had n = 8 been adopted for Pb, the reaction would have been
 
 ```
 [Pb(H2O)8]2+  +  L  ->  [Pb(L)(H2O)4]q  +  4 H2O          x = 4,  Δn = +3
 ```
 
-and x is no longer identical across the three metals. Two extra water-release terms and two extra
-standard-state corrections would then enter ΔG(Pb) and *not* ΔG(Cu) or ΔG(Zn), and they would not
-cancel in ΔΔG. The metal comparison would no longer be isodesmic, and the magnitude of the Pb
-preference would be contaminated by the hydration-number difference rather than measuring it.
+with two extra water-release terms and two extra standard-state corrections entering ΔG(Pb) and not
+ΔG(Cu) or ΔG(Zn). Those terms would not cancel in ΔΔG, and the Pb preference would have been
+contaminated by the hydration-number difference rather than measuring it. **That is the outcome this
+ruling exists to prevent.**
 
-**The three ways out, with their consequences. None is adopted here.**
-
-| Option | What it does | Cost |
-|---|---|---|
-| **A. Fix n = 6 for all three metals in the exchange reaction.** Report the [Pb(H₂O)₆]²⁺ ⇌ [Pb(H₂O)₈]²⁺ free-energy difference separately, as a hydration-structure result and as the §6 validation job. | Keeps x = 2 and Δn = +1 everywhere; ΔΔG stays isodesmic; §3.5 stands unaltered. | The Pb reactant is not the lowest-free-energy Pb aquo species, and the report must say so and quote the difference rather than bury it. |
-| **B. Adopt the lower-energy Pb aquo ion and accept x = 4 for Pb.** | Uses the physically preferred Pb reactant. | ΔΔG is no longer isodesmic; §3.5 must be rewritten with a per-metal Δn; two extra water terms carry their full error into the Pb result. Weakens the central comparison. |
-| **C. Make the Pb product eight-coordinate**, [Pb(L)(H₂O)₆]²⁺, restoring x = 2. | Keeps x = 2 and Δn = +1. | Breaks matching on the *product* side instead: the Pb complex would have six retained waters against four for Cu and Zn, so the product species are no longer of matched composition. Also requires re-deriving the hemidirection descriptors against a different donor count. |
-
-**Both Pb aquo structures have been built and pre-optimised** (`pb_aquo6.xyz`, `pb_aquo8.xyz`), so
-the §6 validation job is unaffected by this ruling and can proceed either way. Only the choice of
-*reactant for the exchange reaction* is blocked.
-
-> **Recommendation, offered but not applied: Option A.** It preserves the property the whole reaction
-> design exists to secure, and it converts the awkwardness into a reported result — the hydration
-> preference of Pb(II) — rather than a hidden inconsistency. **Palaash's ruling is required.**
+**[Pb(H₂O)₈]²⁺ is retained, not discarded.** `structures/pb_aquo8.xyz` and its pre-screen energy in
+`structures/xtb_prescreen.csv` stand unchanged, and the production job for it stands. Its role is
+reclassified: it is the **limitations-discussion alternative** and part of the §6 Pb–O bond-length
+validation, and it is not the headline reference state. The limitation is written out in
+[`DFT_PROTOCOL.md`](DFT_PROTOCOL.md) §2.2 in a form reusable in report §5.3.
 
 ### 3.2 A second condition on x — the Cu P0 chelation mode
 
@@ -280,10 +279,15 @@ Seventeen optimisation-plus-frequency jobs, matching the inventory in
 
 ---
 
-## 7. OPEN ITEMS BLOCKING SUBMISSION OF THE ORCA JOBS
+## 7. OPEN ITEMS
 
-1. **§3.1 — the Pb coordination number.** Options A/B/C above. **Requires Palaash's ruling.**
-2. **§3.2 — the Cu P0 chelation mode.** Check on the DFT-optimised structures; no assumption made.
-3. **§5.1 — whether ORCA's printed final energy already includes the SMD G_CDS term.** Must be
-   established against actual output before `thermo.py` sums anything.
-4. **The P1 deprotonation site**, per [`structures/MODEL_JUSTIFICATION.md`](structures/MODEL_JUSTIFICATION.md) §3.1.
+**Nothing in this list blocks submission of the ORCA jobs.** The one item that did — the Pb
+coordination number — was ruled on 13 August 2026 and is closed; see §3.1.
+
+| Ref | Item | Status |
+|---|---|---|
+| **D-01** | The Pb coordination number. | **CLOSED 2026-08-13** — n = 6, §3.1 and `DFT_PROTOCOL.md` §2.1. |
+| **D-02** | The Cu P0 chelation mode (§3.2). | **OPEN, does not block.** Ruled 2026-08-13: the starting geometry is **not** constrained to force bidentate coordination. Denticity is measured from the optimised structure by the QC checkpoint in `DFT_PROTOCOL.md` §3.7, and the contingency if it is genuinely monodentate is written out there in full. Attack **A31**. |
+| **D-03** | The P1 deprotonation site, per [`structures/MODEL_JUSTIFICATION.md`](structures/MODEL_JUSTIFICATION.md) §3.1. | **OPEN, does not block.** Carried as a labelled stated assumption, not a result. |
+| **D-04** | The gallic acid pK_a motivating the three-state design has no citation. | **OPEN.** Carried as `\TODOPAL` in `DFT_PROTOCOL.md` §1.3. Attack **A32**. |
+| **C-01** | Whether ORCA's printed final energy already includes the SMD G_CDS term (§5.1). | **OPEN, needs output not a decision.** Must be established against real output before `thermo.py` sums anything. |

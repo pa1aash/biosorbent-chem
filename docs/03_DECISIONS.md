@@ -152,3 +152,95 @@ transferring to the compute box, so nothing was submitted and no DFT input file 
 |---|---|
 | — | **`.gitignore` line 25 ignores `*.out` globally** (a LaTeX rule). The block at lines 48–58 is written on the assumption that ORCA `.out` files are kept — its own comment says "Keep .out, .xyz, .hess and property files" — but the global rule overrides it, so **every ORCA output file would be silently untracked**. Since the report requires every quoted energy to be traceable to a file in `dft/outputs/`, this must be fixed with a negation rule before the first production run. Not fixed in this session because it touches build behaviour outside the session's scope. |
 
+---
+
+## 2026-08-13 — Computational arm: four rulings applied (D-01 to D-04)
+
+Session S03. Documentation, decision-recording and repository hygiene only. No structures built, no
+ORCA input written, no calculation run. All four rulings below were **decided by Palaash** and are
+recorded here so they are never re-litigated under deadline pressure.
+
+### D-01 — Pb coordination number: **RULED, n = 6. CLOSED.**
+
+**Decision.** Lead(II) uses **CN = 6**, matching Cu(II) and Zn(II). **[Pb(H₂O)₆]²⁺ is the reference
+state for the headline ΔG_exchange comparison.** The earlier §2 provision — adopt whichever Pb aquo
+ion is lower in free energy — is **withdrawn**; it contradicted §3.5 (Δn = +1) and the contradiction
+was live, because the GFN2-xTB screen does favour the eight-coordinate ion.
+
+**Rationale, as ruled.**
+1. The GFN2-xTB CN = 8 preference is **gas-phase and semi-empirical**, and is **not treated as
+   decisive** for a coordination-number question this subtle.
+2. More importantly, **CN = 6 is required for a controlled isodesmic comparison** across all three
+   metals — same denticity, same Δn, same reaction class — so that any energy difference found is
+   **attributable to the metal** rather than to comparing reactions of different order.
+3. Pb's known preference for variable, higher coordination numbers — a direct consequence of its
+   stereochemically active 6s² lone pair — **is not being denied**. It is **set aside as a
+   controlled-comparison decision and flagged explicitly as a limitation**.
+
+**Consequences applied.** `dft/DFT_PROTOCOL.md` §2.1 states the ruling and §2.2 carries the
+limitation paragraph in a form reusable near-verbatim in report §5.3; §8 job inventory relabelled.
+`dft/REACTIONS.md` §3.1 records the decision as locked, with all **nine** headline equations
+(3 metals × P0/P1/P2) confirmed on `pb_aquo6` / `cu_aquo6` / `zn_aquo6`, **x = 2 uniformly**,
+**Δn = +1 uniformly**. **`pb_aquo8` is retained, not discarded** — structure, pre-screen energy and
+production job all stand; its `role` is relabelled `alternative` with an explicit `role_note` in the
+`.xyz` header and in `xtb_prescreen.csv`, marking it limitations-discussion and §6 validation only.
+
+### D-02 — Cu(II) P0 monodentate collapse: **RULED, do not force geometry; measure post-DFT.**
+
+**Decision.** The DFT starting geometry is **not** constrained to force bidentate coordination.
+Constraining it would decide the chemistry rather than measure it — the same principle already
+applied to hemidirection in §5.
+
+**Consequences applied.** `dft/DFT_PROTOCOL.md` **§3.7** specifies a mandatory QC checkpoint: the
+harvesting script must report **both** M–O(galloyl) distances individually — never averaged, because
+averaging is what would hide a monodentate structure — plus a denticity verdict and first-shell donor
+count, **for every metal × protonation-state combination**, and **Table 4.7 carries a denticity
+column** rather than assuming uniformity. **§3.8** writes out the contingency in full, in advance:
+Case A (all bidentate — GFN2 artefact, nothing changes); **Case B** (Cu P0 genuinely monodentate —
+reported as a **finding**: Cu(II) cannot maintain the same coordination mode as Pb/Zn at this
+protonation state; x = 1 and Δn = 0 for Cu against x = 2 and Δn = +1 for Pb/Zn, so the water terms no
+longer cancel; the P0 cross-metal row carries an **explicit caveat in the table itself** and
+ΔΔG(Pb−Cu) at P0 is **not** quoted as a like-for-like selectivity figure; the complex is **not**
+re-optimised under restraint); Case C (mixed pattern). Tracked as attack **A31**, status OPEN.
+
+### D-03 — P1 deprotonation site: **stated assumption, not a resolved result. Documented, not resolved.**
+
+**Decision.** The site remains at the 4-OH and is **labelled as an assumption** wherever P1 results
+appear. Not resolved computationally in this scope.
+
+**Rationale.** The GFN2 site screen gives a 4-OH/3-OH gap of **3.30 kJ mol⁻¹**, which is **five times
+smaller** than the **16.96 kJ mol⁻¹** conformational effect found in the same species by the later
+conformer search. The screen used one conformer per isomer, so it confounds isomer identity with
+conformer choice and cannot discriminate. It establishes only that the 5-OH isomer is the poor one.
+
+**Consequences applied.** The framing already existed verbatim in
+`dft/structures/MODEL_JUSTIFICATION.md` §3.1 but was **absent from both documents named in the
+handoff**; added to `dft/DFT_PROTOCOL.md` **§1.3.1** and `dft/structures/CONFORMER_SCREEN.md` §3.1.
+
+### D-04 — Gallic acid pK_a: **UNSOURCED ASSERTION WITHDRAWN. Citation outstanding.**
+
+**Decision.** The bare "pK_a ≈ 8.5" is **not retained as though sourced**. It is replaced by a
+visible `\TODOPAL` and reads as pending until Palaash supplies or confirms a real citation.
+
+**Consequences applied.** `dft/DFT_PROTOCOL.md` §1.3 now carries a `\TODOPAL` naming the preferred
+source (a compound-level NMR study of methyl gallate's *microscopic* phenolic pK_a values — both
+compound- and position-specific) and the acceptable fallback (a generic gallic acid phenolic pK_a,
+values around 8.7 in standard compilations, **only** if cited to a real verified source **and**
+carrying the caveat that methyl gallate lacks the carboxylic acid group present in gallic acid, so
+the value may not transfer exactly). The planning comment in `report/sections/03_computational.tex`
+is marked **do-not-uncomment**. §1.3 also records that the three-state design **makes the premise
+unnecessary** — the pK_a determines only which state is described as expected, and all three are
+computed regardless. Tracked as attack **A32**, status OPEN.
+
+### Repository defect fixed
+
+| Date | Fix | Rationale |
+|---|---|---|
+| 2026-08-13 | **`.gitignore`: LaTeX artefact rules scoped from repo-wide to `report/**`.** | A bare `*.out` (a LaTeX/hyperref rule) also matched **ORCA's primary output files** — the evidence every reported energy must be traceable to — and would have silently untracked the entire computational evidence base. Verified: `git check-ignore` on `dft/outputs/*.out` now prints nothing (tracked), on `report/build/*.out` still matches (ignored), and on `dft/outputs/*_atom*.out` still matches (correctly discarded). An explicit `!dft/outputs/**/*.out` negation was tried and **deliberately removed**: it makes `git check-ignore` report a match for those files, which obscures the very check that verifies the invariant. |
+
+### Process rule added
+
+| Date | Rule | Rationale |
+|---|---|---|
+| 2026-08-13 | **`CLAUDE.md` §7.1: a session record is never a substitute for the verbatim client export**, and the assistant must never generate, reconstruct or simulate a transcript. | Neither S01 nor S02 has a real export; both directories hold assistant-written records only. Appendix A is assembled from **exports**, not records. Submitting a written account as though it were a chat log would misrepresent evidence to the Organising Committee — a worse finding than a missing file. |
+

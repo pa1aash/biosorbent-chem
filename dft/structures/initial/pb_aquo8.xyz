@@ -1,5 +1,5 @@
 25
-charge=+2 | mult=1 | uhf=0 | uks=false | species=pb_aquo8 | label=[Pb(H2O)8]2+ | formula=H16O8Pb1 | role=reactant | protonation=n-a | metal=Pb | config=6s2, closed shell | builder=build_structures.py
+charge=+2 | mult=1 | uhf=0 | uks=false | species=pb_aquo8 | label=[Pb(H2O)8]2+ | formula=H16O8Pb1 | role=alternative | role_note=limitations-discussion alternative and section 6 validation only; NOT the headline reference state -- see DFT_PROTOCOL.md 2.1, ruling D-01 of 2026-08-13 | protonation=n-a | metal=Pb | config=6s2, closed shell | builder=build_structures.py
 Pb     0.00000000     0.00000000     0.00000000
 O      2.27766344     0.00000000     1.35452917
 H      2.78176120    -0.75748061     1.65431671

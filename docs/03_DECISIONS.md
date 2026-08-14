@@ -358,3 +358,53 @@ reusing the first-shell cutoffs of `structures/geom_utils.py` so pre-screen and 
 are directly comparable. Parses frequencies natively from the ORCA output because **cclib 1.8.1
 cannot parse ORCA 6.1.1 output** (it aborts in the SCF convergence block), and the §3.4 all-real
 check must not depend on a parser that fails silently.
+
+---
+
+## 2026-08-14 — Watchdog added; the P0 denticity pattern completed
+
+Session S06. A cron heartbeat and queue watchdog were added to the compute box. Nothing running was
+touched: `cu_P1_cplx` and `pb_P1_cplx` were hours into their calculations throughout.
+
+### Decisions taken by the auditor (reversible on request)
+
+| Date | Decision | Rationale |
+|---|---|---|
+| 2026-08-14 | **Watchdog restarts only after 15 min of confirmed idle across two cron ticks, with zero ORCA drivers and no `run_queue.sh` flock holder.** No `kill`, `pkill` or `tmux kill-session` appears anywhere in it. | A watchdog that can kill a nine-hour calculation is worse than no watchdog. The only failure it exists to correct is the S04 one — the queue driver *exiting* with work outstanding. |
+| 2026-08-14 | **The shared job-state predicates live in `lib_jobstate.sh`, which `run_queue.sh` deliberately does NOT source, and `run_queue.sh` was not edited on the box.** | Bash reads a script incrementally, so editing a running script can corrupt its execution mid-queue. `run_queue.sh` must also keep working when everything else is broken. |
+| 2026-08-14 | **Process detection uses `pgrep -x` on the process name and an flock test for the queue driver, never `pgrep -f` on a command-line pattern.** | The first version reported three ORCA drivers when two were running, because `pgrep -f` matched the ssh command line that contained the pattern. **That false positive is in the dangerous direction** — it makes a dead queue look busy and suppresses the restart the watchdog exists to make. |
+| 2026-08-14 | **Give-up conditions: death within 30 min of a restart, no additional completed job since the last restart, or 5 restarts.** Writes a FAILURE banner to `heartbeat.log` and `queue.log`; `scripts/dft_status.sh` surfaces it. | The 30-minute rule was specified. The no-progress rule was added because a job that fails slowly and repeatedly would otherwise loop indefinitely under the 30-minute rule alone. |
+
+### A31 — the P0 pattern is complete, and it is not Case B
+
+All three P0 complexes converged with all frequencies real:
+
+| Species | M–O #1 | M–O #2 | Verdict |
+|---|---|---|---|
+| `pb_P0_cplx` | 2.936 Å | 4.166 Å | **MONODENTATE** |
+| `cu_P0_cplx` | 2.048 Å | 3.692 Å | **MONODENTATE** |
+| `zn_P0_cplx` | 2.180 Å | 2.215 Å | **bidentate** |
+
+**Zinc is the outlier, not copper** — the mixed-pattern branch of `DFT_PROTOCOL.md` §3.8 Case C.
+
+This **inverts the Case B conclusion in the favourable direction**. §3.8 Case B assumed Cu alone
+would differ and therefore that ΔΔG(Pb−Cu)|P0 could not be quoted like-for-like. In fact **Pb and Cu
+are matched with each other** (both x = 1, Δn = 0), so the comparison that carries the
+Irving–Williams argument **is** like-for-like at P0; ΔΔG(Pb−Zn) and ΔΔG(Cu−Zn) are the unmatched
+ones.
+
+**Consequence requiring attention:** `REACTIONS.md` §3 states "x = 2, identically, for all three
+metals and all three protonation states". That is **falsified at P0 for Pb and Cu** and must be
+qualified. §3.2 of that document anticipated the check and required it before any P0 ΔΔG is
+reported. The reaction scheme has **not** been unilaterally rewritten — whether to compute a matched
+monodentate set for all three metals (§3.8 point 5 names it future work) or to report the Zn P0 row
+as not comparable is a design decision for Palaash.
+
+**No complex was re-optimised under a restraint**, per §3.8 point 5.
+
+### Interpretation offered, not asserted
+
+Both metals that shed a donor have an electronic reason to: Cu(II) d⁹ is Jahn–Teller distorted and
+disfavours a sixth short bond, and Pb(II) has the stereochemically active 6s² lone pair on which the
+report's central mechanism rests. Zn(II) d¹⁰ has neither and keeps the chelate. Recorded with that
+basis and **not** presented as established — it must be tested against P1 and P2 first.

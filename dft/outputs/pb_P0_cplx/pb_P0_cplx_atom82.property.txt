@@ -29,16 +29,16 @@ $SCF_Energy
 $End
 $SCF_Timings
    &GeometryIndex 1
-   &TOTAL [&Type "Double"]       1.9935440000000000e+00
-   &PREP [&Type "Double"]       1.9683999999999997e-02
-   &FOCK [&Type "Double"]       1.8500649999999996e+00
-   &DENS [&Type "Double"]       1.4068000000000712e-02
-   &ETOT [&Type "Double"]       1.8470000000001818e-03
-   &TRAFO [&Type "Double"]       1.6259999999999053e-03
-   &DIIS [&Type "Double"]       4.5655999999999558e-02
-   &SOSCF [&Type "Double"]       2.4109999999999410e-03
-   &J [&Type "Double"]       1.8964280000000002e+00
-   &FOCKSTART [&Type "Double"]       1.6600000000000677e-03
+   &TOTAL [&Type "Double"]       2.0167230000000003e+00
+   &PREP [&Type "Double"]       1.9560999999999999e-02
+   &FOCK [&Type "Double"]       1.8627110000000007e+00
+   &DENS [&Type "Double"]       1.8057999999999689e-02
+   &ETOT [&Type "Double"]       2.2260000000000474e-03
+   &TRAFO [&Type "Double"]       1.5710000000000446e-03
+   &DIIS [&Type "Double"]       5.2241999999999997e-02
+   &SOSCF [&Type "Double"]       2.2929999999999895e-03
+   &J [&Type "Double"]       1.9065219999999996e+00
+   &FOCKSTART [&Type "Double"]       1.8280000000001316e-03
 $End
 $Single_Point_Data
    &GeometryIndex 1
@@ -87,8 +87,8 @@ $SCF_Dipole_Moment
 $End
 $Calculation_Timings
    &GeometryIndex 1
-   &GTOINT [&Type "Double"]       1.2174900000000000e-01
-   &SCF [&Type "Double"]       2.0685990000000003e+00
-   &PROP [&Type "Double"]       3.2549999999999635e-02
-   &SUM [&Type "Double"]       2.2228979999999998e+00
+   &GTOINT [&Type "Double"]       1.2357000000000004e-01
+   &SCF [&Type "Double"]       2.0943459999999998e+00
+   &PROP [&Type "Double"]       3.3511000000000291e-02
+   &SUM [&Type "Double"]       2.2514270000000001e+00
 $End

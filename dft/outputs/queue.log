@@ -6,3 +6,24 @@
 2026-08-13T18:48:43Z | FINISHED | pb_P0_cplx | exit=0 | elapsed=11173s | ORCA TERMINATED NORMALLY
 2026-08-13T20:19:34Z | FINISHED | cu_P0_cplx | exit=0 | elapsed=16639s | ORCA TERMINATED NORMALLY
 2026-08-13T20:19:34Z | ======== QUEUE END ========
+2026-08-14T06:10:37Z | ======== QUEUE START | job list 17 | already complete 2 | to run 15 | core cap 16 ========
+2026-08-14T06:10:37Z | SKIP     | water | already complete (ORCA TERMINATED NORMALLY present)
+2026-08-14T06:10:37Z | SKIP     | cu_P0_cplx | already complete (ORCA TERMINATED NORMALLY present)
+2026-08-14T06:10:37Z | START    | cu_aquo6 | cores=4 | maxcore=1500MB
+2026-08-14T06:10:37Z | START    | pb_aquo6 | cores=4 | maxcore=1500MB
+2026-08-14T06:10:37Z | START    | zn_aquo6 | cores=4 | maxcore=1500MB
+2026-08-14T06:10:37Z | START    | lig_P0_LH2 | cores=4 | maxcore=1500MB
+2026-08-14T06:43:20Z | FINISHED | lig_P0_LH2 | exit=0 | elapsed=1963s (0h32m43s) | ORCA TERMINATED NORMALLY | all frequencies real
+2026-08-14T06:43:20Z | START    | lig_P1_LH1m | cores=4 | maxcore=1500MB
+2026-08-14T07:13:17Z | FINISHED | zn_aquo6 | exit=0 | elapsed=3760s (1h02m40s) | ORCA TERMINATED NORMALLY | all frequencies real
+2026-08-14T07:13:17Z | START    | lig_P2_L2m | cores=4 | maxcore=1500MB
+2026-08-14T07:14:45Z | FINISHED | lig_P1_LH1m | exit=0 | elapsed=1885s (0h31m25s) | ORCA TERMINATED NORMALLY | all frequencies real
+2026-08-14T07:18:37Z | FINISHED | cu_aquo6 | exit=0 | elapsed=4080s (1h08m00s) | ORCA TERMINATED NORMALLY | all frequencies real
+2026-08-14T07:18:37Z | START    | pb_P0_cplx | cores=8 | maxcore=1500MB
+2026-08-14T07:46:50Z | FINISHED | lig_P2_L2m | exit=0 | elapsed=2013s (0h33m33s) | ORCA TERMINATED NORMALLY | all frequencies real
+2026-08-14T09:33:12Z | FINISHED | pb_aquo6 | exit=0 | elapsed=12155s (3h22m35s) | ORCA TERMINATED NORMALLY | all frequencies real
+2026-08-14T09:33:12Z | START    | zn_P0_cplx | cores=8 | maxcore=1500MB
+2026-08-14T11:26:48Z | FINISHED | pb_P0_cplx | exit=0 | elapsed=14891s (4h08m11s) | ORCA TERMINATED NORMALLY | all frequencies real
+2026-08-14T11:26:48Z | START    | cu_P1_cplx | cores=8 | maxcore=1500MB
+2026-08-14T11:57:57Z | FINISHED | zn_P0_cplx | exit=0 | elapsed=8685s (2h24m45s) | ORCA TERMINATED NORMALLY | all frequencies real
+2026-08-14T11:57:57Z | START    | pb_P1_cplx | cores=8 | maxcore=1500MB

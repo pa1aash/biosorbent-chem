@@ -488,3 +488,72 @@ to check it, which made the heartbeat report `orca 3` when two jobs were running
 suppress exactly the restart the watchdog exists to make. Both process checks were changed to be
 immune to command-line matching — `pgrep -c -x orca` matches the process *name*, and the queue-driver
 test uses the flock rather than a pattern.
+
+---
+
+## 11. THE P0 DENTICITY PATTERN IS COMPLETE — AND IT IS NOT CASE B
+
+**2026-08-14, 20:15 IST.** All three P0 complexes are now converged with all frequencies real. This
+**supersedes the provisional reading in §9**, which was based on an unconverged `pb_P0_cplx`
+geometry and on the §3.8 Case B assumption that copper alone would differ.
+
+| Species | M–O(galloyl) #1 | M–O(galloyl) #2 | Cutoff | Verdict | Cycles | Imag. |
+|---|---|---|---|---|---|---|
+| `pb_P0_cplx` | **2.936 Å** bound | **4.166 Å** not bound | 3.20 Å | **MONODENTATE** | 119 | 0 |
+| `cu_P0_cplx` | **2.048 Å** bound | **3.692 Å** not bound | 2.80 Å | **MONODENTATE** | 88 | 0 |
+| `zn_P0_cplx` | **2.180 Å** bound | **2.215 Å** bound | 2.80 Å | **bidentate** | 60 | 0 |
+
+**Zinc is the outlier, not copper.** This is the mixed-pattern branch of protocol §3.8 Case C —
+"if the pattern is mixed in some other way, Case B applies to whichever metals differ" — and the
+metal that differs is **Zn**.
+
+### What this changes, and it is favourable
+
+§3.8 Case B was written on the assumption that Cu alone would go monodentate, and concluded that
+**ΔΔG(Pb − Cu) at P0 must not be quoted as a like-for-like figure**. The measurement inverts that:
+
+| Comparison at P0 | Reaction classes | Status |
+|---|---|---|
+| **ΔΔG(Pb − Cu)** | both x = 1, Δn = 0 | **MATCHED — like-for-like, quotable** |
+| ΔΔG(Pb − Zn) | x = 1 vs x = 2, Δn = 0 vs +1 | **NOT matched — carries the caveat** |
+| ΔΔG(Cu − Zn) | x = 1 vs x = 2, Δn = 0 vs +1 | **NOT matched — carries the caveat** |
+
+**The comparison that carries the Irving–Williams argument is the Pb/Cu one, and at P0 it is
+matched.** That is a materially better position than Case B anticipated.
+
+### Consequences that now bind
+
+1. **The P0 reaction for Pb and Cu is not the one written in `REACTIONS.md` §2.** It is
+
+   ```
+   [M(H2O)6]2+  +  LH2  ->  [M(LH2)(H2O)5]2+  +  1 H2O        x = 1,  dn = 0
+   ```
+
+   **`REACTIONS.md` §3's claim of "x = 2, identically, for all three metals and all three
+   protonation states" is falsified at P0 for Pb and Cu** and must be qualified. §3.2 of that
+   document anticipated exactly this check and required it before any P0 ΔΔG is reported.
+2. The standard-state correction differs between the Pb/Cu pair and Zn at P0: ΔG_ss = 0 for the
+   monodentate pair against −12.0 kJ/mol for Zn. **The water terms do not cancel in ΔΔG(Pb − Zn).**
+3. **Table 4.7 carries the measured denticity and first-shell donor count for every species**, as
+   §3.7 requires. Table 4.9's P0 row marks the Zn mismatch **in the table itself**, not a footnote.
+4. **No complex is re-optimised under a restraint** to force bidentate coordination (§3.8 point 5).
+   Computing the monodentate form for all three metals as a matched second set remains **future
+   work**, not a this-week action.
+
+### Interpretation — offered with its basis, not asserted
+
+The pattern is what the geometry supports and it is chemically coherent: **both metals that shed a
+donor have an electronic reason to**. Cu(II) d⁹ is Jahn–Teller distorted and disfavours a sixth
+short bond; Pb(II) has a stereochemically active 6s² lone pair that occupies one hemisphere, which
+is the same feature the report's central mechanism rests on. Zn(II) d¹⁰ has no ligand-field
+preference and no lone pair, and retains the chelate. **A neutral catechol is a weak donor**, so at
+P0 the electronic cost of the second bond is not repaid for Pb or Cu.
+
+This is stated as an interpretation with that basis. It is **not** presented as established, and it
+must be tested against the P1 and P2 rows before it enters the report as a mechanism.
+
+### Still open
+
+The P1 and P2 denticity pattern. `cu_P1_cplx` and `pb_P1_cplx` are running now. **Nothing about the
+headline claim rests on P0** — the reported claim is the one that survives all three protonation
+states (§1.3).

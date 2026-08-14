@@ -421,3 +421,70 @@ report says Cu is monodentate and says nothing about the pattern.
 | ⟨S²⟩ for `cu_aquo6`, `cu_P1_cplx`, `cu_P2_cplx` | pending — running or queued |
 | Denticity for the remaining 8 complexes | pending — §3.7 requires all nine |
 | `G_CDS` identity re-confirmed on a metal complex | pending |
+
+---
+
+## 10. WATCHDOG — added 2026-08-14, 20:00 IST (S06)
+
+Cron-based, deliberately lightweight. **No systemd migration**, and nothing that was running was
+touched: `cu_P1_cplx` and `pb_P1_cplx` were hours into their calculations when this was installed.
+
+| | |
+|---|---|
+| `dft/heartbeat.sh` → `/opt/dft-jobs/heartbeat.sh` | every **10 min**, appends one line to `heartbeat.log` |
+| `dft/watchdog.sh` → `/opt/dft-jobs/watchdog.sh` | every **15 min**, restarts the queue only if it has genuinely died |
+| `dft/lib_jobstate.sh` → `/opt/dft-jobs/lib_jobstate.sh` | shared job-state predicates, so the completion test cannot drift again |
+
+Heartbeat line format:
+
+```
+2026-08-14T14:31:09Z | complete 10/17 | incomplete  7 | orca 2 | disk 430G free | ram 17G free | queue ALIVE
+```
+
+### What the watchdog will never do
+
+It contains **no `kill`, no `pkill`, no `tmux kill-session`**. It never touches a job directory, an
+input file, or `run_queue.sh`. It never starts anything while an ORCA process is alive. Its only
+side effects are appended log lines and, in one narrow case, a `tmux new-session`.
+
+**`run_queue.sh` is never edited while it may be running.** Bash reads a script incrementally, so
+editing a running script can corrupt its execution mid-queue. That is why the shared predicates live
+in a separate file that `run_queue.sh` does not source.
+
+### When it restarts
+
+All five must hold:
+
+1. at least one job is incomplete (three-part test: normal termination **and** frequency section
+   **and** `.hess`),
+2. zero ORCA driver processes,
+3. `run_queue.sh` is not running — tested via the flock it holds, not via `pgrep`,
+4. 1–3 have held **continuously for more than 15 minutes**, confirmed across two cron ticks rather
+   than on a single observation, and
+5. the watchdog has not given up.
+
+A restart is safe because the three-part completion test makes `run_queue.sh` **resume rather than
+redo**, and its flock prevents two concurrent queues even if the watchdog were wrong.
+
+### When it gives up
+
+It writes a loud `WATCHDOG FAILURE` banner to `heartbeat.log` and `queue.log`, sets a `disabled`
+flag and stops, if any of:
+
+- the queue died again **within 30 minutes** of the previous restart,
+- a restart produced **no additional completed job**, or
+- **5 restarts** have been made.
+
+`scripts/dft_status.sh` surfaces that banner at the top of its watchdog section. Re-arm after fixing
+the cause with `rm -rf /opt/dft-jobs/.watchdog`.
+
+### A bug caught before installation
+
+The first version counted ORCA processes with `pgrep -f '/opt/orca/orca .*\.inp'`. That **also
+matches any other process whose command line contains the pattern** — including the ssh command used
+to check it, which made the heartbeat report `orca 3` when two jobs were running.
+
+**That false positive is in the dangerous direction**: it makes a dead queue look busy and would
+suppress exactly the restart the watchdog exists to make. Both process checks were changed to be
+immune to command-line matching — `pgrep -c -x orca` matches the process *name*, and the queue-driver
+test uses the flock rather than a pattern.

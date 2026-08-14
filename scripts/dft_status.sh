@@ -142,6 +142,55 @@ echo "job directories total: $(du -sh "$JOBROOT" 2>/dev/null | cut -f1)"
 echo "memory:"; free -g | head -2
 
 echo
+echo "=== WATCHDOG ==="
+if crontab -l 2>/dev/null | grep -q "heartbeat.sh"; then
+    echo "cron heartbeat  : INSTALLED (every 10 min)"
+else
+    echo "cron heartbeat  : *** NOT INSTALLED ***"
+fi
+if crontab -l 2>/dev/null | grep -q "watchdog.sh"; then
+    echo "cron watchdog   : INSTALLED (every 15 min)"
+else
+    echo "cron watchdog   : *** NOT INSTALLED ***"
+fi
+
+if [ -f "$JOBROOT/.watchdog/disabled" ]; then
+    echo "watchdog state  : *** DISABLED -- IT GAVE UP. See the FAILURE banner in"
+    echo "                  heartbeat.log below. Fix the cause, then re-arm with:"
+    echo "                    ssh root@<host> 'rm -rf $JOBROOT/.watchdog'"
+elif [ -f "$JOBROOT/.watchdog/restart_count" ]; then
+    echo "watchdog state  : armed | restarts so far: $(cat "$JOBROOT/.watchdog/restart_count")"
+else
+    echo "watchdog state  : armed | no restart has ever been needed"
+fi
+
+if [ -f "$JOBROOT/.watchdog/last_restart" ]; then
+    lr=$(cat "$JOBROOT/.watchdog/last_restart")
+    echo "last restart    : $(date -u -d "@$lr" '+%Y-%m-%d %H:%M:%SZ') "\
+         "($(( (now - lr) / 60 )) min ago)"
+else
+    echo "last restart    : never"
+fi
+if [ -f "$JOBROOT/.watchdog/first_idle" ]; then
+    fi_=$(cat "$JOBROOT/.watchdog/first_idle")
+    echo "!! queue has been idle with work outstanding since "\
+         "$(date -u -d "@$fi_" '+%H:%M:%SZ') ($(( (now - fi_) / 60 )) min) --"
+    echo "   the watchdog will restart it once that passes 15 min."
+fi
+
+# The FAILURE banner is the one thing that must never be missed.
+if grep -qa "WATCHDOG FAILURE" "$JOBROOT/heartbeat.log" 2>/dev/null; then
+    echo
+    echo "################################################################"
+    grep -a -A14 "WATCHDOG FAILURE" "$JOBROOT/heartbeat.log" | tail -18
+    echo "################################################################"
+fi
+
+echo
+echo "=== heartbeat.log (last 8) ==="
+tail -8 "$JOBROOT/heartbeat.log" 2>/dev/null || echo "(no heartbeat yet — cron may not have ticked)"
+
+echo
 echo "=== queue.log (last 15) ==="
 tail -15 queue.log 2>/dev/null || echo "(no queue.log yet)"
 

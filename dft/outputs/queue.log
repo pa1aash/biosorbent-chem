@@ -1,0 +1,8 @@
+2026-08-13T15:42:15Z | ======== QUEUE START | 17 jobs | maxpar=2 | orca=/opt/orca/orca ========
+2026-08-13T15:42:15Z | START    | water | nprocs=8 | maxcore=1500MB
+2026-08-13T15:42:15Z | START    | cu_P0_cplx | nprocs=8 | maxcore=1500MB
+2026-08-13T15:42:30Z | FINISHED | water | exit=0 | elapsed=15s | ORCA TERMINATED NORMALLY
+2026-08-13T15:42:30Z | START    | pb_P0_cplx | nprocs=8 | maxcore=1500MB
+2026-08-13T18:48:43Z | FINISHED | pb_P0_cplx | exit=0 | elapsed=11173s | ORCA TERMINATED NORMALLY
+2026-08-13T20:19:34Z | FINISHED | cu_P0_cplx | exit=0 | elapsed=16639s | ORCA TERMINATED NORMALLY
+2026-08-13T20:19:34Z | ======== QUEUE END ========

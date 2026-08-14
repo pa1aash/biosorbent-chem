@@ -1,20 +1,35 @@
 # Chem-151 | queue order consumed by run_queue.sh
-# Longest-processing-time-first. water first (cheap end-to-end
-# validation), pb_aquo8 last (not a headline job, delays nothing).
-water
-cu_P0_cplx
-pb_P0_cplx
-zn_P0_cplx
-cu_P1_cplx
-pb_P1_cplx
-zn_P1_cplx
-cu_P2_cplx
-pb_P2_cplx
-zn_P2_cplx
-lig_P0_LH2
-lig_P1_LH1m
-lig_P2_L2m
-cu_aquo6
-pb_aquo6
-zn_aquo6
-pb_aquo8
+# FORMAT: <jobname> <cores>   -- the launcher schedules by TOTAL CORES
+# Total cores available: 16. ORCA runs one MPI process per
+# core, so total processes never exceeds that and peak memory is
+# maxcore x cores. Ordered BY DEPENDENCY, not by size -- see
+# make_orca_inputs.py JOB_SPEC for the reasoning.
+
+# -- group 0: ALREADY COMPLETE (S04) -- opt converged AND frequencies ran
+water          8    # COMPLETE S04 — 15 s, 4 cycles, freq done
+cu_P0_cplx     8    # COMPLETE S04 — 4h37m, 88 cycles, freq done
+
+# -- group 1: gate everything downstream: aquo ions + ligands, small and fast
+cu_aquo6       4    # 19 atoms, UKS — reactant in all 3 Cu reactions
+pb_aquo6       4    # 19 atoms — headline Pb reference state
+zn_aquo6       4    # 19 atoms — reactant in all 3 Zn reactions
+lig_P0_LH2     4    # 21 atoms — reactant in all 3 P0 reactions
+lig_P1_LH1m    4    # 20 atoms — reactant in all 3 P1 reactions
+lig_P2_L2m     4    # 19 atoms — reactant in all 3 P2 reactions
+
+# -- group 2: completes the P0 set -- pb_P0_cplx is a RE-RUN, see JOB_SPEC
+pb_P0_cplx     8    # 34 atoms — RE-RUN from S04 geometry, S04 attempt hit MaxIter
+zn_P0_cplx     8    # 34 atoms — last P0 complex
+
+# -- group 3: the P1 row
+cu_P1_cplx     8    # 33 atoms, UKS
+pb_P1_cplx     8    # 33 atoms, ECP60MDF
+zn_P1_cplx     8    # 33 atoms
+
+# -- group 4: the P2 row
+cu_P2_cplx     8    # 32 atoms, UKS
+pb_P2_cplx     8    # 32 atoms, ECP60MDF
+zn_P2_cplx     8    # 32 atoms
+
+# -- group 5: not a headline quantity -- drop first if the schedule slips
+pb_aquo8       4    # 25 atoms — limitations discussion and §6 validation only

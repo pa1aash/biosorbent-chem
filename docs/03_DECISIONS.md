@@ -302,3 +302,59 @@ uks=true`". **There are four**: `cu_aquo6`, `cu_P0_cplx`, `cu_P1_cplx`, `cu_P2_c
 and the generated inputs are correct — all four are UKS multiplicity 2, verified — so this is an
 error in the written record only, with no consequence for any calculation. Left uncorrected because
 the log's convention is that entries are struck through rather than edited; flagged here instead.
+
+---
+
+## 2026-08-14 — Computational arm: queue stall diagnosed, launcher rebuilt, queue relaunched
+
+Session S05. The S04 queue had dispatched 3 of 17 jobs and exited cleanly fifteen hours earlier.
+
+### Defects found
+
+| Ref | Defect | Consequence |
+|---|---|---|
+| **X-01** | **`run_queue.sh` v1 fed its job list to the dispatch loop on stdin (`done < "$ORDER"`) and invoked ORCA without redirecting stdin.** Each backgrounded job inherited fd 0 pointing at `JOB_ORDER.txt`, **sharing its file offset**; ORCA's `mpirun` read stdin, consumed the remaining job lines, and advanced the offset to EOF. | The parent's next `read` returned EOF, the loop exited normally, and the queue logged a clean `QUEUE END`. **Nothing failed — fourteen jobs were never dispatched.** Fifteen hours of wall-clock lost on a project whose critical path is wall-clock. |
+| **X-02** | **`ORCA TERMINATED NORMALLY` was used as the completion test.** ORCA prints that banner even when the geometry optimiser exhausts its cycle cap and the frequency calculation never runs. | `pb_P0_cplx` was recorded as FINISHED after 102 cycles with **no convergence, no frequencies and no `.hess`**. The true S04 result is **2 complete jobs, not 3**. Had the skip logic shipped with this test, the relaunch would have skipped a job that produced no free energy. |
+
+Both defects were in code written by the assistant in S04. X-01 was the cause of the stall; X-02 was
+found while fixing it and is the more dangerous of the two, because it fails silently in the
+direction of appearing successful.
+
+### Decisions taken by the auditor (reversible on request)
+
+| Date | Decision | Rationale |
+|---|---|---|
+| 2026-08-14 | **Job list read on file descriptor 3, and ORCA invoked with `< /dev/null`.** Two independent defences. | Either alone fixes X-01; both are kept because the failure is silent and the cost is one redirect. |
+| 2026-08-14 | **The launcher logs `DISPATCH COMPLETE \| lines read N of M` and warns if they disagree.** | This is the line that would have surfaced X-01 in seconds instead of fifteen hours. Observability, not correctness, was the real gap. |
+| 2026-08-14 | **Completion test is now three-part: normal termination AND the `VIBRATIONAL FREQUENCIES` section AND the `.hess` file.** Applied in `run_queue.sh`, `scripts/dft_status.sh` and `scripts/dft_harvest.sh`. | X-02. A job with no frequencies has no free energy and is not finished, whatever the banner says. |
+| 2026-08-14 | **Scheduling by total cores (cap 16), with 4 cores for the six small species and 8 for the complexes.** | ORCA's parallel efficiency at 8 cores for ~330-basis-function systems is roughly 55–70% against 80–90% at 4, so the small group gets appreciably more throughput. Memory is unchanged and the invariant is exact: one MPI process per core, so peak nominal memory is 1500 MB × 16 = 24 GB for any mix. Verified live: CPU 1594%/1600%, ORCA RSS 2.4 GB. |
+| 2026-08-14 | **Queue reordered by dependency rather than by size.** The three aquo ions and the three ligands run first. | Every reaction free energy needs them (`REACTIONS.md` §2), so they gate everything downstream. The S04 longest-processing-time-first order optimised makespan, which was the wrong objective. |
+| 2026-08-14 | **`%geom MaxIter 300` added to every input that had not already completed**, uniformly. | ORCA's default is 3 × N_atoms = 102 for a 34-atom complex; `pb_P0_cplx` hit it exactly and `cu_P0_cplx` converged at 88, so the margin was one job wide. This is a **resource cap, not a convergence criterion** — it does not touch the TightOPT thresholds of protocol §3.4. Applied uniformly so no species is treated differently from another. |
+| 2026-08-14 | **`pb_P0_cplx` re-runs from its own S04 final geometry, not from the S02 conformer.** | The S04 attempt left the energy converged to ~5 × 10⁻⁵ Eh after 102 cycles. Restarting from the S02 conformer would repeat three hours of work from a worse starting point. This is a continuation of the same trajectory at the same level of theory; the provenance chain is written into the input header. |
+| 2026-08-14 | **`water` and `cu_P0_cplx` inputs FROZEN at their S04 form**, regenerating byte-for-byte. | Their `.inp` is the provenance of a finished calculation and must keep describing what actually ran. Both converged far inside the default cap (4 and 88 cycles), so `MaxIter` could not have altered either result. |
+
+### Finding requiring Palaash's ruling — NOT YET NEEDED, BUT LIVE
+
+| Ref | Finding |
+|---|---|
+| **D-07** | **TightOPT may not be reachable for the floppy aquo complexes.** `pb_P0_cplx` did not merely run out of cycles: its **energy** was converged to ~5 × 10⁻⁵ Eh while its **`MAX step`** oscillated (0.023 → 0.215 → 0.254 → 0.075 → 0.097 → 0.046 against a 0.001 tolerance, with 1.9–3.7° dihedral swings). That is a flat dihedral plateau — coordinated waters rotating at near-zero cost — exactly what `structures/CONFORMER_SCREEN.md` §5 limitations 2 and 3 predicted. `cu_P0_cplx` converged at 88 cycles, so it is not universal. **No protocol change has been made.** If it recurs at the 300-cycle cap, the convergence criteria need a ruling, and any loosening must be applied to all three metals to keep the comparison controlled. `scripts/dft_status.sh` now flags any job past 150 cycles. |
+
+### A31 — PARTLY RESOLVED
+
+**Cu(II) P0 is monodentate at the production level of theory.** `cu_P0_cplx` converged in 88 cycles
+with all 102 frequencies real and ⟨S²⟩ = 0.7518: **Cu–O(galloyl) 2.048 Å and 3.692 Å** against a
+2.80 Å cutoff, first shell 5 O (1 ligand + 4 water). The GFN2-xTB pre-screen (2.30 / 3.24 Å) was
+**not an artefact** — DFT makes the split more pronounced. **Protocol §3.8 Case B now binds.**
+
+The unconverged `pb_P0_cplx` geometry is *also* provisionally monodentate (2.845 / 3.842 Å). **That
+is not a finding and is not reported as one**, but if it survives convergence — and if zinc follows
+— this is §3.8 **Case C** rather than Case B, which would *restore* comparability at P0 on a matched
+`x = 1` basis. Needs the `pb_P0_cplx` re-run and `zn_P0_cplx`, both queued.
+
+### Tooling added
+
+`dft/analysis/qc_checkpoint.py` — implements protocol §3.2, §3.4 and §3.7 for every harvested job,
+reusing the first-shell cutoffs of `structures/geom_utils.py` so pre-screen and production verdicts
+are directly comparable. Parses frequencies natively from the ORCA output because **cclib 1.8.1
+cannot parse ORCA 6.1.1 output** (it aborts in the SCF convergence block), and the §3.4 all-real
+check must not depend on a parser that fails silently.

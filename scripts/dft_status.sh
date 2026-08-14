@@ -11,9 +11,12 @@
 #
 # You do not need any prior context to read the output. Each job is one line:
 #
-#   DONE      finished, and ORCA printed its normal-termination banner
+#   DONE      optimisation converged AND frequencies ran AND .hess exists
 #   RUNNING   an ORCA process for this job exists right now
-#   FAILED    it stopped without the normal-termination banner -- needs a look
+#   NO-FREQ   ORCA "terminated normally" but the optimiser hit its cycle cap and
+#             NEVER RAN THE FREQUENCIES. This is not a finished job -- it has no
+#             free energy and must be re-run. S04 lost pb_P0_cplx this way.
+#   FAILED    stopped without a normal-termination banner -- needs a look
 #   QUEUED    not started yet
 #
 # The instance is 65.20.67.245 and it bills at $0.493/hr whether or not the
@@ -50,7 +53,13 @@ printf '%-14s %-9s %-11s %-8s %s\n' -------------- --------- ----------- -------
 ndone=0; nfail=0; nrunning=0; nqueued=0
 
 while read -r job; do
-    job="${job%%#*}"; job="${job//[[:space:]]/}"
+    # JOB_ORDER.txt is now two columns: "<jobname> <cores>  # note".
+    # Take the FIRST field only -- stripping all whitespace would fuse the
+    # name and the core count into "water8".
+    job="${job%%#*}"
+    # shellcheck disable=SC2086
+    set -- $job
+    job="${1:-}"
     [ -z "$job" ] && continue
     out="$job/$job.out"
 
@@ -89,14 +98,32 @@ while read -r job; do
     [ -n "$stage" ] || stage='starting up'
     case "$stage" in *"OPTIMIZATION CYCLE"*) stage="opt cycle $cyc";; *HESSIAN*) stage="analytic Hessian";; *VIBRATIONAL*) stage="frequencies";; *THERMOCHEM*) stage="thermochemistry";; *HURRAY*) stage="opt converged -> Hessian";; esac
 
-    if grep -qa 'ORCA TERMINATED NORMALLY' "$out" 2>/dev/null; then
+    # A normal-termination banner is NOT proof of a finished opt+freq job. ORCA
+    # prints it even when the optimiser hit MaxIter and no frequency ran. Demand
+    # the frequency section and the .hess file too.
+    term=0; freq=0
+    grep -qa 'ORCA TERMINATED NORMALLY' "$out" 2>/dev/null && term=1
+    grep -qa 'VIBRATIONAL FREQUENCIES'  "$out" 2>/dev/null && freq=1
+    [ -f "$job/$job.hess" ] || freq=0
+
+    if [ "$term" = 1 ] && [ "$freq" = 1 ]; then
         nimag=$(grep -ac '\*\*\*imaginary mode\*\*\*' "$out" 2>/dev/null); nimag=${nimag:-0}
         note="opt cycles $cyc"
         [ "$nimag" -gt 0 ] && note="$note | *** $nimag IMAGINARY MODE(S) ***"
         printf '%-14s %-9s %-11s %-8s %s\n' "$job" DONE "$el" "$scratch" "$note"
         ndone=$((ndone+1))
+    elif [ "$term" = 1 ]; then
+        printf '%-14s %-9s %-11s %-8s %s\n' "$job" NO-FREQ "$el" "$scratch" \
+            "terminated after $cyc cycles WITHOUT frequencies -- opt hit MaxIter, must re-run"
+        nfail=$((nfail+1))
     elif pgrep -f "/opt/orca/orca $job.inp" >/dev/null 2>&1; then
-        printf '%-14s %-9s %-11s %-8s %s\n' "$job" RUNNING "$el" "$scratch" "$stage"
+        # A complex that passes ~150 optimisation cycles is probably oscillating
+        # on a flat plateau rather than converging. pb_P0_cplx did exactly that
+        # in S04 and burned three hours for no result. Flag it while there is
+        # still time to intervene.
+        warn=""
+        [ "$cyc" -gt 150 ] && warn="  <<< $cyc cycles: may be oscillating, check convergence"
+        printf '%-14s %-9s %-11s %-8s %s%s\n' "$job" RUNNING "$el" "$scratch" "$stage" "$warn"
         nrunning=$((nrunning+1))
     else
         printf '%-14s %-9s %-11s %-8s %s\n' "$job" FAILED "$el" "$scratch" "stopped at: $stage"

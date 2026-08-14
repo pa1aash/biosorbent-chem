@@ -1,6 +1,9 @@
 <!-- Chem-151 | S.T. Yau High School Science Award (Asia) 2026 | Palaash Gang -->
 # ORCA PRODUCTION QUEUE — LAUNCH RECORD
 
+**Current as of 2026-08-14, 11:45 IST (S05 relaunch).** The S04 launch section is
+retained below for the record; where the two disagree, this section is current.
+
 > ## ⚠ THE INSTANCE MUST BE DESTROYED AFTER HARVEST
 >
 > **Vultr instance `65.20.67.245` bills at `$0.493/hr`.**
@@ -12,12 +15,118 @@
 
 ---
 
-## 1. LAUNCH
+## 0. S05 RELAUNCH — 2026-08-14, 11:40 IST
+
+### What went wrong with the S04 queue
+
+**The S04 queue dispatched 3 of 17 jobs and then exited cleanly, reporting no failures.**
+It sat idle for roughly fifteen hours before this was noticed.
+
+**Root cause: a shared stdin file offset.** `run_queue.sh` v1 fed the job list to its dispatch
+loop on stdin (`done < "$ORDER"`) and invoked ORCA without redirecting stdin
+(`"$ORCA" "$job.inp" > "$job.out" 2>&1`). Each backgrounded job therefore inherited file
+descriptor 0 pointing at `JOB_ORDER.txt`, **sharing its file offset with the parent loop**.
+ORCA's `mpirun` reads stdin, consumed the remaining fourteen job lines, and advanced the shared
+offset to end-of-file. The parent's next `read` returned EOF, the loop exited normally, `wait`
+drained the two running jobs, and the queue logged a clean `QUEUE END`. **Nothing failed —
+fourteen jobs were simply never dispatched.**
+
+### A second, independent defect found while fixing the first
+
+**`ORCA TERMINATED NORMALLY` is not a valid completion test, and S04 used it as one.** ORCA
+prints that banner even when the geometry optimiser exhausts its iteration cap and the frequency
+calculation never runs at all.
+
+`pb_P0_cplx` did exactly that: **102 optimisation cycles, no convergence, no frequencies, no
+`.hess` file — and a clean normal-termination banner.** 102 is precisely ORCA's default cap of
+3 × N_atoms for a 34-atom species. `cu_P0_cplx` converged at 88 of the same 102, so the margin
+was one job wide.
+
+**The true S04 result is therefore 2 complete jobs, not 3.** The completion test in
+`run_queue.sh`, `scripts/dft_status.sh` and `scripts/dft_harvest.sh` now requires all three of:
+normal termination, the `VIBRATIONAL FREQUENCIES` section, and the `.hess` file on disk.
+
+### What changed in the launcher
+
+| Change | Why |
+|---|---|
+| Job list read on **file descriptor 3**, never stdin | A child that reads stdin cannot reach it |
+| ORCA invoked with **`< /dev/null`** | No child has a readable stdin at all |
+| Logs **`DISPATCH COMPLETE \| lines read N of M`** | The line that would have caught this in seconds rather than fifteen hours |
+| **Skip on a three-part completion test** | Safely re-runnable; never re-runs finished work, never skips an unfinished job |
+| **Scheduling by total cores**, not job count | Lets 4-core and 8-core jobs share the machine without a barrier |
+| `--dry-run` mode | The skip logic was verified before launch, not after |
+
+### Concurrency
+
+**4 cores for the six small species, 8 cores for the complexes, scheduled against a 16-core cap.**
+Memory is unchanged and the invariant is exact: ORCA runs one MPI process per core, the scheduler
+caps total cores at 16, so peak nominal memory is 1500 MB × 16 = **24 GB against 29 GB available,
+for any mix of job sizes**. Verified live after launch: **CPU 1594% of 1600%, total ORCA RSS
+2.4 GB.**
+
+The gain is throughput: ORCA's parallel efficiency at 8 cores for ~330-basis-function systems is
+roughly 55–70%, against 80–90% at 4 cores, so four 4-core jobs do appreciably more useful work
+than two 8-core jobs. The complexes keep 8 cores because they have more work per unit of
+communication, and because per-job latency matters — the §3.7 denticity checkpoint cannot run
+until individual complexes finish.
+
+### New job order — by dependency, not by size
+
+The S04 order was longest-processing-time-first, which starts with the jobs whose results nothing
+else needs. **Every reaction free energy needs the three aquo ions and the ligand at its
+protonation state**, so those six small, fast species now run first and gate everything downstream.
+
+| Group | Jobs | Cores |
+|---|---|---|
+| 0 — complete, skipped | `water`, `cu_P0_cplx` | — |
+| 1 — gates everything | `cu_aquo6`, `pb_aquo6`, `zn_aquo6`, `lig_P0_LH2`, `lig_P1_LH1m`, `lig_P2_L2m` | 4 |
+| 2 — completes P0 | **`pb_P0_cplx` (RE-RUN)**, `zn_P0_cplx` | 8 |
+| 3 — the P1 row | `cu_P1_cplx`, `pb_P1_cplx`, `zn_P1_cplx` | 8 |
+| 4 — the P2 row | `cu_P2_cplx`, `pb_P2_cplx`, `zn_P2_cplx` | 8 |
+| 5 — lowest priority | `pb_aquo8` | 4 |
+
+`pb_P0_cplx` moved from group 0 to group 2: it is not complete, but it is a complex and gates
+nothing, so it runs after the six species that do.
+
+### Two protocol-adjacent changes, both recorded as decisions
+
+1. **`%geom MaxIter 300`** added to every input that had not already completed. This is a
+   **resource cap, not a convergence criterion** — it does not touch the TightOPT thresholds fixed
+   by §3.4, only how long the optimiser may search for the same minimum. Applied uniformly so no
+   species is treated differently from another.
+2. **`pb_P0_cplx` restarts from its own S04 final geometry**, not from the S02 conformer. The S04
+   attempt left the energy converged to ~5 × 10⁻⁵ Eh; discarding it would repeat three hours of
+   work from a worse starting point. This is a continuation of the same trajectory at the same
+   level of theory, and the provenance chain is written into the input file's header.
+
+**`water` and `cu_P0_cplx` inputs are FROZEN at their S04 form** and regenerate byte-for-byte, so
+they remain accurate provenance for the two finished calculations. Both converged far inside the
+default cap (4 and 88 cycles), so `MaxIter` could not have changed either result.
+
+### ⚠ RISK CARRIED FORWARD — TightOPT on floppy aquo complexes
+
+`pb_P0_cplx` did not fail for lack of cycles alone. Its **energy** was converged to ~5 × 10⁻⁵ Eh
+while its **`MAX step`** criterion oscillated — 0.023 → 0.215 → 0.254 → 0.075 → 0.097 → 0.046
+against a 0.001 tolerance, with 1.9–3.7° dihedral swings. That is a floppy degree of freedom
+(coordinated waters rotating on a flat plateau), exactly what `CONFORMER_SCREEN.md` §5
+limitations 2 and 3 predicted.
+
+**More cycles may not be enough.** `cu_P0_cplx` converged at 88, so the problem is not universal,
+but if a complex reaches ~150 cycles it is probably oscillating rather than converging —
+`scripts/dft_status.sh` now flags that. **If it recurs, the convergence criteria themselves need a
+ruling from Palaash**, because loosening TightOPT is a protocol change and would have to be
+applied to all three metals to keep the comparison controlled. No such change has been made.
+
+---
+
+## 1. LAUNCH (S04 — superseded by §0 above)
 
 | | |
 |---|---|
-| **Launched** | **2026-08-13, 21:12 IST** (15:42 UTC) |
-| Session | S04 |
+| **S04 launched** | 2026-08-13, 21:12 IST (15:42 UTC) — **queue stalled after 3 dispatches** |
+| **S05 relaunched** | **2026-08-14, 11:40 IST (06:10 UTC)** |
+| Session | S04, then S05 |
 | Instance | `65.20.67.245`, Vultr, 16 vCPU / 30 GiB RAM / 469 GB disk |
 | Remote path | `/opt/dft-jobs/` |
 | tmux session | **`dft-queue`** — detached, survives SSH disconnection |
@@ -146,57 +255,67 @@ identically, but it is cheap to check and this is the term that would silently c
 
 ---
 
-## 6. PROJECTED COMPLETION — AN ESTIMATE, TO BE REVISED
+## 6. PROJECTED COMPLETION — REVISED ON MEASURED TIMINGS
 
-**Every figure in this section is an order-of-magnitude estimate and must be revised the moment the
-first large complex finishes.** The only measured production datapoints so far are `water`
-(3 atoms, 15 s) and the observed rate of ~2 min per geometry optimisation cycle for the 34-atom
-complexes.
+**Superseding the S04 estimates, which were guesses.** These use the real S04 wall-clock and the
+measured cost split of the one complex that finished.
 
-| Job class | Atoms | ≈ basis functions | Estimated wall-clock, 8 cores |
+### Measured
+
+| Job | Atoms | Cores | Wall-clock | Cycles | Outcome |
+|---|---|---|---|---|---|
+| `water` | 3 | 8 | **15 s** | 4 | complete |
+| `cu_P0_cplx` | 34 | 8 | **4h37m** | 88 | complete |
+| `pb_P0_cplx` | 34 | 8 | **3h06m** | 102 | **no frequencies — cap hit** |
+
+**Cost split of `cu_P0_cplx` (4h37m), from ORCA's own timing table:**
+
+| Module | Time | Share |
+|---|---|---|
+| SCF iterations | 2h32m | 54.8% |
+| SCF gradient | 54m | 19.6% |
+| SCF response (CPSCF, the analytic Hessian) | 32m | 11.6% |
+| Property integrals | 21m | 7.7% |
+| Property calculations | 9m | 3.4% |
+| Startup | 8m | 2.9% |
+
+Which resolves to two numbers that drive everything below:
+
+- **~140 s per geometry-optimisation cycle** for a 34-atom complex at 8 cores
+  (`pb_P0_cplx`, closed-shell, was cheaper at ~110 s/cycle)
+- **~1h03m for the analytic Hessian and thermochemistry**, largely independent of cycle count
+
+### Projection
+
+Group 1 started 06:10 UTC. Complexes begin as cores free up, from roughly 08:00 UTC.
+
+| Scenario | Per complex | 8 complexes at 2 concurrent | **Queue finishes** |
 |---|---|---|---|
-| `water` | 3 | 43 | **15 s — measured, complete** |
-| aquo6 ions | 19 | ~330 | 1–2 h |
-| free ligands | 19–21 | ~350 | 1–2 h |
-| `pb_aquo8` | 25 | ~430 | 1.5–3 h |
-| **complexes** | **32–34** | **~665** | **3–8 h each** |
+| Optimistic — ~70 cycles | ~3.7 h | ~13.5 h | **15 Aug, ~03:00 IST** |
+| **Central — ~90 cycles** | **~4.5 h** | **~17 h** | **15 Aug, ~06:30 IST** |
+| Pessimistic — ~140 cycles | ~6.5 h | ~25 h | **15 Aug, ~14:30 IST** |
 
-| Scenario | Serial work | Wall-clock at 2 concurrent | Finishes |
-|---|---|---|---|
-| Optimistic (3 h/complex) | ~38 h | ~19 h | **Fri 14 Aug, ~16:00 IST** |
-| **Central (5 h/complex)** | **~56 h** | **~28 h** | **Sat 15 Aug, ~01:00 IST** |
-| Pessimistic (9 h/complex) | ~95 h | ~48 h | **Sat 15 Aug, ~21:00 IST** |
+**The central and optimistic cases land comfortably before midday Saturday 15 August. Only the
+pessimistic case crosses it, and then by about two hours.**
 
-**The central estimate lands early Saturday 15 August, comfortably before midday. The pessimistic
-branch does not — it runs into Saturday night.**
+`pb_P0_cplx` is treated as cheaper than a fresh complex (~2.5 h) because it restarts from a
+near-converged geometry.
 
-### Longest pole
+### Longest pole, and the real risk
 
-**`cu_P0_cplx`.** It is the largest species (34 atoms), it is open-shell UKS — roughly double the SCF
-work of a closed shell, and d⁹ SCF convergence is frequently slow — and it is the one species whose
-coordination mode may change during the optimisation (attack **A31**, ruling **D-02**: at GFN2-xTB
-the neutral ligand opened to monodentate on Cu). A ligand arm swinging out costs many extra
-optimisation cycles. It is running first, which is the correct scheduling.
+The longest pole is no longer a single job — it is **the possibility of another `MaxIter`-style
+non-convergence**. At ~140 s/cycle a complex that runs to the new 300-cycle cap burns **11.7 hours
+and produces no free energy**, which is worse than the failure it replaced. The mitigations are:
 
-### If it overruns — what to do, in order
+1. `scripts/dft_status.sh` flags any job past 150 cycles.
+2. The cap is 300, so a pathological job is bounded rather than endless.
+3. If it recurs, the convergence criteria need a ruling — see the risk note in §0.
 
-1. **Re-tune concurrency, before cutting any science.** For the twelve small jobs (ligands, aquo
-   ions) **4 concurrent jobs × 4 cores each** will almost certainly out-throughput 2 × 8, because
-   ORCA's parallel efficiency at 8 cores is well below linear. Memory is unchanged (4 × 4 × 1500 =
-   24 GB). Edit `MAXPAR` and `%pal` and restart the queue for the remaining jobs only. **This costs
-   nothing scientifically and should be tried first.**
-2. **Drop `pb_aquo8`.** It is already last and is not a headline quantity. Cost: the §6 Pb–O
-   validation covers only the six-coordinate ion, and the CN = 8 limitation in §2.2 rests on the
-   GFN2-xTB screen alone rather than on a DFT comparison. Cheap.
-3. **Drop the P0 protonation state** (`{pb,cu,zn}_P0_cplx`, 3 × 34 atoms — the most expensive tier,
-   worth roughly half the remaining wall-clock). **This is a real scientific loss and is the last
-   resort.** It weakens §1.3's three-state sensitivity design, which is the move that converts the
-   protonation assumption from a liability into a result. It is nevertheless the least-bad cut,
-   because P0 is already the compromised state: at pre-screen Cu(II) P0 went monodentate while Pb and
-   Zn stayed bidentate, so under §3.8 Case B the P0 cross-metal row may not be a like-for-like
-   comparison in any case, whereas P1 and P2 both retained bidentate coordination for all three
-   metals. If this cut is made, the report must say plainly that P0 was not computed and why —
-   not quietly present a two-state design as though it had always been the plan.
+### If it slips past midday Saturday
+
+1. **Drop `pb_aquo8`** — already last, not a headline quantity, costs nothing scientifically.
+2. **Do not drop a protonation state without discussing it.** The P0 row has become more
+   interesting, not less, since the denticity result in §9 below.
 
 ---
 
@@ -227,3 +346,78 @@ large enough that it needs no further monitoring, though `scripts/dft_status.sh`
 4. Confirm ⟨S²⟩ for all four Cu species and record the deviation from 0.750.
 5. Re-confirm the §5 `G_CDS` identity on a metal complex before `thermo.py` sums anything.
 6. **DESTROY THE VULTR INSTANCE.** See the banner at the top of this file.
+
+---
+
+## 9. QC CHECKPOINT RESULTS — AND THE A31 DENTICITY FINDING
+
+Produced by [`analysis/qc_checkpoint.py`](analysis/qc_checkpoint.py), which implements protocol
+§3.2, §3.4 and §3.7 and reuses the first-shell cutoffs of
+[`structures/geom_utils.py`](structures/geom_utils.py) so pre-screen and production verdicts are
+directly comparable.
+
+### `water` — COMPLETE
+9 modes, **0 imaginary**, lowest real 1596.16 cm⁻¹. `FINAL SINGLE POINT ENERGY` −76.39085071 Eh.
+
+### `cu_P0_cplx` — COMPLETE
+102 modes (3 × 34), **0 imaginary**, lowest real **28.65 cm⁻¹**. Optimisation converged in 88
+cycles. `FINAL SINGLE POINT ENERGY` −2630.96396966 Eh.
+
+> The lowest real mode at 28.65 cm⁻¹ is far below the 100 cm⁻¹ quasi-RRHO threshold of §3.4, which
+> is direct evidence that the quasi-RRHO treatment is doing real work rather than being a formality.
+> A raw RRHO entropy would badly mistreat that mode.
+
+**§3.2 ⟨S²⟩ = 0.7518** against the ideal 0.750 — a deviation of **+0.0018, or 0.24%**. Spin
+contamination is negligible; the d⁹ doublet is clean.
+
+### A31 — Cu(II) P0 IS MONODENTATE AT THE PRODUCTION LEVEL OF THEORY
+
+**Attack A31 / ruling D-02, OPEN since S03, is now resolved for copper.** Distances reported
+individually and never averaged, per §3.7:
+
+| Species | Cu–O(galloyl) #1 | Cu–O(galloyl) #2 | Cutoff | Verdict |
+|---|---|---|---|---|
+| `cu_P0_cplx` | **2.048 Å** — bound | **3.692 Å** — not bound | 2.80 Å | **MONODENTATE** |
+
+First shell: **5 oxygens — 1 ligand + 4 water.** The third phenolic oxygen sits at 5.875 Å.
+
+**The GFN2-xTB pre-screen was right, and DFT makes it more pronounced**, not less: the pre-screen
+gave 2.30 / 3.24 Å, production gives 2.048 / 3.692 Å. This was not a semi-empirical artefact.
+
+**This is protocol §3.8 Case B**, which was written out in advance on 13 August precisely so it
+would not have to be decided under deadline pressure. Its consequences now bind:
+
+- The P0 Cu reaction displaces **one** water, not two: `x = 1, Δn = 0` against `x = 2, Δn = +1`
+  for a bidentate product. The standard-state correction differs and the water terms **no longer
+  cancel** in ΔΔG.
+- **ΔΔG(Pb − Cu) at P0 must not be quoted as a like-for-like selectivity figure.**
+- The P0 row of Table 4.9 carries the denticity mismatch **in the table itself**, not in a footnote.
+- The Cu P0 complex is **not** re-optimised under a restraint to force bidentate coordination.
+- The argument does not depend on P0: the claim is the one that survives all three protonation
+  states, and P1/P2 both retained bidentate coordination at pre-screen for all three metals.
+
+### `pb_P0_cplx` — PROVISIONAL, NOT A RESULT
+
+| Species | Pb–O(galloyl) #1 | Pb–O(galloyl) #2 | Cutoff | Provisional verdict |
+|---|---|---|---|---|
+| `pb_P0_cplx` | 2.845 Å — bound | 3.842 Å — not bound | 3.20 Å | *monodentate* |
+
+**This geometry is NOT converged** — it is the last point of an optimisation that hit its cycle cap
+and never ran frequencies. **It is not a finding and must not be reported as one.** It is recorded
+only because it raises a live possibility that changes which contingency applies:
+
+> If lead(II) P0 is *also* monodentate once converged, this is **not** §3.8 Case B (Cu alone
+> differing) but **Case C** — and if zinc follows, comparability at P0 is *restored* at `x = 1`
+> on a matched basis, which is a materially better position than Case B.
+
+**Resolving this needs two things, both queued now:** the `pb_P0_cplx` re-run, and `zn_P0_cplx`.
+Until both are converged with real frequencies, the P0 denticity pattern is **open**, and the
+report says Cu is monodentate and says nothing about the pattern.
+
+### Still outstanding
+
+| Item | State |
+|---|---|
+| ⟨S²⟩ for `cu_aquo6`, `cu_P1_cplx`, `cu_P2_cplx` | pending — running or queued |
+| Denticity for the remaining 8 complexes | pending — §3.7 requires all nine |
+| `G_CDS` identity re-confirmed on a metal complex | pending |

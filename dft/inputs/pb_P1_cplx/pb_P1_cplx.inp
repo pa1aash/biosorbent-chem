@@ -64,6 +64,15 @@
   NewECP Pb "def2-ECP"  end
 end
 
+# Geometry-optimiser iteration cap. ORCA's default is 3 x N_atoms
+# (99 here). In S04 pb_P0_cplx hit that default, stopped without
+# converging, and never ran its frequency calculation -- while still
+# printing a normal-termination banner. This is a resource cap only:
+# it does not alter the TightOPT thresholds of protocol §3.4.
+%geom
+  MaxIter 300
+end
+
 # SMD, water. Geometries are optimised IN SOLUTION -- never optimised in
 # gas phase and single-pointed in solvent. Protocol §3.3.
 %cpcm

@@ -46,11 +46,20 @@
 #     charge = +0   multiplicity = 1   unpaired electrons = 0   RKS
 # ============================================================================
 
-%pal nprocs 8 end
+%pal nprocs 4 end
 %maxcore 1500
 
 ! PBE0 D3BJ def2-TZVP def2/J RIJCOSX TightSCF DefGrid3 RKS
 ! Opt Freq TightOPT
+
+# Geometry-optimiser iteration cap. ORCA's default is 3 x N_atoms
+# (63 here). In S04 pb_P0_cplx hit that default, stopped without
+# converging, and never ran its frequency calculation -- while still
+# printing a normal-termination banner. This is a resource cap only:
+# it does not alter the TightOPT thresholds of protocol §3.4.
+%geom
+  MaxIter 300
+end
 
 # SMD, water. Geometries are optimised IN SOLUTION -- never optimised in
 # gas phase and single-pointed in solvent. Protocol §3.3.

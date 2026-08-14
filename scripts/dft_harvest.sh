@@ -41,12 +41,14 @@ JOBROOT="${DFT_JOBROOT:-/opt/dft-jobs}"
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DEST="$REPO/dft/outputs"
 
+# NOTE: this script must run under macOS's /bin/bash, which is 3.2 -- no
+# mapfile, and `set -u` trips on empty arrays. Plain strings throughout.
 ONLY_FINISHED=1
-RSYNC_EXTRA=()
+RSYNC_EXTRA=""
 for arg in "$@"; do
     case "$arg" in
         --all)     ONLY_FINISHED=0 ;;
-        --dry-run) RSYNC_EXTRA+=(--dry-run) ;;
+        --dry-run) RSYNC_EXTRA="--dry-run" ;;
         -h|--help) sed -n '2,45p' "${BASH_SOURCE[0]}"; exit 0 ;;
         *) echo "unknown option: $arg" >&2; exit 2 ;;
     esac
@@ -65,35 +67,47 @@ fi
 echo
 
 # ── Which jobs are ready? Decided on the box, from the .out banner. ──────────
-mapfile -t JOBS < <(
+JOBS=$(
     ssh -o ConnectTimeout=15 "$HOST" JOBROOT="$JOBROOT" ONLY_FINISHED="$ONLY_FINISHED" 'bash -s' <<'REMOTE'
 cd "$JOBROOT" 2>/dev/null || exit 1
 while read -r job; do
-    job="${job%%#*}"; job="${job//[[:space:]]/}"
+    # JOB_ORDER.txt is now two columns: "<jobname> <cores>  # note".
+    # Take the FIRST field only -- stripping all whitespace would fuse the
+    # name and the core count into "water8".
+    job="${job%%#*}"
+    # shellcheck disable=SC2086
+    set -- $job
+    job="${1:-}"
     [ -z "$job" ] && continue
     out="$job/$job.out"
     [ -f "$out" ] || continue
+    # See run_queue.sh: the banner alone is not proof the job finished. Require
+    # the frequency section and the .hess file as well.
     if [ "$ONLY_FINISHED" -eq 1 ]; then
         grep -qa 'ORCA TERMINATED NORMALLY' "$out" || continue
+        grep -qa 'VIBRATIONAL FREQUENCIES'  "$out" || continue
+        [ -f "$job/$job.hess" ] || continue
     fi
     echo "$job"
 done < JOB_ORDER.txt
 REMOTE
 )
 
-if [ "${#JOBS[@]}" -eq 0 ]; then
+if [ -z "$JOBS" ]; then
     echo "Nothing to harvest yet -- no job has terminated normally."
     echo "Check progress with:  bash scripts/dft_status.sh"
     exit 0
 fi
 
-echo "harvesting ${#JOBS[@]} job(s): ${JOBS[*]}"
+echo "harvesting $(echo "$JOBS" | wc -w | tr -d ' ') job(s): $(echo $JOBS)"
 echo
 
-for job in "${JOBS[@]}"; do
+for job in $JOBS; do
     mkdir -p "$DEST/$job"
-    rsync -az --info=name1 "${RSYNC_EXTRA[@]}" \
-        --prune-empty-dirs \
+    # NOTE: macOS ships "openrsync" (protocol 29, rsync-2.6.9 compatible). It
+    # supports --include/--exclude but NOT --info=... or --prune-empty-dirs.
+    # Keep this option set conservative so the script works with the stock tool.
+    rsync -az $RSYNC_EXTRA \
         --include='*/' \
         --include='*.out' \
         --include='*.xyz' \
@@ -122,15 +136,23 @@ for job in "${JOBS[@]}"; do
 done
 
 # The queue log is evidence of what ran, when, and for how long.
-rsync -az "${RSYNC_EXTRA[@]}" "$HOST:$JOBROOT/queue.log" "$DEST/queue.log" 2>/dev/null \
+rsync -az $RSYNC_EXTRA "$HOST:$JOBROOT/queue.log" "$DEST/queue.log" 2>/dev/null \
     && echo "  queue.log      ok"
 
 echo
 echo "=== harvested ==="
-for job in "${JOBS[@]}"; do
+for job in $JOBS; do
     n=$(find "$DEST/$job" -type f 2>/dev/null | wc -l | tr -d ' ')
     sz=$(du -sh "$DEST/$job" 2>/dev/null | cut -f1)
-    term=$(grep -qa 'ORCA TERMINATED NORMALLY' "$DEST/$job/$job.out" 2>/dev/null && echo 'TERMINATED NORMALLY' || echo '*** NO NORMAL TERMINATION ***')
+    if grep -qa 'ORCA TERMINATED NORMALLY' "$DEST/$job/$job.out" 2>/dev/null; then
+        if [ -f "$DEST/$job/$job.hess" ] && grep -qa 'VIBRATIONAL FREQUENCIES' "$DEST/$job/$job.out" 2>/dev/null; then
+            term='COMPLETE (opt converged + frequencies)'
+        else
+            term='*** NO FREQUENCIES -- opt hit MaxIter, MUST RE-RUN ***'
+        fi
+    else
+        term='*** NO NORMAL TERMINATION ***'
+    fi
     imag=$(grep -ac '\*\*\*imaginary mode\*\*\*' "$DEST/$job/$job.out" 2>/dev/null || echo 0)
     extra=""
     [ "$imag" -gt 0 ] 2>/dev/null && extra="  *** $imag IMAGINARY MODE(S) -- NOT A MINIMUM ***"

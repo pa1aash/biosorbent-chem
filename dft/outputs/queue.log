@@ -27,3 +27,18 @@
 2026-08-14T11:26:48Z | START    | cu_P1_cplx | cores=8 | maxcore=1500MB
 2026-08-14T11:57:57Z | FINISHED | zn_P0_cplx | exit=0 | elapsed=8685s (2h24m45s) | ORCA TERMINATED NORMALLY | all frequencies real
 2026-08-14T11:57:57Z | START    | pb_P1_cplx | cores=8 | maxcore=1500MB
+2026-08-14T14:55:52Z | FINISHED | cu_P1_cplx | exit=0 | elapsed=12544s (3h29m04s) | ORCA TERMINATED NORMALLY | all frequencies real
+2026-08-14T14:55:52Z | START    | zn_P1_cplx | cores=8 | maxcore=1500MB
+2026-08-14T17:09:08Z | FINISHED | zn_P1_cplx | exit=0 | elapsed=7996s (2h13m16s) | ORCA TERMINATED NORMALLY | all frequencies real
+2026-08-14T17:09:08Z | START    | cu_P2_cplx | cores=8 | maxcore=1500MB
+2026-08-14T18:23:00Z | FINISHED | pb_P1_cplx | exit=0 | elapsed=23103s (6h25m03s) | ORCA TERMINATED NORMALLY | all frequencies real
+2026-08-14T18:23:00Z | START    | pb_P2_cplx | cores=8 | maxcore=1500MB
+2026-08-14T22:33:34Z | FINISHED | pb_P2_cplx | exit=0 | elapsed=15034s (4h10m34s) | ORCA TERMINATED NORMALLY | all frequencies real
+2026-08-14T22:33:34Z | START    | zn_P2_cplx | cores=8 | maxcore=1500MB
+2026-08-15T00:35:10Z | FINISHED | zn_P2_cplx | exit=0 | elapsed=7296s (2h01m36s) | ORCA TERMINATED NORMALLY | all frequencies real
+2026-08-15T00:35:10Z | DISPATCH COMPLETE | lines read 17 of 17 | dispatched 15 | skipped 2
+2026-08-15T00:35:10Z | START    | pb_aquo8 | cores=4 | maxcore=1500MB
+2026-08-15T01:56:20Z | FINISHED | cu_P2_cplx | exit=0 | elapsed=31632s (8h47m12s) | ORCA TERMINATED NORMALLY | all frequencies real
+2026-08-15T04:04:50Z | FINISHED | pb_aquo8 | exit=0 | elapsed=12580s (3h29m40s) | ORCA TERMINATED NORMALLY | all frequencies real
+2026-08-15T04:04:50Z | ======== QUEUE END | dispatched 15 | skipped 2 ========
+2026-08-15T04:15:02Z | ######## WATCHDOG: all 17 jobs complete -- watchdog idle, nothing further to do ########

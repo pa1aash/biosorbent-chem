@@ -1,0 +1,114 @@
+# ============================================================================
+# Chem-151 | S.T. Yau High School Science Award (Asia) 2026 | Palaash Gang
+#
+# PRODUCTION ORCA INPUT -- GENERATED FILE, DO NOT EDIT BY HAND.
+# Regenerate with:  python dft/make_orca_inputs.py
+#
+# Job            pb_aquo8
+# Species        [Pb(H2O)8]2+
+# Formula        H16O8Pb1
+# Role           alternative | protonation n-a | metal Pb
+#
+# ROLE NOTE
+#   limitations-discussion alternative and section 6 validation only; NOT
+#   the headline reference state -- see DFT_PROTOCOL.md 2.1, ruling D-01
+#   of 2026-08-13
+#
+# GEOMETRY SOURCE
+#   dft/structures/pb_aquo8.xyz
+#   The lowest-energy conformer retained by the S02 conformer screen,
+#   pre-optimised at GFN2-xTB/ALPB(water). The pre-screen energy is NOT a
+#   report quantity; this geometry is a starting point only and is
+#   re-optimised in full below.
+#
+# LEVEL OF THEORY -- every setting fixed by dft/DFT_PROTOCOL.md.
+#   Functional           PBE0 (25% exact exchange)                     §3 'Functional'
+#   Dispersion           D3(BJ) — D3 with Becke–Johnson damping        §3 'Dispersion'
+#   Basis, all elements  def2-TZVP                                     §3.1
+#   Pb core treatment    def2-ECP = Stuttgart–Cologne ECP60MDF, 60     §3.1
+#                        core electrons, 22 in valence
+#   Cu, Zn, C, H, O      all-electron                                  §3.1
+#   Auxiliary basis      def2/J                                        §3.1, §3.4
+#   Acceleration         RIJCOSX                                       §3.4
+#   Solvation            SMD, solvent = water, applied during the      §3.3
+#                        optimisation
+#   Geometry convergence TightOPT                                      §3.4
+#   SCF convergence      TightSCF                                      §3.4
+#   Integration grid     DefGrid3                                      §3.4
+#   Frequencies          analytic, same level, same solvent            §3.4
+#   Opt+freq             one combined job per species (17 total)       §8
+#
+# THERMOCHEMISTRY
+#   Protocol §3.4 fixes 298.15 K, 1 atm, RRHO with Grimme's quasi-RRHO
+#   treatment of modes below 100 cm-1. That treatment is applied in
+#   post-processing by analysis/thermo.py from the frequency list printed
+#   below, per REACTIONS.md §5.1, NOT by an ORCA keyword -- so that ORCA's
+#   own default entropy treatment cannot be silently double-counted.
+#
+# CHARGE AND MULTIPLICITY
+#   Read verbatim from the .xyz provenance header written in S02. Never
+#   inferred, never defaulted. Attack A02, rated CRITICAL.
+#     charge = +2   multiplicity = 1   unpaired electrons = 0   RKS
+# ============================================================================
+
+%pal nprocs 4 end
+%maxcore 1500
+
+! PBE0 D3BJ def2-TZVP def2/J RIJCOSX TightSCF DefGrid3 RKS
+! Opt Freq TightOPT
+
+# Pb: def2-TZVP carries the def2-ECP automatically, but the ECP is
+# declared explicitly here so that the relativistic treatment is
+# visible in the input file itself and not only in the output.
+# def2-ECP for Pb IS the Stuttgart-Cologne ECP60MDF: 60 core
+# electrons replaced, 22 electrons in the valence space, scalar-
+# relativistic effects entering through the ECP parameterisation.
+# Protocol §3.1 -- attack A03, rated CRITICAL.
+%basis
+  NewGTO Pb "def2-TZVP" end
+  NewECP Pb "def2-ECP"  end
+end
+
+# Geometry-optimiser iteration cap. ORCA's default is 3 x N_atoms
+# (75 here). In S04 pb_P0_cplx hit that default, stopped without
+# converging, and never ran its frequency calculation -- while still
+# printing a normal-termination banner. This is a resource cap only:
+# it does not alter the TightOPT thresholds of protocol §3.4.
+%geom
+  MaxIter 300
+end
+
+# SMD, water. Geometries are optimised IN SOLUTION -- never optimised in
+# gas phase and single-pointed in solvent. Protocol §3.3.
+%cpcm
+  smd        true
+  SMDsolvent "water"
+end
+
+* xyz 2 1
+  Pb       -0.15513725       0.02525369      -0.03429617
+  O         1.30246836      -0.08309076       2.09051735
+  H         2.10648767      -0.52575614       1.79428356
+  H         0.96552041      -0.58008543       2.84302362
+  O         0.66830120       2.39535051       0.74536516
+  H         0.05251137       3.10771125       0.94475359
+  H         1.17581276       2.21837555       1.54595549
+  O        -2.13623398       0.08121000       1.63924075
+  H        -2.01516512       0.48729864       2.50340262
+  H        -2.32807338      -0.85275072       1.78689394
+  O        -0.82307165      -2.32647912       0.81757638
+  H        -0.10089748      -2.88457043       1.12403333
+  H        -1.19472517      -2.74818123       0.03385300
+  O         1.56087748       1.14971641      -1.66750008
+  H         1.82418044       1.92255923      -1.15350631
+  H         1.30004173       1.46531091      -2.53856624
+  O        -2.36058626       0.95937328      -1.11346006
+  H        -2.40338523       1.82147704      -1.53929431
+  H        -2.99188611       0.96377440      -0.38469385
+  O        -1.10222860      -1.49557240      -1.93037279
+  H        -0.65211866      -1.52816307      -2.78058705
+  H        -1.96476427      -1.09216099      -2.08496984
+  O         1.97737035      -1.40640054      -0.41540729
+  H         2.52315195      -0.83270050      -0.96639664
+  H         1.85492591      -2.22749451      -0.90281536
+*

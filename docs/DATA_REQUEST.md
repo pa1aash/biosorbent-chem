@@ -742,3 +742,28 @@ ready. Sources: [`dft/REACTIONS.md`](../dft/REACTIONS.md),
 | **C-01** | Whether ORCA's printed final energy already contains the SMD non-electrostatic (CDS) term, or whether it must be added. Getting this wrong double-counts it in every free energy. | Against the first real ORCA output, before `dft/analysis/thermo.py` sums anything. |
 | **C-02** | Whether the Cu(II) Jahn–Teller distortion optimises to an **elongated** octahedron at DFT level. The GFN2 pre-screen gives a *compressed* one, which is not the expected form and is not trusted. | First `cu_aquo6` optimisation. |
 | **C-03** | Whether any Pb structure optimises to a holodirected rather than hemidirected geometry, and whether an alternative basin exists that the symmetric starting geometry did not reach. | After the Pb optimisations; feeds the §5.3 limitation on coordination-sphere isomerism. |
+
+---
+
+## Computational-arm items after S07 (2026-08-15) — all seventeen jobs analysed
+
+**C-01, C-02 and C-03 are all closed by real output.** They are left in the table above for the
+trail; their resolutions are here.
+
+| Ref | Resolution |
+|---|---|
+| **C-01** | **CLOSED.** `FINAL SINGLE POINT ENERGY = E(SCF, SMD electrostatic) + G_CDS + E_D3BJ`, verified to below 1e−9 Eh on the charged `pb_P0_cplx`, the open-shell `cu_P0_cplx` and all seventeen jobs. `thermo.py` adds neither term again. `dft/analysis/verify_c01.py`, `dft/analysis/G_COMPOSITION.md`. |
+| **C-02** | **CLOSED — the DFT result is the expected form.** `cu_aquo6` optimises to an **elongated** Jahn–Teller octahedron: Cu–O = 2.007, 2.007, 2.011, 2.011, 2.298, 2.298 Å, four short and two long. The GFN2 pre-screen's compressed octahedron was a semi-empirical artefact and is superseded. `zn_aquo6` is near-regular (2.102–2.114 Å), as a d¹⁰ centre should be. |
+| **C-03** | **CLOSED — no Pb structure optimised to a holodirected geometry.** All five Pb species are hemidirected, d̃ = 0.369–0.470 and θ_void = 95.2–100.4°, from symmetric undistorted starting geometries. The §5.3 limitation on coordination-sphere isomerism still stands (one basin was sampled per species), but no holodirected Pb basin was reached from an unbiased start. |
+
+### Still needed from Palaash — computational
+
+| Ref | Item | What it blocks |
+|---|---|---|
+| **D-04 / A32** | **A verified phenolic pK_a.** Now urgent rather than tidy: the computed metal preference **inverts between the protonated and deprotonated states**, so the pK_a selects between two contradictory answers. §1.3's argument that the three-state design makes the premise unnecessary no longer holds. | Whether the report may argue from the P0 result at all. §3.1, §4.7, the abstract. |
+| **D-05** | **Multiwfn version string.** The ORCA half is closed (6.1.1 RELEASE, GIT `487d211c`, printed in all seventeen outputs). Multiwfn is still not installed. | Table 3.1's decomposition row; f_orb. With the deadline at 17 August, treat `DFT_PROTOCOL.md` §4.3's fallback as the outcome: **the report does not contain f_orb.** |
+| **D-09** | **Rewrite of `DFT_PROTOCOL.md` §2.2.** It concedes the GFN2 CN = 8 preference as an open limitation; that preference was tested and does not survive (ΔG = +51.2 kJ/mol favouring CN = 6). | §5.3 and the A33 armour, both of which currently understate the position. |
+| **D-11** | **Rewrite of attack A05's armour.** It assumes a magnitude gap in the right direction; two of six comparisons disagree in **sign**. | §4.6.3, Table 4.9. |
+| **D-13** | **A ruling on how §4.7 and the abstract present a computational arm that does not reproduce the central ordering claim.** | §4.7, §5.3, the abstract, and the framing of the title. Tracked as attack **A34**. |
+| **new** | **A verified EXAFS / X-ray reference for the aqueous Pb(II) hydration structure**, to complete the §6 protocol validation. Must clear `verify_dois.py` and be read. | `validation_deviation_pct`. The computed means stand: 2.537 Å (n = 5) for `pb_aquo6`, 2.604 Å (n = 6) for `pb_aquo8`. |
+| **new** | **Confirmation of whether ruling "D-08" exists.** The S07 session brief cites it as the ruling that x is measured rather than assumed; `docs/03_DECISIONS.md` runs D-01 to D-07 only. Its substance was followed. | Nothing — but the decision trail should be complete. |
